@@ -1,187 +1,729 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Love Simulator</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Simulator</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #111;
-      height: 100vh;
-      overflow: hidden;
-    }
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #111;
+  user-select: none;
+}
 
-    /* 잠금화면 */
-    #lockscreen {
-      width: 100%;
-      height: 100vh;
-      background:
-        linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.18)),
-        linear-gradient(160deg, #a9c5df, #d9c4d7 55%, #e5c3bb);
+.screen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
 
-      color: white;
-      position: relative;
-      text-align: center;
-    }
+/* =========================
+   잠금화면
+========================= */
 
-    .status-bar {
-      display: flex;
-      justify-content: space-between;
-      padding: 14px 22px;
-      font-size: 14px;
-      font-weight: 600;
-    }
+#lockscreen {
+  z-index: 10;
+  color: white;
 
-    .lock-icon {
-      font-size: 20px;
-      margin-top: 25px;
-    }
+  background:
+    linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.18)),
+    linear-gradient(155deg, #91b6d4, #c9bad1 55%, #deb6b0);
 
-    .date {
-      margin-top: 25px;
-      font-size: 20px;
-      font-weight: 500;
-    }
+  transition:
+    transform .55s cubic-bezier(.4,0,.2,1),
+    opacity .4s;
+}
 
-    .time {
-      font-size: 82px;
-      line-height: 1;
-      font-weight: 200;
-      letter-spacing: -5px;
-      margin-top: 5px;
-    }
+#lockscreen.unlocked {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
 
-    /* 알림 */
-    .notification {
-      width: calc(100% - 28px);
-      max-width: 430px;
-      margin: 45px auto 0;
-      padding: 14px;
+.statusbar {
+  height: 48px;
+  padding: 12px 22px;
 
-      background: rgba(245,245,245,0.78);
-      backdrop-filter: blur(18px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-      color: #111;
-      border-radius: 18px;
-      text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+}
 
-      cursor: pointer;
-    }
+.lock-icon {
+  text-align: center;
+  font-size: 19px;
+  margin-top: 18px;
+}
 
-    .notification-top {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: #555;
-      margin-bottom: 7px;
-    }
+.lock-date {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 24px;
+}
 
-    .app-icon {
-      width: 22px;
-      height: 22px;
-      background: #36c55f;
-      border-radius: 6px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 12px;
-    }
+.lock-time {
+  text-align: center;
+  font-size: 82px;
+  line-height: 1;
+  font-weight: 200;
+  letter-spacing: -5px;
+  margin-top: 5px;
+}
 
-    .sender {
-      font-weight: 700;
-      font-size: 15px;
-      margin-bottom: 3px;
-    }
+/* =========================
+   알림
+========================= */
 
-    .message {
-      font-size: 14px;
-    }
+.notification {
+  width: calc(100% - 28px);
+  max-width: 430px;
 
-    /* 아래 버튼 */
-    .bottom {
-      position: absolute;
-      bottom: 25px;
-      width: 100%;
-    }
+  margin: 45px auto 0;
+  padding: 13px 14px 14px;
 
-    .unlock {
-      font-size: 14px;
-      margin-bottom: 22px;
-      opacity: .9;
-    }
+  color: #111;
+  text-align: left;
 
-    .home-bar {
-      width: 130px;
-      height: 5px;
-      background: white;
-      border-radius: 10px;
-      margin: auto;
-    }
+  background: rgba(245,245,245,.80);
 
-  </style>
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  border-radius: 18px;
+}
+
+.notification-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #666;
+  font-size: 12px;
+
+  margin-bottom: 7px;
+}
+
+.kakao-mini {
+  width: 23px;
+  height: 23px;
+
+  background: #fee500;
+  border-radius: 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 12px;
+}
+
+.notification-name {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.notification-message {
+  font-size: 14px;
+}
+
+.lock-bottom {
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+  text-align: center;
+}
+
+.swipe-text {
+  font-size: 14px;
+  margin-bottom: 22px;
+
+  animation: fade 1.8s infinite;
+}
+
+@keyframes fade {
+  0%,100% { opacity:.55; }
+  50% { opacity:1; }
+}
+
+.home-indicator {
+  width: 135px;
+  height: 5px;
+
+  background: white;
+  border-radius: 10px;
+
+  margin: auto;
+}
+
+/* =========================
+   홈화면
+========================= */
+
+#homescreen {
+  z-index: 1;
+  color: white;
+
+  background:
+    linear-gradient(rgba(0,0,0,.05), rgba(0,0,0,.15)),
+    linear-gradient(155deg, #91b6d4, #c9bad1 55%, #deb6b0);
+}
+
+.home-status {
+  height: 48px;
+  padding: 12px 22px;
+
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.apps {
+  padding: 30px 22px;
+
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+
+  gap: 27px 18px;
+}
+
+.app {
+  text-align: center;
+  cursor: pointer;
+}
+
+.icon {
+  width: 62px;
+  height: 62px;
+
+  margin: auto;
+
+  border-radius: 15px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 29px;
+
+  box-shadow: 0 3px 10px rgba(0,0,0,.12);
+}
+
+.app-name {
+  font-size: 12px;
+  margin-top: 6px;
+
+  text-shadow: 0 1px 3px rgba(0,0,0,.35);
+}
+
+/* 앱 색 */
+
+.kakao {
+  background: #fee500;
+}
+
+.instagram {
+  background:
+    linear-gradient(
+      145deg,
+      #7048ff,
+      #d83a9d,
+      #ff963d
+    );
+}
+
+.photos {
+  background: white;
+}
+
+.messages {
+  background: #4bd663;
+}
+
+.phone {
+  background: #42d15c;
+}
+
+/* =========================
+   Dock
+========================= */
+
+.dock {
+  position: absolute;
+
+  bottom: 18px;
+  left: 12px;
+  right: 12px;
+
+  height: 88px;
+
+  border-radius: 27px;
+
+  background: rgba(255,255,255,.28);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.dock .icon {
+  width: 60px;
+  height: 60px;
+}
+
+.home-bottom {
+  position: absolute;
+
+  bottom: 4px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 135px;
+  height: 5px;
+
+  background: white;
+  border-radius: 10px;
+}
+
+/* =========================
+   PC 화면
+========================= */
+
+@media (min-width:600px) {
+
+  body {
+    background: #151515;
+  }
+
+  .screen {
+    width: 390px;
+    height: 844px;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%,-50%);
+
+    overflow: hidden;
+
+    border-radius: 42px;
+  }
+
+  #lockscreen.unlocked {
+    transform: translate(-50%,-150%);
+  }
+}
+
+</style>
 </head>
 
 <body>
 
-  <div id="lockscreen">
 
-    <div class="status-bar">
-      <span>SKT</span>
-      <span>●●● 100%</span>
-    </div>
+<!-- ======================
+     홈 화면
+======================= -->
 
-    <div class="lock-icon">🔒</div>
+<div id="homescreen" class="screen">
 
-    <div class="date">11월 3일 화요일</div>
+  <div class="home-status">
 
-    <div class="time">23:27</div>
+    <span id="homeClock">
+      00:00
+    </span>
 
-    <div class="notification" onclick="openMessage()">
-
-      <div class="notification-top">
-        <div class="app-icon">💬</div>
-        메시지 · 지금
-      </div>
-
-      <div class="sender">JAKE</div>
-
-      <div class="message">
-        아직 안 자?
-      </div>
-
-    </div>
-
-
-    <div class="bottom">
-
-      <div class="unlock">
-        위로 쓸어올려서 잠금 해제
-      </div>
-
-      <div class="home-bar"></div>
-
-    </div>
+    <span>
+      ●●● 100%
+    </span>
 
   </div>
 
 
-  <script>
+  <div class="apps">
 
-    function openMessage() {
-      alert("다음 단계에서 여기 누르면 메시지 앱으로 들어가게 만들 거야!");
+
+    <!-- 카카오톡 -->
+
+    <div class="app" onclick="openKakao()">
+
+      <div class="icon kakao">
+        💬
+      </div>
+
+      <div class="app-name">
+        카카오톡
+      </div>
+
+    </div>
+
+
+    <!-- Instagram -->
+
+    <div class="app" onclick="openInstagram()">
+
+      <div class="icon instagram">
+        📷
+      </div>
+
+      <div class="app-name">
+        Instagram
+      </div>
+
+    </div>
+
+
+    <!-- 사진 -->
+
+    <div class="app" onclick="openPhotos()">
+
+      <div class="icon photos">
+        🌈
+      </div>
+
+      <div class="app-name">
+        사진
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <!-- 아래 Dock -->
+
+  <div class="dock">
+
+
+    <!-- 전화 -->
+
+    <div class="app" onclick="openPhone()">
+
+      <div class="icon phone">
+        ☎
+      </div>
+
+    </div>
+
+
+    <!-- 메시지 -->
+
+    <div class="app" onclick="openMessages()">
+
+      <div class="icon messages">
+        💬
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <div class="home-bottom"></div>
+
+</div>
+
+
+
+<!-- ======================
+     잠금 화면
+======================= -->
+
+<div id="lockscreen" class="screen">
+
+
+  <div class="statusbar">
+
+    <span>
+      SKT
+    </span>
+
+    <span>
+      ●●● 100%
+    </span>
+
+  </div>
+
+
+  <div class="lock-icon">
+    🔒
+  </div>
+
+
+  <div
+    class="lock-date"
+    id="date">
+
+    11월 3일 화요일
+
+  </div>
+
+
+  <div
+    class="lock-time"
+    id="clock">
+
+    00:00
+
+  </div>
+
+
+
+  <!-- 재윤이에게 온 알림 -->
+
+  <div class="notification">
+
+
+    <div class="notification-header">
+
+      <div class="kakao-mini">
+        💬
+      </div>
+
+      <span>
+        카카오톡
+      </span>
+
+      <span style="margin-left:auto;">
+        지금
+      </span>
+
+    </div>
+
+
+    <div class="notification-name">
+      재윤이
+    </div>
+
+
+    <div class="notification-message">
+      아직 안 자?
+    </div>
+
+
+  </div>
+
+
+
+  <div class="lock-bottom">
+
+
+    <div class="swipe-text">
+      위로 쓸어올려서 잠금 해제
+    </div>
+
+
+    <div class="home-indicator"></div>
+
+
+  </div>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================
+   현재 시간
+========================= */
+
+function updateClock() {
+
+  const now = new Date();
+
+  const hour =
+    String(now.getHours()).padStart(2,"0");
+
+  const minute =
+    String(now.getMinutes()).padStart(2,"0");
+
+
+  const currentTime =
+    hour + ":" + minute;
+
+
+  document.getElementById("clock").textContent =
+    currentTime;
+
+  document.getElementById("homeClock").textContent =
+    currentTime;
+
+
+  const days = [
+    "일요일",
+    "월요일",
+    "화요일",
+    "수요일",
+    "목요일",
+    "금요일",
+    "토요일"
+  ];
+
+
+  document.getElementById("date").textContent =
+    (now.getMonth()+1) +
+    "월 " +
+    now.getDate() +
+    "일 " +
+    days[now.getDay()];
+
+}
+
+
+updateClock();
+
+setInterval(updateClock,1000);
+
+
+
+/* =========================
+   잠금 해제
+========================= */
+
+const lockscreen =
+  document.getElementById("lockscreen");
+
+
+let startY = 0;
+
+
+lockscreen.addEventListener(
+  "touchstart",
+  function(event) {
+
+    startY =
+      event.touches[0].clientY;
+
+  }
+);
+
+
+lockscreen.addEventListener(
+  "touchend",
+  function(event) {
+
+    const endY =
+      event.changedTouches[0].clientY;
+
+
+    if(startY - endY > 50) {
+
+      unlock();
+
     }
 
-  </script>
+  }
+);
+
+
+/* 컴퓨터에서는 클릭 */
+
+lockscreen.addEventListener(
+  "click",
+  function() {
+
+    unlock();
+
+  }
+);
+
+
+function unlock() {
+
+  lockscreen.classList.add(
+    "unlocked"
+  );
+
+}
+
+
+
+/* =========================
+   앱
+========================= */
+
+
+/* 카카오톡 */
+
+function openKakao() {
+
+  alert(
+    "다음 단계에서 재윤이 카카오톡 대화방이 열리게 만들 거야 💬"
+  );
+
+}
+
+
+/* Instagram */
+
+function openInstagram() {
+
+  alert(
+    "여기에 네가 만든 Instagram 게시물들이 들어갈 거야 📷"
+  );
+
+}
+
+
+/* 사진 */
+
+function openPhotos() {
+
+  alert(
+    "여기에 사진첩을 만들 거야 🖼️"
+  );
+
+}
+
+
+/* 전화 */
+
+function openPhone() {
+
+  alert(
+    "여기에 재윤이와의 통화 기록과 전화 이벤트가 들어갈 거야 📞"
+  );
+
+}
+
+
+/* 메시지 */
+
+function openMessages() {
+
+  alert(
+    "여기에 메시지 앱을 만들 거야 💬"
+  );
+
+}
+
+
+</script>
 
 </body>
 </html>
