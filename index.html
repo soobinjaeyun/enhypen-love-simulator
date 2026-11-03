@@ -6,506 +6,857 @@
 <title>Love Simulator</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  -webkit-tap-highlight-color: transparent;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
 }
 
-body {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #111;
-  user-select: none;
+body{
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+  background:#111;
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  user-select:none;
 }
 
-.screen {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
+.phone-screen{
+  position:absolute;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+
+/* =========================
+   공통 상태바
+========================= */
+
+.statusbar{
+  height:48px;
+  padding:12px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:14px;
+  font-weight:600;
 }
 
 /* =========================
    잠금화면
 ========================= */
 
-#lockscreen {
-  z-index: 10;
-  color: white;
-
+#lockscreen{
+  z-index:50;
+  color:white;
   background:
-    linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.18)),
-    linear-gradient(155deg, #91b6d4, #c9bad1 55%, #deb6b0);
+    linear-gradient(rgba(0,0,0,.06),rgba(0,0,0,.17)),
+    linear-gradient(155deg,#91b6d4,#c9bad1 55%,#deb6b0);
 
-  transition:
-    transform .55s cubic-bezier(.4,0,.2,1),
-    opacity .4s;
+  transition:transform .5s ease,opacity .4s;
 }
 
-#lockscreen.unlocked {
-  transform: translateY(-100%);
-  opacity: 0;
-  pointer-events: none;
+#lockscreen.unlocked{
+  transform:translateY(-100%);
+  opacity:0;
+  pointer-events:none;
 }
 
-.statusbar {
-  height: 48px;
-  padding: 12px 22px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  font-size: 14px;
-  font-weight: 600;
+.lock-icon{
+  text-align:center;
+  font-size:19px;
+  margin-top:18px;
 }
 
-.lock-icon {
-  text-align: center;
-  font-size: 19px;
-  margin-top: 18px;
+.lock-date{
+  text-align:center;
+  font-size:20px;
+  margin-top:24px;
 }
 
-.lock-date {
-  text-align: center;
-  font-size: 20px;
-  margin-top: 24px;
+.lock-time{
+  text-align:center;
+  font-size:82px;
+  line-height:1;
+  font-weight:200;
+  letter-spacing:-5px;
+  margin-top:5px;
 }
 
-.lock-time {
-  text-align: center;
-  font-size: 82px;
-  line-height: 1;
-  font-weight: 200;
-  letter-spacing: -5px;
-  margin-top: 5px;
+.notification{
+  width:calc(100% - 28px);
+  max-width:430px;
+  margin:45px auto 0;
+  padding:13px 14px 14px;
+  color:#111;
+  background:rgba(245,245,245,.82);
+  backdrop-filter:blur(20px);
+  border-radius:18px;
 }
 
-/* =========================
-   알림
-========================= */
-
-.notification {
-  width: calc(100% - 28px);
-  max-width: 430px;
-
-  margin: 45px auto 0;
-  padding: 13px 14px 14px;
-
-  color: #111;
-  text-align: left;
-
-  background: rgba(245,245,245,.80);
-
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-
-  border-radius: 18px;
+.notification-top{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:12px;
+  color:#666;
+  margin-bottom:7px;
 }
 
-.notification-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  color: #666;
-  font-size: 12px;
-
-  margin-bottom: 7px;
+.kakao-small{
+  width:23px;
+  height:23px;
+  border-radius:6px;
+  background:#fee500;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.kakao-mini {
-  width: 23px;
-  height: 23px;
-
-  background: #fee500;
-  border-radius: 6px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 12px;
+.notification-name{
+  font-size:15px;
+  font-weight:700;
 }
 
-.notification-name {
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 3px;
+.notification-text{
+  margin-top:3px;
+  font-size:14px;
 }
 
-.notification-message {
-  font-size: 14px;
+.lock-bottom{
+  position:absolute;
+  bottom:10px;
+  width:100%;
+  text-align:center;
 }
 
-.lock-bottom {
-  position: absolute;
-  width: 100%;
-  bottom: 10px;
-  text-align: center;
+.swipe{
+  font-size:14px;
+  margin-bottom:22px;
+  animation:blink 1.8s infinite;
 }
 
-.swipe-text {
-  font-size: 14px;
-  margin-bottom: 22px;
-
-  animation: fade 1.8s infinite;
+@keyframes blink{
+  0%,100%{opacity:.5}
+  50%{opacity:1}
 }
 
-@keyframes fade {
-  0%,100% { opacity:.55; }
-  50% { opacity:1; }
-}
-
-.home-indicator {
-  width: 135px;
-  height: 5px;
-
-  background: white;
-  border-radius: 10px;
-
-  margin: auto;
+.homebar{
+  width:135px;
+  height:5px;
+  border-radius:10px;
+  background:white;
+  margin:auto;
 }
 
 /* =========================
-   홈화면
+   홈 화면
 ========================= */
 
-#homescreen {
-  z-index: 1;
-  color: white;
-
+#home{
+  z-index:1;
+  color:white;
   background:
-    linear-gradient(rgba(0,0,0,.05), rgba(0,0,0,.15)),
-    linear-gradient(155deg, #91b6d4, #c9bad1 55%, #deb6b0);
+    linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.15)),
+    linear-gradient(155deg,#91b6d4,#c9bad1 55%,#deb6b0);
 }
 
-.home-status {
-  height: 48px;
-  padding: 12px 22px;
-
-  display: flex;
-  justify-content: space-between;
-
-  font-size: 14px;
-  font-weight: 600;
+.apps{
+  padding:30px 22px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:27px 18px;
 }
 
-.apps {
-  padding: 30px 22px;
-
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-
-  gap: 27px 18px;
+.app{
+  text-align:center;
+  cursor:pointer;
 }
 
-.app {
-  text-align: center;
-  cursor: pointer;
+.app-icon{
+  width:62px;
+  height:62px;
+  border-radius:15px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  box-shadow:0 3px 10px rgba(0,0,0,.12);
 }
 
-.icon {
-  width: 62px;
-  height: 62px;
-
-  margin: auto;
-
-  border-radius: 15px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  font-size: 29px;
-
-  box-shadow: 0 3px 10px rgba(0,0,0,.12);
+.app-name{
+  margin-top:6px;
+  font-size:12px;
+  text-shadow:0 1px 3px rgba(0,0,0,.35);
 }
 
-.app-name {
-  font-size: 12px;
-  margin-top: 6px;
-
-  text-shadow: 0 1px 3px rgba(0,0,0,.35);
+.kakao-icon{
+  background:#fee500;
+  color:#251c00;
 }
 
-/* 앱 색 */
-
-.kakao {
-  background: #fee500;
+.insta-icon{
+  background:linear-gradient(145deg,#7549ff,#d73c9f,#ff963d);
 }
 
-.instagram {
-  background:
-    linear-gradient(
-      145deg,
-      #7048ff,
-      #d83a9d,
-      #ff963d
-    );
+.photo-icon{
+  background:white;
 }
 
-.photos {
-  background: white;
+.dock{
+  position:absolute;
+  bottom:18px;
+  left:12px;
+  right:12px;
+  height:88px;
+  border-radius:27px;
+  background:rgba(255,255,255,.28);
+  backdrop-filter:blur(20px);
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
 }
 
-.messages {
-  background: #4bd663;
+.phone-icon{
+  background:#42d15c;
 }
 
-.phone {
-  background: #42d15c;
+.message-icon{
+  background:#4bd663;
 }
 
 /* =========================
-   Dock
+   카카오톡 채팅 목록
 ========================= */
 
-.dock {
-  position: absolute;
-
-  bottom: 18px;
-  left: 12px;
-  right: 12px;
-
-  height: 88px;
-
-  border-radius: 27px;
-
-  background: rgba(255,255,255,.28);
-
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+#kakaoList{
+  z-index:10;
+  display:none;
+  background:white;
+  color:#111;
 }
 
-.dock .icon {
-  width: 60px;
-  height: 60px;
+.kakao-header{
+  height:70px;
+  padding:10px 18px 13px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  border-bottom:1px solid #eee;
 }
 
-.home-bottom {
-  position: absolute;
+.kakao-header h1{
+  font-size:23px;
+}
 
-  bottom: 4px;
-  left: 50%;
+.header-buttons{
+  font-size:21px;
+  letter-spacing:8px;
+}
 
-  transform: translateX(-50%);
+.chat-list{
+  padding:5px 0;
+}
 
-  width: 135px;
-  height: 5px;
+.chat-item{
+  display:flex;
+  align-items:center;
+  padding:13px 17px;
+  cursor:pointer;
+}
 
-  background: white;
-  border-radius: 10px;
+.profile{
+  width:53px;
+  height:53px;
+  border-radius:19px;
+  object-fit:cover;
+  flex-shrink:0;
+  background:#ddd;
+}
+
+.chat-info{
+  min-width:0;
+  flex:1;
+  margin-left:12px;
+}
+
+.chat-name{
+  font-size:16px;
+  font-weight:600;
+  margin-bottom:5px;
+}
+
+.chat-preview{
+  font-size:13px;
+  color:#777;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.chat-meta{
+  text-align:right;
+  margin-left:10px;
+}
+
+.chat-time{
+  font-size:11px;
+  color:#999;
 }
 
 /* =========================
-   PC 화면
+   재윤이 대화방
 ========================= */
 
-@media (min-width:600px) {
+#chatRoom{
+  z-index:20;
+  display:none;
+  background:#b2c7d9;
+  color:#111;
+}
 
-  body {
-    background: #151515;
+.room-header{
+  height:64px;
+  background:#b2c7d9;
+  padding:8px 14px 10px;
+  display:flex;
+  align-items:flex-end;
+}
+
+.back{
+  font-size:30px;
+  font-weight:300;
+  width:42px;
+  cursor:pointer;
+}
+
+.room-profile{
+  width:35px;
+  height:35px;
+  border-radius:13px;
+  object-fit:cover;
+  margin-right:9px;
+}
+
+.room-name{
+  font-size:16px;
+  font-weight:600;
+  padding-bottom:7px;
+}
+
+.room-menu{
+  margin-left:auto;
+  font-size:22px;
+  padding-bottom:5px;
+}
+
+.messages{
+  height:calc(100% - 64px);
+  overflow-y:auto;
+  padding:14px 12px 145px;
+  -webkit-overflow-scrolling:touch;
+}
+
+.day{
+  text-align:center;
+  margin:8px 0 18px;
+}
+
+.day span{
+  display:inline-block;
+  background:rgba(0,0,0,.12);
+  color:white;
+  padding:5px 12px;
+  border-radius:14px;
+  font-size:11px;
+}
+
+.message-row{
+  display:flex;
+  margin-bottom:8px;
+}
+
+.message-row.them{
+  align-items:flex-start;
+}
+
+.message-row.me{
+  justify-content:flex-end;
+}
+
+.message-profile{
+  width:37px;
+  height:37px;
+  border-radius:14px;
+  object-fit:cover;
+  margin-right:7px;
+}
+
+.message-content{
+  max-width:72%;
+}
+
+.message-sender{
+  font-size:12px;
+  margin-bottom:5px;
+}
+
+.bubble-line{
+  display:flex;
+  align-items:flex-end;
+  gap:5px;
+}
+
+.me .bubble-line{
+  flex-direction:row-reverse;
+}
+
+.bubble{
+  padding:9px 11px;
+  border-radius:4px 12px 12px 12px;
+  font-size:14px;
+  line-height:1.4;
+  word-break:keep-all;
+}
+
+.them .bubble{
+  background:white;
+}
+
+.me .bubble{
+  background:#fee500;
+  border-radius:12px 4px 12px 12px;
+}
+
+.bubble-time{
+  font-size:9px;
+  color:#555;
+  white-space:nowrap;
+}
+
+/* =========================
+   선택지
+========================= */
+
+#choices{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  padding:10px 10px 20px;
+  background:rgba(255,255,255,.96);
+  border-top:1px solid rgba(0,0,0,.08);
+}
+
+.choice-title{
+  font-size:11px;
+  color:#888;
+  text-align:center;
+  margin-bottom:7px;
+}
+
+.choice{
+  width:100%;
+  border:none;
+  background:white;
+  border:1px solid #ddd;
+  border-radius:18px;
+  padding:9px 10px;
+  margin:3px 0;
+  font-size:13px;
+  cursor:pointer;
+}
+
+/* =========================
+   임시 앱 화면
+========================= */
+
+#placeholder{
+  z-index:30;
+  display:none;
+  background:#f7f7f7;
+}
+
+.placeholder-header{
+  height:60px;
+  display:flex;
+  align-items:flex-end;
+  padding:0 17px 12px;
+  background:white;
+  border-bottom:1px solid #eee;
+}
+
+.placeholder-back{
+  font-size:28px;
+  margin-right:15px;
+  cursor:pointer;
+}
+
+.placeholder-content{
+  text-align:center;
+  padding-top:150px;
+  color:#777;
+}
+
+/* =========================
+   PC에서 아이폰 크기
+========================= */
+
+@media(min-width:600px){
+
+  .phone-screen{
+    width:390px;
+    height:844px;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    border-radius:42px;
   }
 
-  .screen {
-    width: 390px;
-    height: 844px;
-
-    top: 50%;
-    left: 50%;
-
-    transform: translate(-50%,-50%);
-
-    overflow: hidden;
-
-    border-radius: 42px;
-  }
-
-  #lockscreen.unlocked {
-    transform: translate(-50%,-150%);
+  #lockscreen.unlocked{
+    transform:translate(-50%,-150%);
   }
 }
-
 </style>
 </head>
 
 <body>
 
+<!-- 홈 -->
+<div id="home" class="phone-screen">
 
-<!-- ======================
-     홈 화면
-======================= -->
-
-<div id="homescreen" class="screen">
-
-  <div class="home-status">
-
-    <span id="homeClock">
-      00:00
-    </span>
-
-    <span>
-      ●●● 100%
-    </span>
-
+  <div class="statusbar">
+    <span id="homeClock">00:00</span>
+    <span>●●● 100%</span>
   </div>
-
 
   <div class="apps">
 
-
-    <!-- 카카오톡 -->
-
     <div class="app" onclick="openKakao()">
-
-      <div class="icon kakao">
-        💬
-      </div>
-
-      <div class="app-name">
-        카카오톡
-      </div>
-
+      <div class="app-icon kakao-icon">💬</div>
+      <div class="app-name">카카오톡</div>
     </div>
 
-
-    <!-- Instagram -->
-
-    <div class="app" onclick="openInstagram()">
-
-      <div class="icon instagram">
-        📷
-      </div>
-
-      <div class="app-name">
-        Instagram
-      </div>
-
+    <div class="app" onclick="openPlaceholder('Instagram')">
+      <div class="app-icon insta-icon">📷</div>
+      <div class="app-name">Instagram</div>
     </div>
 
-
-    <!-- 사진 -->
-
-    <div class="app" onclick="openPhotos()">
-
-      <div class="icon photos">
-        🌈
-      </div>
-
-      <div class="app-name">
-        사진
-      </div>
-
+    <div class="app" onclick="openPlaceholder('사진')">
+      <div class="app-icon photo-icon">🌈</div>
+      <div class="app-name">사진</div>
     </div>
-
 
   </div>
-
-
-  <!-- 아래 Dock -->
 
   <div class="dock">
 
-
-    <!-- 전화 -->
-
-    <div class="app" onclick="openPhone()">
-
-      <div class="icon phone">
-        ☎
-      </div>
-
+    <div class="app" onclick="openPlaceholder('전화')">
+      <div class="app-icon phone-icon">☎</div>
     </div>
 
-
-    <!-- 메시지 -->
-
-    <div class="app" onclick="openMessages()">
-
-      <div class="icon messages">
-        💬
-      </div>
-
+    <div class="app" onclick="openPlaceholder('메시지')">
+      <div class="app-icon message-icon">💬</div>
     </div>
-
 
   </div>
-
-
-  <div class="home-bottom"></div>
 
 </div>
 
-
-
-<!-- ======================
-     잠금 화면
-======================= -->
-
-<div id="lockscreen" class="screen">
-
+<!-- 카카오톡 채팅목록 -->
+<div id="kakaoList" class="phone-screen">
 
   <div class="statusbar">
+    <span id="kakaoClock">00:00</span>
+    <span>●●● 100%</span>
+  </div>
 
-    <span>
-      SKT
-    </span>
+  <div class="kakao-header">
+    <h1>채팅</h1>
 
-    <span>
-      ●●● 100%
-    </span>
+    <div>
+      <span onclick="goHome()" style="cursor:pointer;">⌂</span>
+    </div>
+  </div>
+
+  <div class="chat-list">
+
+    <div class="chat-item" onclick="openChat()">
+
+      <img src="jaeyoon.jpg" class="profile">
+
+      <div class="chat-info">
+        <div class="chat-name">재윤이</div>
+        <div class="chat-preview" id="preview">
+          아직 안 자?
+        </div>
+      </div>
+
+      <div class="chat-meta">
+        <div class="chat-time">오후 11:42</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- 재윤이 채팅방 -->
+<div id="chatRoom" class="phone-screen">
+
+  <div class="room-header">
+
+    <div class="back" onclick="backToKakao()">‹</div>
+
+    <img src="jaeyoon.jpg" class="room-profile">
+
+    <div class="room-name">
+      재윤이
+    </div>
+
+    <div class="room-menu">
+      ☰
+    </div>
+
+  </div>
+
+  <div class="messages" id="messageArea">
+
+    <div class="day">
+      <span>2026년 11월 2일 월요일</span>
+    </div>
+
+    <div class="message-row them">
+
+      <img src="jaeyoon.jpg" class="message-profile">
+
+      <div class="message-content">
+
+        <div class="message-sender">
+          재윤이
+        </div>
+
+        <div class="bubble-line">
+          <div class="bubble">
+            집 도착했어?
+          </div>
+          <div class="bubble-time">오후 10:48</div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="message-row me">
+
+      <div class="message-content">
+
+        <div class="bubble-line">
+          <div class="bubble">
+            응 방금
+          </div>
+          <div class="bubble-time">오후 10:49</div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="message-row them">
+
+      <img src="jaeyoon.jpg" class="message-profile">
+
+      <div class="message-content">
+
+        <div class="message-sender">
+          재윤이
+        </div>
+
+        <div class="bubble-line">
+          <div class="bubble">
+            오늘 왜 그냥 갔어
+          </div>
+          <div class="bubble-time">오후 10:50</div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="message-row me">
+
+      <div class="message-content">
+
+        <div class="bubble-line">
+          <div class="bubble">
+            너 친구들이랑 얘기하고 있었잖아
+          </div>
+          <div class="bubble-time">오후 10:51</div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="message-row them">
+
+      <img src="jaeyoon.jpg" class="message-profile">
+
+      <div class="message-content">
+
+        <div class="message-sender">
+          재윤이
+        </div>
+
+        <div class="bubble-line">
+          <div class="bubble">
+            그래도 말은 하고 가지
+          </div>
+          <div class="bubble-time">오후 10:52</div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="message-row them">
+
+      <img src="jaeyoon.jpg" class="message-profile">
+
+      <div class="message-content">
+
+        <div class="message-sender">
+          재윤이
+        </div>
+
+        <div class="bubble-line">
+          <div class="bubble">
+            기다렸는데
+          </div>
+          <div class="bubble-time">오후 10:52</div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="day">
+      <span>오늘</span>
+    </div>
+
+
+    <div class="message-row them">
+
+      <img src="jaeyoon.jpg" class="message-profile">
+
+      <div class="message-content">
+
+        <div class="message-sender">
+          재윤이
+        </div>
+
+        <div class="bubble-line">
+          <div class="bubble">
+            아직 안 자?
+          </div>
+          <div class="bubble-time">오후 11:42</div>
+        </div>
+
+      </div>
+
+    </div>
 
   </div>
 
 
-  <div class="lock-icon">
-    🔒
+  <div id="choices">
+
+    <div class="choice-title">
+      답장을 선택하세요
+    </div>
+
+    <button
+      class="choice"
+      onclick="chooseReply(1)">
+      응 왜 ㅋㅋ
+    </button>
+
+    <button
+      class="choice"
+      onclick="chooseReply(2)">
+      자려고 했는데
+    </button>
+
+    <button
+      class="choice"
+      onclick="chooseReply(3)">
+      너 연락 기다리고 있었는데
+    </button>
+
   </div>
 
+</div>
 
-  <div
-    class="lock-date"
-    id="date">
+<!-- 다른 앱 임시 화면 -->
+<div id="placeholder" class="phone-screen">
 
-    11월 3일 화요일
+  <div class="statusbar">
+    <span id="placeholderClock">00:00</span>
+    <span>●●● 100%</span>
+  </div>
+
+  <div class="placeholder-header">
+
+    <div class="placeholder-back" onclick="closePlaceholder()">
+      ‹
+    </div>
+
+    <strong id="placeholderTitle">
+      앱
+    </strong>
 
   </div>
 
+  <div class="placeholder-content">
+    이 앱은 다음에 만들 거야 :)
+  </div>
 
-  <div
-    class="lock-time"
-    id="clock">
+</div>
 
+<!-- 잠금화면 -->
+<div id="lockscreen" class="phone-screen">
+
+  <div class="statusbar">
+    <span>SKT</span>
+    <span>●●● 100%</span>
+  </div>
+
+  <div class="lock-icon">🔒</div>
+
+  <div class="lock-date" id="date"></div>
+
+  <div class="lock-time" id="clock">
     00:00
-
   </div>
-
-
-
-  <!-- 재윤이에게 온 알림 -->
 
   <div class="notification">
 
+    <div class="notification-top">
 
-    <div class="notification-header">
-
-      <div class="kakao-mini">
+      <div class="kakao-small">
         💬
       </div>
 
-      <span>
-        카카오톡
-      </span>
+      <span>카카오톡</span>
 
       <span style="margin-left:auto;">
         지금
@@ -513,66 +864,50 @@ body {
 
     </div>
 
-
     <div class="notification-name">
       재윤이
     </div>
 
-
-    <div class="notification-message">
+    <div class="notification-text">
       아직 안 자?
     </div>
 
-
   </div>
-
-
 
   <div class="lock-bottom">
 
-
-    <div class="swipe-text">
+    <div class="swipe">
       위로 쓸어올려서 잠금 해제
     </div>
 
-
-    <div class="home-indicator"></div>
-
+    <div class="homebar"></div>
 
   </div>
 
-
 </div>
-
-
 
 <script>
 
 /* =========================
-   현재 시간
+   시간
 ========================= */
 
-function updateClock() {
+function updateClock(){
 
   const now = new Date();
 
-  const hour =
+  const h =
     String(now.getHours()).padStart(2,"0");
 
-  const minute =
+  const m =
     String(now.getMinutes()).padStart(2,"0");
 
+  const time = h + ":" + m;
 
-  const currentTime =
-    hour + ":" + minute;
-
-
-  document.getElementById("clock").textContent =
-    currentTime;
-
-  document.getElementById("homeClock").textContent =
-    currentTime;
-
+  document.getElementById("clock").textContent = time;
+  document.getElementById("homeClock").textContent = time;
+  document.getElementById("kakaoClock").textContent = time;
+  document.getElementById("placeholderClock").textContent = time;
 
   const days = [
     "일요일",
@@ -584,144 +919,296 @@ function updateClock() {
     "토요일"
   ];
 
-
   document.getElementById("date").textContent =
     (now.getMonth()+1) +
     "월 " +
     now.getDate() +
     "일 " +
     days[now.getDay()];
-
 }
 
-
 updateClock();
-
 setInterval(updateClock,1000);
 
 
-
 /* =========================
-   잠금 해제
+   잠금해제
 ========================= */
 
 const lockscreen =
   document.getElementById("lockscreen");
 
-
 let startY = 0;
-
 
 lockscreen.addEventListener(
   "touchstart",
-  function(event) {
-
-    startY =
-      event.touches[0].clientY;
-
+  function(e){
+    startY = e.touches[0].clientY;
   }
 );
-
 
 lockscreen.addEventListener(
   "touchend",
-  function(event) {
+  function(e){
 
     const endY =
-      event.changedTouches[0].clientY;
+      e.changedTouches[0].clientY;
 
-
-    if(startY - endY > 50) {
-
+    if(startY-endY>50){
       unlock();
-
     }
-
   }
 );
-
-
-/* 컴퓨터에서는 클릭 */
 
 lockscreen.addEventListener(
   "click",
-  function() {
-
-    unlock();
-
-  }
+  unlock
 );
 
-
-function unlock() {
-
-  lockscreen.classList.add(
-    "unlocked"
-  );
-
+function unlock(){
+  lockscreen.classList.add("unlocked");
 }
-
 
 
 /* =========================
-   앱
+   화면 이동
 ========================= */
 
+function openKakao(){
 
-/* 카카오톡 */
+  document.getElementById("kakaoList").style.display =
+    "block";
+}
 
-function openKakao() {
+function goHome(){
 
-  alert(
-    "다음 단계에서 재윤이 카카오톡 대화방이 열리게 만들 거야 💬"
-  );
+  document.getElementById("kakaoList").style.display =
+    "none";
+}
+
+function openChat(){
+
+  document.getElementById("chatRoom").style.display =
+    "block";
+
+  scrollBottom();
+}
+
+function backToKakao(){
+
+  document.getElementById("chatRoom").style.display =
+    "none";
+}
+
+function openPlaceholder(name){
+
+  document.getElementById("placeholderTitle").textContent =
+    name;
+
+  document.getElementById("placeholder").style.display =
+    "block";
+}
+
+function closePlaceholder(){
+
+  document.getElementById("placeholder").style.display =
+    "none";
+}
+
+
+/* =========================
+   메시지 생성
+========================= */
+
+function addMyMessage(text){
+
+  const area =
+    document.getElementById("messageArea");
+
+  const row =
+    document.createElement("div");
+
+  row.className =
+    "message-row me";
+
+  row.innerHTML = `
+    <div class="message-content">
+      <div class="bubble-line">
+        <div class="bubble">${text}</div>
+        <div class="bubble-time">지금</div>
+      </div>
+    </div>
+  `;
+
+  area.appendChild(row);
+
+  document.getElementById("preview").textContent =
+    text;
+
+  scrollBottom();
+}
+
+
+function addJaeyoonMessage(text){
+
+  const area =
+    document.getElementById("messageArea");
+
+  const row =
+    document.createElement("div");
+
+  row.className =
+    "message-row them";
+
+  row.innerHTML = `
+    <img
+      src="jaeyoon.jpg"
+      class="message-profile">
+
+    <div class="message-content">
+
+      <div class="message-sender">
+        재윤이
+      </div>
+
+      <div class="bubble-line">
+
+        <div class="bubble">
+          ${text}
+        </div>
+
+        <div class="bubble-time">
+          지금
+        </div>
+
+      </div>
+
+    </div>
+  `;
+
+  area.appendChild(row);
+
+  document.getElementById("preview").textContent =
+    text;
+
+  scrollBottom();
+}
+
+
+/* =========================
+   첫 선택
+========================= */
+
+let routeScore = 0;
+
+function chooseReply(number){
+
+  const choices =
+    document.getElementById("choices");
+
+  choices.style.display =
+    "none";
+
+
+  if(number === 1){
+
+    addMyMessage(
+      "응 왜 ㅋㅋ"
+    );
+
+    routeScore += 1;
+
+    setTimeout(function(){
+
+      addJaeyoonMessage(
+        "그냥"
+      );
+
+      setTimeout(function(){
+
+        addJaeyoonMessage(
+          "너 안 자고 있을 것 같아서"
+        );
+
+      },700);
+
+    },900);
+
+  }
+
+
+  if(number === 2){
+
+    addMyMessage(
+      "자려고 했는데"
+    );
+
+    routeScore -= 1;
+
+    setTimeout(function(){
+
+      addJaeyoonMessage(
+        "아 그래?"
+      );
+
+      setTimeout(function(){
+
+        addJaeyoonMessage(
+          "그럼 자야지"
+        );
+
+      },800);
+
+    },900);
+
+  }
+
+
+  if(number === 3){
+
+    addMyMessage(
+      "너 연락 기다리고 있었는데"
+    );
+
+    routeScore += 2;
+
+    setTimeout(function(){
+
+      addJaeyoonMessage(
+        "진짜?"
+      );
+
+      setTimeout(function(){
+
+        addJaeyoonMessage(
+          "그런 말 아무렇지도 않게 하지 마 ㅋㅋ"
+        );
+
+      },850);
+
+    },900);
+
+  }
 
 }
 
 
-/* Instagram */
+/* =========================
+   스크롤
+========================= */
 
-function openInstagram() {
+function scrollBottom(){
 
-  alert(
-    "여기에 네가 만든 Instagram 게시물들이 들어갈 거야 📷"
-  );
+  setTimeout(function(){
 
+    const area =
+      document.getElementById("messageArea");
+
+    area.scrollTop =
+      area.scrollHeight;
+
+  },50);
 }
-
-
-/* 사진 */
-
-function openPhotos() {
-
-  alert(
-    "여기에 사진첩을 만들 거야 🖼️"
-  );
-
-}
-
-
-/* 전화 */
-
-function openPhone() {
-
-  alert(
-    "여기에 재윤이와의 통화 기록과 전화 이벤트가 들어갈 거야 📞"
-  );
-
-}
-
-
-/* 메시지 */
-
-function openMessages() {
-
-  alert(
-    "여기에 메시지 앱을 만들 거야 💬"
-  );
-
-}
-
 
 </script>
 
