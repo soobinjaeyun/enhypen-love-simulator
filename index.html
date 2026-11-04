@@ -12,22 +12,16 @@
   padding:0;
   -webkit-tap-highlight-color:transparent;
 }
-
 html,body{
   width:100%;
   height:100%;
   overflow:hidden;
 }
-
 body{
   background:#111;
   font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;
 }
-
-button,input{
-  font-family:inherit;
-}
-
+button,input{font-family:inherit}
 .screen{
   position:absolute;
   inset:0;
@@ -35,9 +29,9 @@ button,input{
   height:100%;
   overflow:hidden;
 }
-
 .status{
   height:45px;
+  flex-shrink:0;
   padding:12px 20px 0;
   display:flex;
   justify-content:space-between;
@@ -45,567 +39,599 @@ button,input{
   font-weight:600;
 }
 
-/* ========================================
+/* ==============================
    이름 설정
-======================================== */
+============================== */
 
-#nameSetup{
+#setup{
   z-index:500;
   background:#fff;
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   padding:30px;
 }
-
-.nameBox{
+.setupBox{
   width:100%;
   max-width:330px;
   text-align:center;
   transform:translateY(-25px);
 }
-
-.nameTitle{
+.setupTitle{
   font-size:25px;
   font-weight:700;
-  color:#111;
   margin-bottom:10px;
 }
-
-.nameDescription{
-  font-size:14px;
+.setupDesc{
   color:#777;
-  margin-bottom:32px;
+  font-size:14px;
+  margin-bottom:30px;
 }
-
 #nameInput{
   width:100%;
   height:52px;
-  padding:0 16px;
-
   border:1px solid #ddd;
   border-radius:15px;
-
   background:#f8f8f8;
+  padding:0 16px;
   outline:none;
-
-  font-size:17px;
   text-align:center;
+  font-size:17px;
 }
-
-#nameInput:focus{
-  background:white;
-  border-color:#aaa;
-}
-
-.startButton{
+.startBtn{
   width:100%;
   height:52px;
   margin-top:12px;
-
   border:0;
   border-radius:15px;
-
   background:#111;
-  color:white;
-
+  color:#fff;
   font-size:16px;
   font-weight:600;
-
   cursor:pointer;
 }
 
-/* ========================================
+/* ==============================
    잠금화면
-======================================== */
+============================== */
 
-#lockScreen{
+#lock{
   z-index:100;
   color:white;
-
   background:
-    linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.15)),
+    linear-gradient(rgba(0,0,0,.04),rgba(0,0,0,.14)),
     linear-gradient(150deg,#91b6d4,#c9bad1,#dfb7b1);
 }
-
 .lockIcon{
   text-align:center;
   margin-top:20px;
 }
-
 .lockDate{
   text-align:center;
   margin-top:25px;
   font-size:19px;
 }
-
 .lockTime{
   text-align:center;
   font-size:78px;
   font-weight:200;
   letter-spacing:-5px;
 }
-
-/* 처음에는 안 보임 */
-
-.notification{
+#notification{
   margin:45px 14px;
   padding:13px;
-
   border-radius:18px;
-
-  background:rgba(245,245,245,.86);
+  background:rgba(245,245,245,.87);
   backdrop-filter:blur(18px);
   -webkit-backdrop-filter:blur(18px);
-
   color:#111;
-
   opacity:0;
-  transform:translateY(-22px) scale(.98);
-
-  transition:
-    opacity .35s ease,
-    transform .4s cubic-bezier(.2,.8,.2,1);
-
-  pointer-events:none;
+  transform:translateY(-22px);
+  transition:.4s ease;
+  cursor:pointer;
 }
-
-.notification.show{
+#notification.show{
   opacity:1;
-  transform:translateY(0) scale(1);
-  pointer-events:auto;
+  transform:translateY(0);
 }
-
-.notificationTop{
+.notTop{
   display:flex;
   align-items:center;
-  margin-bottom:8px;
   color:#666;
   font-size:12px;
+  margin-bottom:7px;
 }
-
 .kakaoMini{
   width:23px;
   height:23px;
   margin-right:7px;
-
   border-radius:6px;
   background:#fee500;
-
   display:flex;
-  align-items:center;
   justify-content:center;
-
-  color:#111;
+  align-items:center;
 }
-
-.notificationName{
+.notName{
   font-size:15px;
   font-weight:600;
 }
-
-.notificationMessage{
+.notMessage{
   margin-top:3px;
   font-size:14px;
 }
-
 .unlockText{
   position:absolute;
   left:0;
   right:0;
   bottom:30px;
-
   text-align:center;
   font-size:13px;
-  opacity:.9;
 }
 
-/* ========================================
+/* ==============================
    홈
-======================================== */
+============================== */
 
-#homeScreen{
+#home{
   z-index:1;
   color:white;
-
   background:
     linear-gradient(rgba(0,0,0,.04),rgba(0,0,0,.14)),
     linear-gradient(150deg,#91b6d4,#c9bad1,#dfb7b1);
 }
-
 .apps{
   padding:35px 22px;
-
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:25px 15px;
 }
-
 .app{
   text-align:center;
   cursor:pointer;
 }
-
 .appIcon{
   width:61px;
   height:61px;
   margin:auto;
-
   border-radius:15px;
-
   display:flex;
-  align-items:center;
   justify-content:center;
-
+  align-items:center;
   font-size:27px;
 }
-
-.kakaoIcon{
-  background:#fee500;
-  color:#111;
+.kakaoIcon{background:#fee500;color:#111}
+.instagramIcon{
+  background:linear-gradient(145deg,#7048ff,#db3d99,#ff963d);
 }
-
+.photoIcon{background:white}
+.greenIcon{background:#34c759}
 .appName{
   margin-top:6px;
   font-size:11px;
   text-shadow:0 1px 3px rgba(0,0,0,.4);
 }
-
-/* ========================================
-   카톡 목록
-======================================== */
-
-#kakaoScreen{
-  display:none;
-  z-index:10;
-  background:white;
+.dock{
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:17px;
+  height:87px;
+  border-radius:27px;
+  background:rgba(255,255,255,.29);
+  backdrop-filter:blur(22px);
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
 }
 
-.kakaoHeader{
-  height:65px;
-  padding:20px 18px 10px;
+/* ==============================
+   카톡 목록
+============================== */
 
+#kakao{
+  display:none;
+  z-index:10;
+  background:#fff;
+}
+.kakaoHeader{
+  height:64px;
+  padding:18px 18px 10px;
   display:flex;
   align-items:flex-end;
 }
-
-.kakaoHeader h1{
-  font-size:23px;
-}
-
-.homeButton{
+.kakaoHeader h1{font-size:23px}
+.homeBtn{
   margin-left:auto;
   cursor:pointer;
   font-size:14px;
 }
-
 .chatItem{
   display:flex;
   align-items:center;
-
   padding:12px 16px;
-
   cursor:pointer;
 }
-
 .profile{
   width:55px;
   height:55px;
-
   border-radius:20px;
   object-fit:cover;
-
   background:#ddd;
 }
-
 .listText{
   flex:1;
   min-width:0;
   margin-left:12px;
 }
-
 .chatName{
   font-size:16px;
   font-weight:600;
 }
-
-.chatPreview{
+.preview{
   margin-top:5px;
-
   color:#888;
   font-size:13px;
-
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
 
-/* ========================================
+/* ==============================
    채팅방
-======================================== */
+============================== */
 
-#chatRoom{
+#room{
   display:none;
-
   z-index:20;
-
   background:#b2c7d9;
-
   flex-direction:column;
 }
-
-#chatRoom.show{
-  display:flex;
-}
-
+#room.show{display:flex}
 .roomHeader{
-  height:58px;
+  height:56px;
   flex-shrink:0;
-
   padding:5px 14px;
-
   display:flex;
   align-items:center;
 }
-
-.backButton{
+.back{
   width:40px;
   font-size:34px;
   cursor:pointer;
 }
-
 .roomName{
   font-size:17px;
   font-weight:600;
 }
-
 .roomTools{
   margin-left:auto;
   font-size:20px;
 }
-
-/* ========================================
-   메시지
-======================================== */
-
 #messages{
   flex:1;
   min-height:0;
-
   overflow-y:auto;
-
-  padding:10px 12px 15px;
-
+  padding:10px 12px 16px;
   -webkit-overflow-scrolling:touch;
 }
-
 .dateDivider{
   margin:10px 0 20px;
   text-align:center;
 }
-
 .dateDivider span{
+  display:inline-block;
   padding:5px 12px;
-
   border-radius:15px;
-
   background:rgba(0,0,0,.12);
-
-  color:white;
+  color:#fff;
   font-size:11px;
 }
-
 .them{
   display:flex;
   align-items:flex-start;
   margin-bottom:10px;
 }
-
 .them img{
   width:39px;
   height:39px;
-
   margin-right:7px;
-
   border-radius:14px;
-
   object-fit:cover;
 }
-
-.themContent{
-  max-width:75%;
-}
-
+.themContent{max-width:75%}
 .sender{
   margin-bottom:5px;
   font-size:12px;
 }
-
 .messageLine{
   display:flex;
   align-items:flex-end;
 }
-
-.themBubble{
+.themBubble,
+.meBubble{
+  max-width:245px;
   padding:8px 10px;
-
-  border-radius:3px 10px 10px 10px;
-
-  background:white;
-
   font-size:14px;
-  line-height:1.4;
+  line-height:1.42;
+  word-break:keep-all;
 }
-
+.themBubble{
+  background:#fff;
+  border-radius:3px 10px 10px 10px;
+}
 .me{
   display:flex;
   justify-content:flex-end;
   align-items:flex-end;
-
   margin:6px 0;
 }
-
 .meBubble{
-  max-width:75%;
-
-  padding:8px 10px;
-
-  border-radius:10px 3px 10px 10px;
-
   background:#fee500;
-
-  font-size:14px;
-  line-height:1.4;
+  border-radius:10px 3px 10px 10px;
 }
-
-.messageTime{
+.msgTime{
   margin:0 5px 1px;
-
   color:#59656d;
-
   font-size:9px;
   white-space:nowrap;
 }
 
-/* ========================================
-   메시지 입력
-======================================== */
+/* ==============================
+   입력창
+============================== */
 
 .composer{
   min-height:64px;
   flex-shrink:0;
-
   padding:8px 9px max(12px,env(safe-area-inset-bottom));
-
-  background:white;
-
+  background:#fff;
   display:flex;
   align-items:center;
   gap:8px;
+  position:relative;
+  z-index:30;
 }
-
 .plus{
   width:31px;
   height:31px;
   flex-shrink:0;
-
   border:1px solid #aaa;
   border-radius:50%;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   color:#777;
   font-size:22px;
 }
-
 .fakeInput{
   flex:1;
   height:39px;
-
   padding:9px 13px;
-
   border:1px solid #ddd;
   border-radius:20px;
-
-  background:white;
-
   color:#aaa;
   font-size:14px;
-
   cursor:pointer;
 }
+.fakeInput.waiting{
+  background:#f5f5f5;
+  color:#bbb;
+}
 
-/* ========================================
+/* ==============================
    선택지
-======================================== */
+============================== */
 
 #choiceOverlay{
   display:none;
-
   position:absolute;
   inset:0;
-
-  z-index:50;
-
+  z-index:80;
   background:rgba(0,0,0,.25);
 }
-
 .choicePanel{
   position:absolute;
   left:0;
   right:0;
   bottom:0;
-
-  padding:15px 12px max(28px,env(safe-area-inset-bottom));
-
+  padding:14px 12px max(28px,env(safe-area-inset-bottom));
   border-radius:20px 20px 0 0;
-
   background:#f5f5f5;
 }
-
 .choiceTitle{
-  margin-bottom:10px;
-
+  margin-bottom:9px;
   text-align:center;
-
   color:#888;
   font-size:12px;
 }
-
-.choice{
-  display:block;
-
+.choiceBtn{
   width:100%;
-
   margin-bottom:8px;
   padding:14px 10px;
-
   border:0;
   border-radius:12px;
-
-  background:white;
+  background:#fff;
   color:#111;
-
   font-size:14px;
-
   cursor:pointer;
 }
 
-/* PC */
+/* ==============================
+   전화 수신
+============================== */
+
+#incomingCall{
+  display:none;
+  z-index:200;
+  color:white;
+  background:#222;
+}
+.callBg{
+  position:absolute;
+  inset:-25px;
+  background:
+    linear-gradient(rgba(15,15,15,.48),rgba(15,15,15,.72)),
+    url("jaeyoon.jpg") center/cover;
+  filter:blur(20px);
+  transform:scale(1.12);
+}
+.callShade{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.18);
+}
+.callContent{
+  position:relative;
+  z-index:2;
+  height:100%;
+  padding-top:90px;
+  text-align:center;
+}
+.callPhoto{
+  width:108px;
+  height:108px;
+  border-radius:50%;
+  object-fit:cover;
+}
+.callName{
+  margin-top:18px;
+  font-size:31px;
+  font-weight:500;
+}
+.callSub{
+  margin-top:7px;
+  color:#ddd;
+  font-size:15px;
+}
+.callButtons{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:75px;
+  display:flex;
+  justify-content:space-around;
+}
+.callGroup{font-size:13px}
+.callRound{
+  width:68px;
+  height:68px;
+  margin-bottom:9px;
+  border:0;
+  border-radius:50%;
+  color:white;
+  font-size:27px;
+  cursor:pointer;
+}
+.reject{background:#ff3b30}
+.answer{background:#34c759}
+
+/* ==============================
+   통화 중
+============================== */
+
+#activeCall{
+  display:none;
+  z-index:210;
+  color:white;
+  background:#222;
+}
+.activeBg{
+  position:absolute;
+  inset:-25px;
+  background:
+    linear-gradient(rgba(15,15,15,.55),rgba(15,15,15,.78)),
+    url("jaeyoon.jpg") center/cover;
+  filter:blur(20px);
+  transform:scale(1.12);
+}
+.activeShade{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.22);
+}
+.activeContent{
+  position:relative;
+  z-index:2;
+  height:100%;
+  padding-top:80px;
+  text-align:center;
+}
+.activeName{font-size:29px}
+#callTimer{
+  margin-top:8px;
+  color:#ddd;
+  font-size:14px;
+}
+#callDialogue{
+  margin:70px 25px 0;
+  min-height:72px;
+  padding:17px;
+  border-radius:17px;
+  background:rgba(0,0,0,.28);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:16px;
+  line-height:1.5;
+}
+#callChoices{
+  position:absolute;
+  left:15px;
+  right:15px;
+  bottom:125px;
+}
+.callChoice{
+  width:100%;
+  margin:4px 0;
+  padding:12px;
+  border:0;
+  border-radius:18px;
+  background:rgba(255,255,255,.92);
+  color:#111;
+  font-size:13px;
+}
+.endCall{
+  position:absolute;
+  left:50%;
+  bottom:38px;
+  transform:translateX(-50%);
+  width:68px;
+  height:68px;
+  border:0;
+  border-radius:50%;
+  background:#ff3b30;
+  color:white;
+  font-size:27px;
+}
+
+/* 다른 앱 */
+
+#other{
+  display:none;
+  z-index:30;
+  background:#f7f7f7;
+}
+.otherHeader{
+  height:62px;
+  padding:0 18px 13px;
+  background:white;
+  border-bottom:1px solid #eee;
+  display:flex;
+  align-items:flex-end;
+}
+.otherBody{
+  padding-top:180px;
+  text-align:center;
+  color:#999;
+}
 
 @media(min-width:600px){
-
   .screen{
     width:390px;
     height:844px;
-
     top:50%;
     left:50%;
-
     transform:translate(-50%,-50%);
-
     border-radius:42px;
   }
 }
@@ -614,1158 +640,957 @@ button,input{
 
 <body>
 
-<!-- ========================================
-     이름 설정
-======================================== -->
+<!-- 이름 설정 -->
+<div id="setup" class="screen">
+  <div class="setupBox">
+    <div class="setupTitle">이름을 알려주세요💕</div>
+    <div class="setupDesc">최애가 이 이름으로 당신을 부릅니다.</div>
 
-<div id="nameSetup" class="screen">
+    <input id="nameInput" maxlength="10" placeholder="이름" autocomplete="off">
 
-  <div class="nameBox">
-
-    <div class="nameTitle">
-      이름을 알려주세요💕
-    </div>
-
-    <div class="nameDescription">
-      최애가 이 이름으로 당신을 부릅니다.
-    </div>
-
-    <input
-      id="nameInput"
-      type="text"
-      maxlength="10"
-      placeholder="이름"
-      autocomplete="off">
-
-    <button
-      class="startButton"
-      onclick="startGame()">
+    <button class="startBtn" onclick="startGame()">
       시작하기
     </button>
-
   </div>
-
 </div>
 
-<!-- ========================================
-     홈
-======================================== -->
-
-<div id="homeScreen" class="screen">
-
+<!-- 홈 -->
+<div id="home" class="screen">
   <div class="status">
-    <span id="homeTime">00:00</span>
+    <span class="clock">00:00</span>
     <span>●●● 100%</span>
   </div>
 
   <div class="apps">
-
     <div class="app" onclick="openKakao()">
-
-      <div class="appIcon kakaoIcon">
-        💬
-      </div>
-
-      <div class="appName">
-        카카오톡
-      </div>
-
+      <div class="appIcon kakaoIcon">💬</div>
+      <div class="appName">카카오톡</div>
     </div>
 
+    <div class="app" onclick="openOther('Instagram')">
+      <div class="appIcon instagramIcon">◎</div>
+      <div class="appName">Instagram</div>
+    </div>
+
+    <div class="app" onclick="openOther('사진')">
+      <div class="appIcon photoIcon">🌈</div>
+      <div class="appName">사진</div>
+    </div>
   </div>
 
+  <div class="dock">
+    <div class="app" onclick="openOther('전화')">
+      <div class="appIcon greenIcon">☎</div>
+    </div>
+
+    <div class="app" onclick="openOther('메시지')">
+      <div class="appIcon greenIcon">●</div>
+    </div>
+  </div>
 </div>
 
-<!-- ========================================
-     카카오톡 목록
-======================================== -->
-
-<div id="kakaoScreen" class="screen">
-
+<!-- 카톡 목록 -->
+<div id="kakao" class="screen">
   <div class="status">
-    <span id="kakaoTime">00:00</span>
+    <span class="clock">00:00</span>
     <span>●●● 100%</span>
   </div>
 
   <div class="kakaoHeader">
-
     <h1>채팅</h1>
-
-    <div class="homeButton" onclick="goHome()">
-      홈
-    </div>
-
+    <div class="homeBtn" onclick="goHome()">홈</div>
   </div>
 
-  <div class="chatItem" onclick="openChatRoom()">
-
+  <div class="chatItem" onclick="openRoom()">
     <img src="jaeyoon.jpg" class="profile">
 
     <div class="listText">
-
-      <div class="chatName">
-        재윤이
-      </div>
-
-      <div id="chatPreview" class="chatPreview">
-        물어볼 게 있는데..
-      </div>
-
+      <div class="chatName">재윤이</div>
+      <div id="preview" class="preview">물어볼 게 있는데..</div>
     </div>
-
   </div>
-
 </div>
 
-<!-- ========================================
-     채팅방
-======================================== -->
-
-<div id="chatRoom" class="screen">
-
+<!-- 채팅방 -->
+<div id="room" class="screen">
   <div class="status">
-    <span id="roomTime">00:00</span>
+    <span class="clock">00:00</span>
     <span>●●● 100%</span>
   </div>
 
   <div class="roomHeader">
-
-    <div class="backButton" onclick="closeChatRoom()">
-      ‹
-    </div>
-
-    <div class="roomName">
-      재윤이
-    </div>
-
-    <div class="roomTools">
-      ⌕　☰
-    </div>
-
+    <div class="back" onclick="backList()">‹</div>
+    <div class="roomName">재윤이</div>
+    <div class="roomTools">⌕　☰</div>
   </div>
 
-  <div id="messages">
-
-    <div class="dateDivider">
-      <span>어제</span>
-    </div>
-
-    <div class="them">
-
-      <img src="jaeyoon.jpg">
-
-      <div class="themContent">
-
-        <div class="sender">
-          재윤이
-        </div>
-
-        <div class="messageLine">
-
-          <div id="firstGreeting" class="themBubble"></div>
-
-          <div class="messageTime">
-            오후 10:48
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="me">
-
-      <div class="messageTime">
-        오후 10:49
-      </div>
-
-      <div class="meBubble">
-        ㅋㅋㅋ 웅 방금 들어왔어
-      </div>
-
-    </div>
-
-    <div class="them">
-
-      <img src="jaeyoon.jpg">
-
-      <div class="themContent">
-
-        <div class="sender">
-          재윤이
-        </div>
-
-        <div class="messageLine">
-
-          <div class="themBubble">
-            오늘 왜 그냥 갔어..?
-          </div>
-
-          <div class="messageTime">
-            오후 10:50
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="me">
-
-      <div class="messageTime">
-        오후 10:51
-      </div>
-
-      <div class="meBubble">
-        어...? 너 친구들이랑 얘기하고 있길래 그냥 왔지..ㅜ
-      </div>
-
-    </div>
-
-    <div class="them">
-
-      <img src="jaeyoon.jpg">
-
-      <div class="themContent">
-
-        <div class="sender">
-          재윤이
-        </div>
-
-        <div class="messageLine">
-
-          <div class="themBubble">
-            그래도 말은 하고 가지...
-          </div>
-
-          <div class="messageTime">
-            오후 10:52
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="them">
-
-      <img src="jaeyoon.jpg">
-
-      <div class="themContent">
-
-        <div class="sender">
-          재윤이
-        </div>
-
-        <div class="messageLine">
-
-          <div class="themBubble">
-            기다렸는데
-          </div>
-
-          <div class="messageTime">
-            오후 10:52
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="dateDivider">
-      <span>오늘</span>
-    </div>
-
-    <div class="them">
-
-      <img src="jaeyoon.jpg">
-
-      <div class="themContent">
-
-        <div class="sender">
-          재윤이
-        </div>
-
-        <div class="messageLine">
-
-          <div id="nightGreeting" class="themBubble"></div>
-
-          <div class="messageTime">
-            오후 11:41
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="them">
-
-      <img src="jaeyoon.jpg">
-
-      <div class="themContent">
-
-        <div class="sender">
-          재윤이
-        </div>
-
-        <div class="messageLine">
-
-          <div class="themBubble">
-            물어볼 게 있는데..
-          </div>
-
-          <div class="messageTime">
-            오후 11:42
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- 메시지 입력 -->
+  <div id="messages"></div>
 
   <div class="composer">
+    <div class="plus">＋</div>
 
-    <div class="plus">
-      ＋
-    </div>
-
-    <div class="fakeInput" onclick="showChoices()">
+    <div id="messageInput" class="fakeInput" onclick="openChoices()">
       메시지 입력
     </div>
 
     <div>☺</div>
     <div>#</div>
-
   </div>
-
-  <!-- 선택지 -->
 
   <div id="choiceOverlay">
-
     <div class="choicePanel">
-
-      <div class="choiceTitle">
-        보낼 메시지를 선택하세요
-      </div>
-
-      <button class="choice" onclick="choose(1)">
-        웅?? 아직까지 안 자고 뭐해 ㅋㅋㅋ
-      </button>
-
-      <button class="choice" onclick="choose(2)">
-        뭔데??
-      </button>
-
-      <button class="choice" onclick="choose(3)">
-        아... 나 오늘 좀 피곤해서.. 보내놓으면 내일 읽을게ㅜ
-      </button>
-
+      <div class="choiceTitle">보낼 메시지를 선택하세요</div>
+      <div id="choiceButtons"></div>
     </div>
-
   </div>
-
 </div>
 
-<!-- ========================================
-     잠금화면
-======================================== -->
+<!-- 전화 수신 -->
+<div id="incomingCall" class="screen">
+  <div class="callBg"></div>
+  <div class="callShade"></div>
 
-<div id="lockScreen" class="screen">
+  <div class="callContent">
+    <img src="jaeyoon.jpg" class="callPhoto">
 
+    <div class="callName">재윤이</div>
+    <div class="callSub">휴대전화</div>
+
+    <div class="callButtons">
+      <div class="callGroup">
+        <button class="callRound reject" onclick="rejectCall()">✕</button>
+        <div>거절</div>
+      </div>
+
+      <div class="callGroup">
+        <button class="callRound answer" onclick="answerCall()">☎</button>
+        <div>응답</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 통화 -->
+<div id="activeCall" class="screen">
+  <div class="activeBg"></div>
+  <div class="activeShade"></div>
+
+  <div class="activeContent">
+    <div class="activeName">재윤이</div>
+    <div id="callTimer">00:00</div>
+
+    <div id="callDialogue">여보세요?</div>
+    <div id="callChoices"></div>
+
+    <button class="endCall" onclick="endCall()">☎</button>
+  </div>
+</div>
+
+<!-- 기타 앱 -->
+<div id="other" class="screen">
+  <div class="status">
+    <span class="clock">00:00</span>
+    <span>●●● 100%</span>
+  </div>
+
+  <div class="otherHeader">
+    <span onclick="closeOther()" style="font-size:28px;margin-right:15px;cursor:pointer">‹</span>
+    <strong id="otherTitle"></strong>
+  </div>
+
+  <div class="otherBody">
+    이 앱은 다음에 만들 거야 :)
+  </div>
+</div>
+
+<!-- 잠금화면 -->
+<div id="lock" class="screen">
   <div class="status">
     <span>SKT</span>
     <span>●●● 100%</span>
   </div>
 
-  <div class="lockIcon">
-    🔒
-  </div>
+  <div class="lockIcon">🔒</div>
+  <div id="lockDate" class="lockDate"></div>
+  <div class="lockTime clock">00:00</div>
 
-  <div id="todayDate" class="lockDate"></div>
-
-  <div id="lockTime" class="lockTime">
-    00:00
-  </div>
-
-  <!-- 처음에는 투명 -->
-
-  <div id="kakaoNotification" class="notification">
-
-    <div class="notificationTop">
-
-      <div class="kakaoMini">
-        💬
-      </div>
-
+  <div id="notification">
+    <div class="notTop">
+      <div class="kakaoMini">💬</div>
       카카오톡
-
-      <span style="margin-left:auto">
-        지금
-      </span>
-
+      <span style="margin-left:auto">지금</span>
     </div>
 
-    <div class="notificationName">
-      재윤이
-    </div>
-
-    <div id="lockMessage" class="notificationMessage"></div>
-
+    <div class="notName">재윤이</div>
+    <div id="notificationText" class="notMessage"></div>
   </div>
 
   <div class="unlockText">
     화면을 눌러 잠금 해제
   </div>
-
 </div>
 
 <script>
+/* ==============================
+   게임 상태
+============================== */
 
-/* ========================================
-   기본 변수
-======================================== */
+let userName = "";
+let calledName = "";
 
-let userName="";
-let notificationTimer=null;
-let alreadyAnswered=false;
+let stage = "first";
+let currentChoices = [];
+let waiting = false;
+let storyStarted = false;
 
+let audioContext = null;
+let callInterval = null;
+let callSeconds = 0;
 
-/* ========================================
-   이름 시작
-======================================== */
+/* ==============================
+   이름
+============================== */
+
+function getCalledName(name){
+  if(!name) return "";
+
+  const code = name.charCodeAt(name.length - 1);
+
+  if(code >= 0xAC00 && code <= 0xD7A3){
+    const hasBatchim = (code - 0xAC00) % 28 !== 0;
+    return hasBatchim ? name + "아" : name + "야";
+  }
+
+  return name + "아";
+}
 
 function startGame(){
+  const value = document.getElementById("nameInput").value.trim();
 
-  const input=
-    document
-      .getElementById("nameInput")
-      .value
-      .trim();
-
-  if(input===""){
-
+  if(!value){
     alert("이름을 입력해주세요.");
-
     return;
   }
 
-  userName=input;
-
-  applyUserName();
-
-  /*
-  사용자가 시작하기를 눌렀기 때문에
-  이 시점에 오디오 컨텍스트를 미리 활성화.
-  모바일 브라우저의 자동재생 제한 대응.
-  */
+  userName = value;
+  calledName = getCalledName(userName);
 
   prepareAudio();
 
-  document
-    .getElementById("nameSetup")
-    .style.display="none";
+  document.getElementById("setup").style.display = "none";
 
+  document.getElementById("notificationText").textContent =
+    calledName + " 자?";
 
-  /*
-  잠금화면에 들어오자마자는
-  아무 알림도 없음.
-  */
+  initializeChat();
 
-  document
-    .getElementById("kakaoNotification")
-    .classList.remove("show");
-
-
-  /*
-  2초 후:
-  알림음 + 카톡 알림 등장
-  */
-
-  clearTimeout(notificationTimer);
-
-  notificationTimer=
-    setTimeout(function(){
-
-      playNotificationSound();
-
-      document
-        .getElementById("kakaoNotification")
-        .classList.add("show");
-
-    },2000);
-
+  setTimeout(function(){
+    playNotificationSound();
+    document.getElementById("notification").classList.add("show");
+  }, 2000);
 }
 
-
-/* ========================================
-   이름 조사
-======================================== */
-
-function getCalledName(name){
-
-  if(!name){
-    return "";
-  }
-
-  const code=
-    name.charCodeAt(
-      name.length-1
-    );
-
-  if(
-    code>=0xAC00 &&
-    code<=0xD7A3
-  ){
-
-    const hasBatchim=
-      (code-0xAC00)%28!==0;
-
-    return hasBatchim
-      ? name+"아"
-      : name+"야";
-  }
-
-  return name+"아";
-}
-
-
-function applyUserName(){
-
-  const calledName=
-    getCalledName(userName);
-
-  document
-    .getElementById("firstGreeting")
-    .textContent=
-    userName+
-    " !! 집에 잘 들어갔어?";
-
-  document
-    .getElementById("nightGreeting")
-    .textContent=
-    calledName+
-    " 자?";
-
-  document
-    .getElementById("lockMessage")
-    .textContent=
-    calledName+
-    " 자?";
-
-}
-
-
-/* ========================================
-   자체 알림음 생성
-======================================== */
-
-let audioContext=null;
-
+/* ==============================
+   알림음
+============================== */
 
 function prepareAudio(){
-
   try{
+    const AC = window.AudioContext || window.webkitAudioContext;
+
+    if(!AC) return;
 
     if(!audioContext){
-
-      const AudioContext=
-        window.AudioContext ||
-        window.webkitAudioContext;
-
-      if(AudioContext){
-
-        audioContext=
-          new AudioContext();
-
-      }
-
+      audioContext = new AC();
     }
 
-    if(
-      audioContext &&
-      audioContext.state==="suspended"
-    ){
-
+    if(audioContext.state === "suspended"){
       audioContext.resume();
-
     }
-
-  }catch(error){
-
-    console.log(
-      "오디오를 사용할 수 없습니다."
-    );
-
-  }
-
+  }catch(e){}
 }
-
-
-/*
-실제 카카오톡 음원을 사용하는 게 아니라
-웹앱에서 자체 생성하는 짧은 2음 알림음
-*/
 
 function playNotificationSound(){
-
   try{
+    if(!audioContext) return;
 
-    if(!audioContext){
-      prepareAudio();
-    }
+    const now = audioContext.currentTime;
 
-    if(!audioContext){
-      return;
-    }
+    makeTone(880, now, .13, .12);
+    makeTone(1175, now + .15, .18, .10);
 
-    if(audioContext.state==="suspended"){
-
-      audioContext.resume();
-
-    }
-
-    const now=
-      audioContext.currentTime;
-
-
-    /* 첫 번째 음 */
-
-    const osc1=
-      audioContext.createOscillator();
-
-    const gain1=
-      audioContext.createGain();
-
-    osc1.type="sine";
-    osc1.frequency.setValueAtTime(
-      880,
-      now
-    );
-
-    gain1.gain.setValueAtTime(
-      0.0001,
-      now
-    );
-
-    gain1.gain.exponentialRampToValueAtTime(
-      0.18,
-      now+0.015
-    );
-
-    gain1.gain.exponentialRampToValueAtTime(
-      0.0001,
-      now+0.16
-    );
-
-    osc1.connect(gain1);
-    gain1.connect(
-      audioContext.destination
-    );
-
-    osc1.start(now);
-    osc1.stop(now+0.17);
-
-
-    /* 두 번째 음 */
-
-    const osc2=
-      audioContext.createOscillator();
-
-    const gain2=
-      audioContext.createGain();
-
-    osc2.type="sine";
-
-    osc2.frequency.setValueAtTime(
-      1174,
-      now+0.14
-    );
-
-    gain2.gain.setValueAtTime(
-      0.0001,
-      now+0.14
-    );
-
-    gain2.gain.exponentialRampToValueAtTime(
-      0.16,
-      now+0.155
-    );
-
-    gain2.gain.exponentialRampToValueAtTime(
-      0.0001,
-      now+0.34
-    );
-
-    osc2.connect(gain2);
-    gain2.connect(
-      audioContext.destination
-    );
-
-    osc2.start(now+0.14);
-    osc2.stop(now+0.35);
-
-  }catch(error){
-
-    console.log(
-      "알림음 재생 실패"
-    );
-
-  }
-
+  }catch(e){}
 }
 
+function makeTone(freq,start,duration,volume){
+  const osc = audioContext.createOscillator();
+  const gain = audioContext.createGain();
 
-/* ========================================
-   시간
-======================================== */
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(freq,start);
 
-function updateClock(){
+  gain.gain.setValueAtTime(.0001,start);
+  gain.gain.exponentialRampToValueAtTime(volume,start+.015);
+  gain.gain.exponentialRampToValueAtTime(.0001,start+duration);
 
-  const now=
-    new Date();
+  osc.connect(gain);
+  gain.connect(audioContext.destination);
 
-  const hour=
-    String(
-      now.getHours()
-    ).padStart(2,"0");
+  osc.start(start);
+  osc.stop(start+duration+.02);
+}
 
-  const minute=
-    String(
-      now.getMinutes()
-    ).padStart(2,"0");
+/* ==============================
+   최초 대화
+============================== */
 
-  const currentTime=
-    hour+":"+minute;
+function initializeChat(){
+  if(storyStarted) return;
 
-  document
-    .getElementById("lockTime")
-    .textContent=
-    currentTime;
+  storyStarted = true;
 
-  document
-    .getElementById("homeTime")
-    .textContent=
-    currentTime;
+  const area = document.getElementById("messages");
 
-  document
-    .getElementById("kakaoTime")
-    .textContent=
-    currentTime;
+  area.innerHTML = "";
 
-  document
-    .getElementById("roomTime")
-    .textContent=
-    currentTime;
+  addDate("어제",false);
 
+  addThem(userName + " !! 집에 잘 들어갔어?","오후 10:48",false);
+  addMe("ㅋㅋㅋ 웅 방금 들어왔어","오후 10:49",false);
+  addThem("오늘 왜 그냥 갔어..?","오후 10:50",false);
+  addMe("어...? 너 친구들이랑 얘기하고 있길래 그냥 왔지..ㅜ","오후 10:51",false);
+  addThem("그래도 말은 하고 가지...","오후 10:52",false);
+  addThem("기다렸는데","오후 10:52",false);
 
-  const days=[
-    "일요일",
-    "월요일",
-    "화요일",
-    "수요일",
-    "목요일",
-    "금요일",
-    "토요일"
+  addDate("오늘",false);
+
+  addThem(calledName + " 자?","오후 11:41",false);
+  addThem("물어볼 게 있는데..","오후 11:42",false);
+
+  stage = "first";
+
+  setChoices([
+    "웅?? 아직까지 안 자고 뭐해 ㅋㅋㅋ",
+    "뭔데??",
+    "아... 나 오늘 좀 피곤해서.. 보내놓으면 내일 읽을게ㅜ"
+  ]);
+
+  scrollBottom();
+}
+
+/* ==============================
+   화면 이동
+============================== */
+
+document.getElementById("lock").addEventListener("click",function(e){
+  if(document.getElementById("setup").style.display !== "none") return;
+
+  if(e.target.closest("#notification")){
+    unlockPhone();
+    openKakao();
+    openRoom();
+    return;
+  }
+
+  unlockPhone();
+});
+
+function unlockPhone(){
+  document.getElementById("lock").style.display = "none";
+}
+
+function openKakao(){
+  document.getElementById("kakao").style.display = "block";
+}
+
+function goHome(){
+  document.getElementById("kakao").style.display = "none";
+}
+
+function openRoom(){
+  document.getElementById("room").classList.add("show");
+  scrollBottom();
+}
+
+function backList(){
+  document.getElementById("room").classList.remove("show");
+}
+
+function openOther(name){
+  document.getElementById("otherTitle").textContent = name;
+  document.getElementById("other").style.display = "block";
+}
+
+function closeOther(){
+  document.getElementById("other").style.display = "none";
+}
+
+/* ==============================
+   메시지
+============================== */
+
+function addDate(text,scroll=true){
+  const area = document.getElementById("messages");
+
+  const div = document.createElement("div");
+  div.className = "dateDivider";
+  div.innerHTML = "<span>" + text + "</span>";
+
+  area.appendChild(div);
+
+  if(scroll) scrollBottom();
+}
+
+function addMe(text,time="지금",scroll=true){
+  const area = document.getElementById("messages");
+
+  const div = document.createElement("div");
+  div.className = "me";
+
+  div.innerHTML =
+    '<div class="msgTime">' + time + '</div>' +
+    '<div class="meBubble">' + text + '</div>';
+
+  area.appendChild(div);
+
+  document.getElementById("preview").textContent = text;
+
+  if(scroll) scrollBottom();
+}
+
+function addThem(text,time="지금",scroll=true){
+  const area = document.getElementById("messages");
+
+  const div = document.createElement("div");
+  div.className = "them";
+
+  div.innerHTML =
+    '<img src="jaeyoon.jpg">' +
+    '<div class="themContent">' +
+      '<div class="sender">재윤이</div>' +
+      '<div class="messageLine">' +
+        '<div class="themBubble">' + text + '</div>' +
+        '<div class="msgTime">' + time + '</div>' +
+      '</div>' +
+    '</div>';
+
+  area.appendChild(div);
+
+  document.getElementById("preview").textContent = text;
+
+  if(scroll) scrollBottom();
+}
+
+function scrollBottom(){
+  setTimeout(function(){
+    const area = document.getElementById("messages");
+    area.scrollTop = area.scrollHeight;
+  },50);
+}
+
+/* ==============================
+   선택지 시스템
+============================== */
+
+function setChoices(array){
+  currentChoices = array || [];
+  waiting = false;
+
+  const input = document.getElementById("messageInput");
+
+  if(currentChoices.length){
+    input.textContent = "메시지 입력";
+    input.classList.remove("waiting");
+  }else{
+    input.textContent = "답장을 기다리는 중...";
+    input.classList.add("waiting");
+  }
+}
+
+function lockInput(){
+  currentChoices = [];
+  waiting = true;
+
+  const input = document.getElementById("messageInput");
+  input.textContent = "답장을 기다리는 중...";
+  input.classList.add("waiting");
+}
+
+function openChoices(){
+  if(waiting || !currentChoices.length) return;
+
+  const box = document.getElementById("choiceButtons");
+  box.innerHTML = "";
+
+  currentChoices.forEach(function(text,index){
+    const button = document.createElement("button");
+
+    button.className = "choiceBtn";
+    button.textContent = text;
+
+    button.onclick = function(){
+      selectChoice(index);
+    };
+
+    box.appendChild(button);
+  });
+
+  document.getElementById("choiceOverlay").style.display = "block";
+}
+
+function closeChoices(){
+  document.getElementById("choiceOverlay").style.display = "none";
+}
+
+function selectChoice(index){
+  if(waiting) return;
+
+  const text = currentChoices[index];
+
+  closeChoices();
+  lockInput();
+
+  addMe(text);
+
+  runStage(stage,index);
+}
+
+/* ==============================
+   메시지 순차 전송
+============================== */
+
+function sequence(items,finished){
+  let total = 0;
+
+  items.forEach(function(item){
+    total += item.delay;
+
+    setTimeout(function(){
+      if(item.type === "them"){
+        addThem(item.text);
+      }
+
+      if(item.type === "me"){
+        addMe(item.text);
+      }
+
+      if(item.type === "date"){
+        addDate(item.text);
+      }
+    },total);
+  });
+
+  setTimeout(function(){
+    if(finished) finished();
+  },total + 400);
+}
+
+/* ==============================
+   스토리
+============================== */
+
+function runStage(current,index){
+
+  /* 첫 선택 */
+
+  if(current === "first"){
+
+    if(index === 0){
+      sequence([
+        {type:"them",text:"아니 그게...",delay:1800},
+        {type:"them",text:"생각이 좀 많아서 잠이 안 오네 ㅎㅎ",delay:2800},
+        {type:"them",text:"이번 주말에 뭐 해?",delay:2800}
+      ],weekendChoices);
+    }
+
+    if(index === 1){
+      sequence([
+        {type:"them",text:"아 그...",delay:1900},
+        {type:"them",text:"너 이번 주말에 시간 있어??",delay:2900},
+        {type:"them",text:"아니",delay:2200},
+        {type:"them",text:"주말에 뭐 해?",delay:1800}
+      ],weekendChoices);
+    }
+
+    if(index === 2){
+      sequence([
+        {type:"them",text:"아아 알겠어",delay:1900},
+        {type:"them",text:"얼른 자 ㅎㅎ",delay:2300},
+        {type:"them",text:"그냥 주말에 뭐 하나 물어보려고 했는데..",delay:3500},
+        {type:"them",text:"내일 얘기하자",delay:2400},
+        {type:"date",text:"다음 날",delay:1800},
+        {type:"them",text:"잘 잤어?",delay:1800},
+        {type:"them",text:"어제 많이 피곤했나 보네 ㅎㅎ",delay:2300}
+      ],function(){
+        stage = "nextDay";
+
+        setChoices([
+          "웅 ㅜㅜ 어제 진짜 피곤했어 그래서 뭐 물어보려고 했는데?",
+          "ㅋㅋㅋ웅 근데 주말에는 왜??",
+          "엉 ㅋㅋㅋ 나 이제 봤어"
+        ]);
+      });
+    }
+
+    return;
+  }
+
+  /* 다음날 */
+
+  if(current === "nextDay"){
+
+    if(index === 0){
+      sequence([
+        {type:"them",text:"아 별건 아니고",delay:1800},
+        {type:"them",text:"이번 주말에 시간 되나 해서 ㅎㅎ",delay:2600},
+        {type:"them",text:"같이 영화 볼래?",delay:2300}
+      ],movieChoices);
+    }
+
+    if(index === 1){
+      sequence([
+        {type:"them",text:"아 ㅋㅋㅋ",delay:1800},
+        {type:"them",text:"그냥 시간 되면",delay:2300},
+        {type:"them",text:"같이 영화 볼까 해서 ㅎㅎ",delay:2500}
+      ],movieChoices);
+    }
+
+    if(index === 2){
+      sequence([
+        {type:"them",text:"ㅋㅋㅋㅋ 괜찮아",delay:1900},
+        {type:"them",text:"그냥 주말에 뭐 하나 물어보려고 했어",delay:2800},
+        {type:"me",text:"뭔데?",delay:1800},
+        {type:"them",text:"이번 주말에 시간 있어?",delay:2400},
+        {type:"them",text:"시간 되면 같이 영화 볼래?",delay:2500}
+      ],movieChoices);
+    }
+
+    return;
+  }
+
+  /* 주말 뭐 해 */
+
+  if(current === "weekend"){
+
+    if(index === 0){
+      sequence([
+        {type:"them",text:"진짜??",delay:1700},
+        {type:"them",text:"그럼 토요일도?",delay:2000},
+        {type:"me",text:"웅 왜?",delay:1600},
+        {type:"them",text:"아니 그냥 ㅎㅎ",delay:2300},
+        {type:"them",text:"시간 되면 같이 영화 볼래?",delay:2600}
+      ],movieChoices);
+    }
+
+    if(index === 1){
+      sequence([
+        {type:"them",text:"아 그래??",delay:1800},
+        {type:"them",text:"토요일?",delay:1900},
+        {type:"me",text:"웅 아마?",delay:1600},
+        {type:"them",text:"아아",delay:1900},
+        {type:"them",text:"아니야 ㅎㅎ 그냥 물어봤어",delay:2300},
+        {type:"me",text:"뭐야 ㅋㅋㅋ 왜 물어봤는데",delay:1800},
+        {type:"them",text:"그냥",delay:2300},
+        {type:"them",text:"같이 영화 보자고 하려고 했지 ㅎㅎ",delay:2700}
+      ],movieChoices);
+    }
+
+    if(index === 2){
+      sequence([
+        {type:"them",text:"ㅋㅋㅋㅋㅋ",delay:1700},
+        {type:"them",text:"아니이",delay:1900},
+        {type:"them",text:"...",delay:2300},
+        {type:"them",text:"맞아 ㅎㅎ",delay:2200},
+        {type:"them",text:"시간 되면 같이 영화 볼래?",delay:2600}
+      ],movieChoices);
+    }
+
+    return;
+  }
+
+  /* 영화 제안 */
+
+  if(current === "movie"){
+
+    if(index === 0){
+      sequence([
+        {type:"them",text:"진짜??",delay:1700},
+        {type:"them",text:"잠깐만",delay:1900},
+        {type:"them",text:"나 찾아본 거 있어 ㅋㅋㅋ",delay:2600},
+        {type:"them",text:"[영화 링크]",delay:2200},
+        {type:"them",text:"이거 어때??",delay:1900},
+        {type:"me",text:"ㅋㅋㅋㅋ 이미 찾아봤어?",delay:1800},
+        {type:"them",text:"아니 뭐...",delay:2200},
+        {type:"them",text:"그냥 볼 거 없나 보다가 ㅎㅎ",delay:2600},
+        {type:"them",text:"그럼 이거 보는 거다?",delay:2200}
+      ],startSaturday);
+    }
+
+    if(index === 1){
+      sequence([
+        {type:"them",text:"어...?",delay:1800},
+        {type:"them",text:"ㅋㅋㅋㅋㅋ",delay:1900},
+        {type:"them",text:"왜 둘이는 안 돼?",delay:2300},
+        {type:"me",text:"아니 그런 건 아닌데 ㅋㅋㅋ",delay:1800},
+        {type:"them",text:"그럼 됐네 ㅎㅎ",delay:2200},
+        {type:"them",text:"토요일에 보자",delay:2300}
+      ],startSaturday);
+    }
+
+    if(index === 2){
+      sequence([
+        {type:"them",text:"아 그래??",delay:1900},
+        {type:"them",text:"괜찮아 ㅎㅎ",delay:2300},
+        {type:"them",text:"다음에 보면 되지",delay:2500},
+        {type:"them",text:"주말 잘 보내!!",delay:2200}
+      ],function(){
+        stage = "noMovie";
+        setChoices([]);
+        document.getElementById("messageInput").textContent = "대화가 끝났습니다";
+      });
+    }
+
+    return;
+  }
+
+  /* 토요일 */
+
+  if(current === "saturday"){
+
+    if(index === 0){
+      sequence([
+        {type:"them",text:"진짜??",delay:1700},
+        {type:"them",text:"오키 ㅎㅎ",delay:1900},
+        {type:"them",text:"나 앞에서 기다리고 있을게",delay:2300}
+      ],incomingPhoneCall);
+    }
+
+    if(index === 1){
+      sequence([
+        {type:"them",text:"아니 ㅋㅋㅋㅋ",delay:1800},
+        {type:"them",text:"그냥 일찍 나왔어",delay:2300},
+        {type:"them",text:"천천히 와!!",delay:2200}
+      ],incomingPhoneCall);
+    }
+
+    if(index === 2){
+      sequence([
+        {type:"them",text:"ㅋㅋㅋㅋ 괜찮아",delay:1800},
+        {type:"them",text:"뛰지 마",delay:2100},
+        {type:"them",text:"나 기다리는 거 잘해 ㅎㅎ",delay:2400}
+      ],incomingPhoneCall);
+    }
+
+  }
+}
+
+/* ==============================
+   다음 선택지
+============================== */
+
+function weekendChoices(){
+  stage = "weekend";
+
+  setChoices([
+    "나? 딱히 약속 없는데?",
+    "친구 만나기로 했는데 왜??",
+    "왜 ㅋㅋㅋ 나 만나려고?"
+  ]);
+}
+
+function movieChoices(){
+  stage = "movie";
+
+  setChoices([
+    "좋아 ㅎㅎ 뭐 볼 건데?",
+    "엥 둘이??",
+    "이번 주는 좀 힘들 것 같은데 ㅜㅜ"
+  ]);
+}
+
+function startSaturday(){
+  lockInput();
+
+  sequence([
+    {type:"date",text:"토요일",delay:1800},
+    {type:"them",text:calledName,delay:1800},
+    {type:"them",text:"나 도착했어!!",delay:2100},
+    {type:"them",text:"천천히 와 ㅎㅎ",delay:1900}
+  ],function(){
+    stage = "saturday";
+
+    setChoices([
+      "엥 벌써?? 나 거의 다 왔어!! 쫌만 기다려줘..ㅜㅜ",
+      "ㅋㅋㅋㅋㅋ 왜 이렇게 일찍 왔어",
+      "헐 미안 ㅜㅜ 나 한 10분 늦을 것 같아"
+    ]);
+  });
+}
+
+/* ==============================
+   전화
+============================== */
+
+function incomingPhoneCall(){
+  stage = "call";
+  lockInput();
+
+  setTimeout(function(){
+    playNotificationSound();
+    document.getElementById("incomingCall").style.display = "block";
+  },2500);
+}
+
+function rejectCall(){
+  document.getElementById("incomingCall").style.display = "none";
+
+  sequence([
+    {type:"them",text:"왜 안 받아 ㅋㅋㅋ",delay:1800},
+    {type:"them",text:"어디쯤이야?",delay:2300}
+  ],function(){
+    stage = "afterReject";
+    setChoices([]);
+    document.getElementById("messageInput").textContent = "계속...";
+  });
+}
+
+function answerCall(){
+  document.getElementById("incomingCall").style.display = "none";
+  document.getElementById("activeCall").style.display = "block";
+
+  callSeconds = 0;
+  document.getElementById("callTimer").textContent = "00:00";
+  document.getElementById("callDialogue").textContent = "여보세요?";
+  document.getElementById("callChoices").innerHTML = "";
+
+  if(callInterval) clearInterval(callInterval);
+
+  callInterval = setInterval(function(){
+    callSeconds++;
+
+    const m = String(Math.floor(callSeconds/60)).padStart(2,"0");
+    const s = String(callSeconds%60).padStart(2,"0");
+
+    document.getElementById("callTimer").textContent = m + ":" + s;
+  },1000);
+
+  setTimeout(function(){
+    document.getElementById("callDialogue").textContent =
+      calledName + " 어디쯤이야?";
+
+    showCallChoices();
+  },1800);
+}
+
+function showCallChoices(){
+  const choices = [
+    "나 거의 다 왔어! 왜??",
+    "ㅋㅋㅋㅋ 왜 벌써 전화해",
+    "나 길 잘못 든 것 같아...ㅜㅜ"
   ];
 
-  document
-    .getElementById("todayDate")
-    .textContent=
+  const box = document.getElementById("callChoices");
+  box.innerHTML = "";
 
-    (now.getMonth()+1)+
-    "월 "+
-    now.getDate()+
-    "일 "+
+  choices.forEach(function(text,index){
+    const button = document.createElement("button");
+
+    button.className = "callChoice";
+    button.textContent = text;
+
+    button.onclick = function(){
+      chooseCall(index);
+    };
+
+    box.appendChild(button);
+  });
+}
+
+function chooseCall(index){
+  document.getElementById("callChoices").innerHTML = "";
+
+  if(index === 0){
+    callDialogueSequence([
+      ["아 진짜?",0],
+      ["아니 그냥 어디쯤 왔나 궁금해서 ㅎㅎ",2200],
+      ["그럼 끊지 말고 와",2600]
+    ]);
+  }
+
+  if(index === 1){
+    callDialogueSequence([
+      ["아니 ㅋㅋㅋㅋ",0],
+      ["심심하잖아",2100],
+      ["올 때까지 통화해 ㅎㅎ",2500]
+    ]);
+  }
+
+  if(index === 2){
+    callDialogueSequence([
+      ["어??",0],
+      ["지금 어디야?",1800],
+      ["잠깐만 내가 그쪽으로 갈게",2300],
+      ["끊지 마",2100]
+    ]);
+  }
+}
+
+function callDialogueSequence(items){
+  let total = 0;
+
+  items.forEach(function(item){
+    total += item[1];
+
+    setTimeout(function(){
+      document.getElementById("callDialogue").textContent = item[0];
+    },total);
+  });
+}
+
+function endCall(){
+  if(callInterval){
+    clearInterval(callInterval);
+    callInterval = null;
+  }
+
+  document.getElementById("activeCall").style.display = "none";
+}
+
+/* ==============================
+   시간
+============================== */
+
+function updateClock(){
+  const now = new Date();
+
+  const h = String(now.getHours()).padStart(2,"0");
+  const m = String(now.getMinutes()).padStart(2,"0");
+
+  document.querySelectorAll(".clock").forEach(function(el){
+    el.textContent = h + ":" + m;
+  });
+
+  const days = [
+    "일요일","월요일","화요일",
+    "수요일","목요일","금요일","토요일"
+  ];
+
+  document.getElementById("lockDate").textContent =
+    (now.getMonth()+1) + "월 " +
+    now.getDate() + "일 " +
     days[now.getDay()];
-
 }
 
 updateClock();
-
-setInterval(
-  updateClock,
-  1000
-);
-
-
-/* ========================================
-   잠금화면
-======================================== */
-
-document
-  .getElementById("lockScreen")
-  .addEventListener(
-    "click",
-    function(){
-
-      /*
-      이름 입력 화면이 떠 있을 때
-      뒤의 잠금화면 클릭 방지
-      */
-
-      if(
-        document
-          .getElementById("nameSetup")
-          .style.display!=="none"
-      ){
-        return;
-      }
-
-      this.style.display=
-        "none";
-
-    }
-  );
-
-
-/* ========================================
-   화면 이동
-======================================== */
-
-function openKakao(){
-
-  document
-    .getElementById("kakaoScreen")
-    .style.display=
-    "block";
-
-}
-
-
-function goHome(){
-
-  document
-    .getElementById("kakaoScreen")
-    .style.display=
-    "none";
-
-}
-
-
-function openChatRoom(){
-
-  document
-    .getElementById("chatRoom")
-    .classList.add("show");
-
-  scrollBottom();
-
-}
-
-
-function closeChatRoom(){
-
-  document
-    .getElementById("chatRoom")
-    .classList.remove("show");
-
-}
-
-
-/* ========================================
-   선택지
-======================================== */
-
-function showChoices(){
-
-  if(alreadyAnswered){
-    return;
-  }
-
-  document
-    .getElementById("choiceOverlay")
-    .style.display=
-    "block";
-
-}
-
-
-function hideChoices(){
-
-  document
-    .getElementById("choiceOverlay")
-    .style.display=
-    "none";
-
-}
-
-
-/* ========================================
-   메시지 추가
-======================================== */
-
-function addMyMessage(text){
-
-  const messages=
-    document
-      .getElementById("messages");
-
-  const row=
-    document.createElement("div");
-
-  row.className="me";
-
-  row.innerHTML=
-
-    '<div class="messageTime">'+
-    '지금'+
-    '</div>'+
-
-    '<div class="meBubble">'+
-    text+
-    '</div>';
-
-  messages.appendChild(row);
-
-  document
-    .getElementById("chatPreview")
-    .textContent=
-    text;
-
-  scrollBottom();
-
-}
-
-
-function addJaeyoonMessage(text){
-
-  const messages=
-    document
-      .getElementById("messages");
-
-  const row=
-    document.createElement("div");
-
-  row.className="them";
-
-  row.innerHTML=
-
-    '<img src="jaeyoon.jpg">'+
-
-    '<div class="themContent">'+
-
-      '<div class="sender">'+
-      '재윤이'+
-      '</div>'+
-
-      '<div class="messageLine">'+
-
-        '<div class="themBubble">'+
-        text+
-        '</div>'+
-
-        '<div class="messageTime">'+
-        '지금'+
-        '</div>'+
-
-      '</div>'+
-
-    '</div>';
-
-  messages.appendChild(row);
-
-  document
-    .getElementById("chatPreview")
-    .textContent=
-    text;
-
-  scrollBottom();
-
-}
-
-
-/* ========================================
-   첫 선택
-======================================== */
-
-function choose(number){
-
-  if(alreadyAnswered){
-    return;
-  }
-
-  alreadyAnswered=true;
-
-  hideChoices();
-
-
-  /* ① */
-
-  if(number===1){
-
-    addMyMessage(
-      "웅?? 아직까지 안 자고 뭐해 ㅋㅋㅋ"
-    );
-
-    setTimeout(function(){
-
-      addJaeyoonMessage(
-        "아니 그게..."
-      );
-
-    },1800);
-
-
-    setTimeout(function(){
-
-      addJaeyoonMessage(
-        "생각이 좀 많아서 잠이 안 오네 ㅎㅎ"
-      );
-
-    },4800);
-
-
-    setTimeout(function(){
-
-      addJaeyoonMessage(
-        "이번 주말에 뭐 해?"
-      );
-
-    },7800);
-
-  }
-
-
-  /* ② */
-
-  if(number===2){
-
-    addMyMessage(
-      "뭔데??"
-    );
-
-    setTimeout(function(){
-
-      addJaeyoonMessage(
-        "아 그..."
-      );
-
-    },2000);
-
-
-    setTimeout(function(){
-
-      addJaeyoonMessage(
-        "너 이번 주말에 시간 있어??"
-      );
-
-    },5200);
-
-
-    setTimeout(function(){
-
-      addJaeyoonMessage(
-        "아니"
-      );
-
-    },7600);
-
-
-    setTimeout(function(){
-
-      addJaeyoonMessage(
-        "주말에 뭐 해?"
-      );
-
-    },9800);
-
-  }
-
-
-  /* ③ */
-
-  if(number===3){
-
-    addMyMessage(
-      "아... 나 오늘 좀 피곤해서.. 보내놓으면 내일 읽을게ㅜ"
-    );
-
-    setTimeout(function(){
-
-      addJaeyoonMessage(
-        "아아 알겠어"
-      );
-
-    },2000);
-
-
-    setTimeout(function(){
-
-      addJaeyoonMessage(
-        "얼른 자 ㅎㅎ"
-      );
-
-    },4500);
-
-
-    setTimeout(function(){
-
-      addJaeyoonMessage(
-        "그냥 주말에 뭐 하나 물어보려고 했는데.."
-      );
-
-    },8200);
-
-
-    setTimeout(function(){
-
-      addJaeyoonMessage(
-        "내일 얘기하자"
-      );
-
-    },10800);
-
-  }
-
-}
-
-
-/* ========================================
-   스크롤
-======================================== */
-
-function scrollBottom(){
-
-  setTimeout(function(){
-
-    const messages=
-      document
-        .getElementById("messages");
-
-    messages.scrollTop=
-      messages.scrollHeight;
-
-  },50);
-
-}
-
+setInterval(updateClock,1000);
 
 /* Enter로 시작 */
 
-document
-  .getElementById("nameInput")
-  .addEventListener(
-    "keydown",
-    function(event){
-
-      if(event.key==="Enter"){
-        startGame();
-      }
-
-    }
-  );
-
+document.getElementById("nameInput").addEventListener("keydown",function(e){
+  if(e.key === "Enter"){
+    startGame();
+  }
+});
 </script>
 
 </body>
