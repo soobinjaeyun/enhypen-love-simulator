@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="desktop-home-swipe-fix-20261104">
+<meta name="build-version" content="instagram-comments-persistent-20261104">
 
 <style>
 *{
@@ -3335,6 +3335,17 @@ let igNavStack=[];
 let igLikes={"jaeyoon-0":true,"jaeyoon-2":true};
 let igSaved={};
 let igUserComments={};
+try{
+  const savedIgComments=localStorage.getItem("loveSimIgUserComments");
+  if(savedIgComments){
+    const parsed=JSON.parse(savedIgComments);
+    if(parsed && typeof parsed==="object") igUserComments=parsed;
+  }
+}catch(e){igUserComments={};}
+
+function persistIgUserComments(){
+  try{localStorage.setItem("loveSimIgUserComments",JSON.stringify(igUserComments));}catch(e){}
+}
 const IG_JAEYOON_POSTS=[
   {
     when:"한달 전", caption:"이제 슬슬 추워진다 ㅠㅠ", likes:132,
@@ -3390,7 +3401,9 @@ function igPostHTML(id,i){
   if(id==="jaeyoon") data=IG_JAEYOON_POSTS[i]||data;
   const caption=(data.caption||"").replace("USER_IG",instagramUserId||"my_account").replace("USER_NAME",userName||"나");
   const likeCount=(data.likes||0)+(liked?1:0);
-  const commentCount=(data.comments||[]).length+((igUserComments[key]||[]).length);
+  const storedComments=Array.isArray(igUserComments[key])?igUserComments[key]:(igUserComments[key]?[String(igUserComments[key])]:[]);
+  if(!Array.isArray(igUserComments[key]) && igUserComments[key]){igUserComments[key]=storedComments;persistIgUserComments();}
+  const commentCount=(data.comments||[]).length+storedComments.length;
   return '<article class="igPost" data-post-key="'+key+'">'+
     '<div class="igPostHead" onclick="openIgProfile(\''+id+'\')"><img src="'+a.photo+'"><div><span>'+a.username+'</span>'+(data.when?'<div style="font-size:9px;color:#999;font-weight:400;margin-top:2px">'+data.when+'</div>':'')+'</div><span style="margin-left:auto">•••</span></div>'+
     '<div class="igPlaceholder" onclick="openIgPostDetail(\''+id+'\','+i+')">게시물 사진 업로드 예정</div>'+
@@ -3416,7 +3429,8 @@ function updateIgCommentCount(key){
   const parts=key.split("-");
   const id=parts[0], index=Number(parts[1]||0);
   const data=id==="jaeyoon"?(IG_JAEYOON_POSTS[index]||{comments:[]}):{comments:[]};
-  const count=(data.comments||[]).length+((igUserComments[key]||[]).length);
+  const stored=Array.isArray(igUserComments[key])?igUserComments[key]:(igUserComments[key]?[String(igUserComments[key])]:[]);
+  const count=(data.comments||[]).length+stored.length;
   document.querySelectorAll('.igPost[data-post-key="'+key+'"] .igComments').forEach(function(el){
     el.textContent="댓글 "+count+"개 모두 보기";
   });
@@ -3438,6 +3452,10 @@ function closeIgPostDetail(){
 }
 function openIgComments(id,index){
   const key=id+"-"+index;
+  if(igUserComments[key] && !Array.isArray(igUserComments[key])){
+    igUserComments[key]=[String(igUserComments[key])];
+    persistIgUserComments();
+  }
   const a=getIgAccount(id);
   const data=id==="jaeyoon"?(IG_JAEYOON_POSTS[index]||{comments:[]}):{comments:[]};
   const comments=(data.comments||[]).map(c=>{
@@ -3462,6 +3480,7 @@ function submitIgComment(){
   const key=input.dataset.key;
   if(!Array.isArray(igUserComments[key])) igUserComments[key]=[];
   igUserComments[key].push(text);
+  persistIgUserComments();
   const list=document.getElementById("igCommentsList");
   const row=document.createElement("div");
   row.className="igCommentRow";
