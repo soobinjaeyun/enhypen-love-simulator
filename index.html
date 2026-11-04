@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="chat-search-20261104">
+<meta name="build-version" content="chat-search-force-20261104-2">
 
 <style>
 *{
@@ -1342,7 +1342,7 @@ button,input{
 
 .roomSearchButton{width:38px;height:38px;border:0;background:transparent;font-size:23px;padding:0;cursor:pointer;color:inherit}
 .chatSearchBar{display:none;height:50px;flex-shrink:0;background:#fff;border-top:1px solid #eee;border-bottom:1px solid #ddd;align-items:center;padding:5px 8px;gap:5px;z-index:55}
-.chatSearchBar.show{display:flex}
+.chatSearchBar.show{display:flex!important}
 .chatSearchBar input{flex:1;min-width:0;height:36px;border:0;border-radius:8px;background:#f2f3f5;padding:0 10px;font-size:14px;outline:none}
 .searchBackBtn,.searchMoveBtn{width:32px;height:34px;border:0;background:transparent;font-size:23px;color:#555;cursor:pointer}
 .searchCount{font-size:11px;color:#888;white-space:nowrap;min-width:32px;text-align:center}
@@ -1858,7 +1858,7 @@ button,input{
       재윤이
     </div>
 
-    <div class="roomTools"><button type="button" class="roomSearchButton" onclick="openChatSearch(event)" aria-label="대화 검색">⌕</button><button type="button" class="roomMenuButton" onclick="openRoomDrawer(event)" aria-label="채팅방 메뉴">☰</button></div>
+    <div class="roomTools"><button type="button" class="roomSearchButton" data-chat-search-open="true" aria-label="대화 검색">⌕</button><button type="button" class="roomMenuButton" onclick="openRoomDrawer(event)" aria-label="채팅방 메뉴">☰</button></div>
 
   </div>
   <div id="roomSearchBar" class="chatSearchBar">
@@ -1939,7 +1939,7 @@ button,input{
   <div class="roomHeader">
     <div class="back" onclick="backExtraRoom()">‹</div>
     <div id="extraRoomName" class="roomName"></div>
-    <div class="roomTools"><button type="button" class="roomSearchButton" onclick="openChatSearch(event)" aria-label="대화 검색">⌕</button><button type="button" class="roomMenuButton" onclick="openRoomDrawer(event)" aria-label="채팅방 메뉴">☰</button></div>
+    <div class="roomTools"><button type="button" class="roomSearchButton" data-chat-search-open="true" aria-label="대화 검색">⌕</button><button type="button" class="roomMenuButton" onclick="openRoomDrawer(event)" aria-label="채팅방 메뉴">☰</button></div>
   </div>
   <div id="extraSearchBar" class="chatSearchBar">
     <button onclick="closeChatSearch()" class="searchBackBtn">‹</button>
@@ -7138,6 +7138,21 @@ function openProfileChat2(){
 
 document.addEventListener("DOMContentLoaded", function(){
   sortChatListByLatest();
+});
+
+/* robust chat search bindings */
+document.addEventListener("click",function(ev){
+  const btn=ev.target.closest && ev.target.closest('[data-chat-search-open="true"]');
+  if(btn){
+    ev.preventDefault();
+    ev.stopPropagation();
+    openChatSearch(ev);
+  }
+});
+window.addEventListener("load",function(){
+  document.querySelectorAll('[data-chat-search-open="true"]').forEach(function(btn){
+    btn.style.pointerEvents="auto";
+  });
 });
 </script>
 
