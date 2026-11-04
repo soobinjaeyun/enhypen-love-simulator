@@ -1407,7 +1407,10 @@ button,input{
 .igCaption b{margin-right:5px}
 .igComments{color:#888;margin-top:4px;cursor:pointer}
 .igBottom{position:absolute;left:0;right:0;bottom:0;height:62px;background:#fff;border-top:1px solid #ddd;display:flex;align-items:flex-start;padding-top:8px;justify-content:space-around;z-index:20}
-.igBottom button{border:0;background:transparent;font-size:25px;cursor:pointer}
+.igBottom button{border:0;background:transparent;cursor:pointer;width:32px;height:32px;padding:3px;display:flex;align-items:center;justify-content:center}
+.igBottom svg{width:25px;height:25px;fill:none;stroke:#111;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.igMeNavAvatar{width:25px;height:25px;border-radius:50%;object-fit:cover;border:1.5px solid #111}
+.igMeNavDefault{width:25px;height:25px;border-radius:50%;background:#222;display:block;position:relative;overflow:hidden}
 .igProfileHeader{height:52px;padding:0 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee;position:sticky;top:0;background:#fff;z-index:10}
 .igProfileTop{padding:14px}
 .igProfileSummary{display:flex;align-items:center}
@@ -2305,11 +2308,11 @@ button,input{
     </div>
   </div>
   <div class="igBottom">
-    <button onclick="showIgHome()">⌂</button>
-    <button onclick="igAlert('검색')">⌕</button>
-    <button onclick="igAlert('새 게시물')">⊞</button>
-    <button onclick="igAlert('릴스')">▣</button>
-    <button onclick="openIgProfile('me')" class="igMeBtn">◉</button>
+    <button onclick="showIgHome()" aria-label="홈"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></svg></button>
+    <button onclick="igAlert('검색')" aria-label="검색"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+    <button onclick="igAlert('새 게시물')" aria-label="새 게시물"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 7v10M7 12h10"/></svg></button>
+    <button onclick="igAlert('릴스')" aria-label="릴스"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="m8 3 4 5m1-5 4 5M3.5 8h17.5"/><path d="m10 11 5 3-5 3z"/></svg></button>
+    <button onclick="openIgProfile('me')" class="igMeBtn" aria-label="내 프로필"><span id="igMeNavAvatar" class="igMeNavDefault"></span></button>
   </div>
   <div class="homeGestureArea" data-home-gesture="true"><div class="homeIndicator"></div></div>
 </div>
@@ -3493,6 +3496,11 @@ function openInstagram(){
 }
 function closeInstagram(){document.getElementById("instagram").style.display="none";isOnHome=true;}
 function renderInstagram(){
+  const meNav=document.getElementById("igMeNavAvatar");
+  if(meNav){
+    // The game currently has no uploaded user profile image, so use the Instagram-style default avatar.
+    meNav.className="igMeNavDefault";
+  }
   const stories=document.getElementById("igStories");
   stories.innerHTML='<div class="igStory" onclick="openIgProfile(\'me\')"><div class="igStoryRing" style="background:#ddd"><div style="width:100%;height:100%;border-radius:50%;background:#eee;display:flex;align-items:center;justify-content:center;font-size:24px">＋</div></div><div class="igStoryName">내 스토리</div></div>'+
     IG_ORDER.map(id=>{const a=getIgAccount(id);return '<div class="igStory" onclick="viewIgStory(\''+id+'\')"><div class="igStoryRing"><img src="'+a.photo+'"></div><div class="igStoryName">'+a.username+'</div></div>';}).join("");
