@@ -1161,6 +1161,18 @@ const extraChats = {
   class302: {
     name:"월요일 필교 2시 반 진리관 302호",
     members:["사용자","재윤이","박성훈","박종성","양정원"]
+  },
+  mom: {
+    name:"엄마",
+    members:["엄마"]
+  },
+  dad: {
+    name:"아빠",
+    members:["아빠"]
+  },
+  brother: {
+    name:"오빠",
+    members:["오빠"]
   }
 };
 
@@ -1453,37 +1465,24 @@ function backExtraRoom(){
 
       <div class="chatFilters">
 
-        <button
-          class="filterChip"
-          onclick="setKakaoFilter(this)">
+        <button class="filterChip active" data-filter="all" onclick="setKakaoFilter(this)">
           전체
         </button>
 
-        <button
-          class="filterChip active"
-          onclick="setKakaoFilter(this)">
-          안읽음
-          <span id="filterUnreadCount">
-            2
-          </span>
+        <button class="filterChip" data-filter="unread" onclick="setKakaoFilter(this)">
+          안읽음 <span id="filterUnreadCount">2</span>
         </button>
 
-        <button
-          class="filterChip"
-          onclick="setKakaoFilter(this)">
-          친구
+        <button class="filterChip" data-filter="love" onclick="setKakaoFilter(this)">
+          ❤️
         </button>
 
-        <button
-          class="filterChip"
-          onclick="setKakaoFilter(this)">
-          직장
+        <button class="filterChip" data-filter="university" onclick="setKakaoFilter(this)">
+          대학
         </button>
 
-        <button
-          class="filterChip"
-          onclick="setKakaoFilter(this)">
-          그룹
+        <button class="filterChip" data-filter="family" onclick="setKakaoFilter(this)">
+          가족
         </button>
 
       </div>
@@ -1522,6 +1521,7 @@ function backExtraRoom(){
       <div
         class="chatItem"
         data-chat="jaeyoon"
+        data-group="love"
         onclick="openRoom()">
 
         <img
@@ -1566,7 +1566,7 @@ function backExtraRoom(){
 
 
       <!-- 경영24 박성훈 선배 -->
-      <div class="chatItem" data-chat="sunghoon" onclick="openExtraRoom('sunghoon')">
+      <div class="chatItem" data-chat="sunghoon" data-group="university" onclick="openExtraRoom('sunghoon')">
         <div class="profileFallback">성훈</div>
         <div class="listText">
           <div class="chatNameRow"><div class="chatName">경영24 박성훈 선배</div></div>
@@ -1576,7 +1576,7 @@ function backExtraRoom(){
       </div>
 
       <!-- 경제25 쫑생 선배 -->
-      <div class="chatItem" data-chat="jongseong" onclick="openExtraRoom('jongseong')">
+      <div class="chatItem" data-chat="jongseong" data-group="university" onclick="openExtraRoom('jongseong')">
         <div class="profileFallback">쫑생</div>
         <div class="listText">
           <div class="chatNameRow"><div class="chatName">경제25 쫑생 선배</div></div>
@@ -1586,7 +1586,7 @@ function backExtraRoom(){
       </div>
 
       <!-- 미컴26 양정원 -->
-      <div class="chatItem" data-chat="jungwon" onclick="openExtraRoom('jungwon')">
+      <div class="chatItem" data-chat="jungwon" data-group="university" onclick="openExtraRoom('jungwon')">
         <div class="profileFallback">정원</div>
         <div class="listText">
           <div class="chatNameRow"><div class="chatName">미컴26 양정원</div></div>
@@ -1596,13 +1596,42 @@ function backExtraRoom(){
       </div>
 
       <!-- 5인 단톡방 -->
-      <div class="chatItem" data-chat="class302" onclick="openExtraRoom('class302')">
+      <div class="chatItem" data-chat="class302" data-group="university" onclick="openExtraRoom('class302')">
         <div class="profileFallback group">👥</div>
         <div class="listText">
           <div class="chatNameRow">
             <div class="chatName">월요일 필교 2시 반 진리관 302호</div>
             <div class="memberCount">5</div>
           </div>
+          <div class="preview">대화를 시작해보세요.</div>
+        </div>
+        <div class="chatMeta"><div class="chatTime"></div></div>
+      </div>
+
+
+      <!-- 가족 -->
+      <div class="chatItem" data-chat="mom" data-group="family" onclick="openExtraRoom('mom')">
+        <div class="profileFallback">엄마</div>
+        <div class="listText">
+          <div class="chatNameRow"><div class="chatName">엄마</div></div>
+          <div class="preview">대화를 시작해보세요.</div>
+        </div>
+        <div class="chatMeta"><div class="chatTime"></div></div>
+      </div>
+
+      <div class="chatItem" data-chat="dad" data-group="family" onclick="openExtraRoom('dad')">
+        <div class="profileFallback">아빠</div>
+        <div class="listText">
+          <div class="chatNameRow"><div class="chatName">아빠</div></div>
+          <div class="preview">대화를 시작해보세요.</div>
+        </div>
+        <div class="chatMeta"><div class="chatTime"></div></div>
+      </div>
+
+      <div class="chatItem" data-chat="brother" data-group="family" onclick="openExtraRoom('brother')">
+        <div class="profileFallback">오빠</div>
+        <div class="listText">
+          <div class="chatNameRow"><div class="chatName">오빠</div></div>
           <div class="preview">대화를 시작해보세요.</div>
         </div>
         <div class="chatMeta"><div class="chatTime"></div></div>
@@ -2526,27 +2555,46 @@ function updateUnreadUI(){
 function setKakaoFilter(button){
 
   document
-    .querySelectorAll(
-      ".filterChip"
-    )
-    .forEach(
-      function(chip){
+    .querySelectorAll(".filterChip")
+    .forEach(function(chip){
+      chip.classList.remove("active");
+    });
 
-        chip
-          .classList
-          .remove(
-            "active"
-          );
+  button.classList.add("active");
 
+  const filter =
+    button.dataset.filter || "all";
+
+  document
+    .querySelectorAll(".chatList .chatItem")
+    .forEach(function(item){
+
+      let show = false;
+
+      if(filter === "all"){
+        show = true;
       }
-    );
 
+      if(filter === "love"){
+        show = item.dataset.group === "love";
+      }
 
-  button
-    .classList
-    .add(
-      "active"
-    );
+      if(filter === "university"){
+        show = item.dataset.group === "university";
+      }
+
+      if(filter === "family"){
+        show = item.dataset.group === "family";
+      }
+
+      if(filter === "unread"){
+        show = !!item.querySelector(".unreadBadge.show");
+      }
+
+      item.style.display =
+        show ? "flex" : "none";
+
+    });
 
 }
 
