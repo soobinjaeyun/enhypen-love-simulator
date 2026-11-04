@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="group-profile-zfix-20261104">
+<meta name="build-version" content="chat-search-20261104">
 
 <style>
 *{
@@ -1339,6 +1339,17 @@ button,input{
    border-radius:42px!important;
  }
 }
+
+.roomSearchButton{width:38px;height:38px;border:0;background:transparent;font-size:23px;padding:0;cursor:pointer;color:inherit}
+.chatSearchBar{display:none;height:50px;flex-shrink:0;background:#fff;border-top:1px solid #eee;border-bottom:1px solid #ddd;align-items:center;padding:5px 8px;gap:5px;z-index:55}
+.chatSearchBar.show{display:flex}
+.chatSearchBar input{flex:1;min-width:0;height:36px;border:0;border-radius:8px;background:#f2f3f5;padding:0 10px;font-size:14px;outline:none}
+.searchBackBtn,.searchMoveBtn{width:32px;height:34px;border:0;background:transparent;font-size:23px;color:#555;cursor:pointer}
+.searchCount{font-size:11px;color:#888;white-space:nowrap;min-width:32px;text-align:center}
+.chatSearchHit{outline:2px solid rgba(255,199,0,.85);outline-offset:2px}
+.chatSearchHit .themBubble,.chatSearchHit .meBubble{box-shadow:0 0 0 2px rgba(255,199,0,.7)}
+.chatSearchCurrent .themBubble,.chatSearchCurrent .meBubble{background:#fff3a8!important}
+.chatSearchCurrent.me .meBubble{background:#ffd92f!important}
 </style>
 </head>
 
@@ -1847,10 +1858,16 @@ button,input{
       재윤이
     </div>
 
-    <div class="roomTools"><span>⌕</span><button type="button" class="roomMenuButton" onclick="openRoomDrawer(event)" aria-label="채팅방 메뉴">☰</button></div>
+    <div class="roomTools"><button type="button" class="roomSearchButton" onclick="openChatSearch(event)" aria-label="대화 검색">⌕</button><button type="button" class="roomMenuButton" onclick="openRoomDrawer(event)" aria-label="채팅방 메뉴">☰</button></div>
 
   </div>
-
+  <div id="roomSearchBar" class="chatSearchBar">
+    <button onclick="closeChatSearch()" class="searchBackBtn">‹</button>
+    <input id="roomSearchInput" type="search" placeholder="대화 내용 검색" autocomplete="off">
+    <span id="roomSearchCount" class="searchCount">0/0</span>
+    <button onclick="moveChatSearch(-1)" class="searchMoveBtn">↑</button>
+    <button onclick="moveChatSearch(1)" class="searchMoveBtn">↓</button>
+  </div>
 
   <div id="messages"></div>
 
@@ -1922,7 +1939,14 @@ button,input{
   <div class="roomHeader">
     <div class="back" onclick="backExtraRoom()">‹</div>
     <div id="extraRoomName" class="roomName"></div>
-    <div class="roomTools"><span>⌕</span><button type="button" class="roomMenuButton" onclick="openRoomDrawer(event)" aria-label="채팅방 메뉴">☰</button></div>
+    <div class="roomTools"><button type="button" class="roomSearchButton" onclick="openChatSearch(event)" aria-label="대화 검색">⌕</button><button type="button" class="roomMenuButton" onclick="openRoomDrawer(event)" aria-label="채팅방 메뉴">☰</button></div>
+  </div>
+  <div id="extraSearchBar" class="chatSearchBar">
+    <button onclick="closeChatSearch()" class="searchBackBtn">‹</button>
+    <input id="extraSearchInput" type="search" placeholder="대화 내용 검색" autocomplete="off">
+    <span id="extraSearchCount" class="searchCount">0/0</span>
+    <button onclick="moveChatSearch(-1)" class="searchMoveBtn">↑</button>
+    <button onclick="moveChatSearch(1)" class="searchMoveBtn">↓</button>
   </div>
 
   <div id="extraMessages">
@@ -3066,6 +3090,7 @@ function openKakao(){
 ========================================= */
 
 function backList(){
+  closeChatSearch();
   closeRoomDrawer();
 
   document
@@ -6212,6 +6237,93 @@ document
 
 
 
+
+let chatSearchMatches=[];
+let chatSearchIndex=-1;
+let activeSearchRoom=null;
+
+function getActiveSearchElements(){
+  const jae=document.getElementById("room");
+  if(jae && jae.classList.contains("show")){
+    return {bar:document.getElementById("roomSearchBar"),input:document.getElementById("roomSearchInput"),count:document.getElementById("roomSearchCount"),area:document.getElementById("messages"),room:"room"};
+  }
+  const extra=document.getElementById("extraRoom");
+  if(extra && extra.classList.contains("show")){
+    return {bar:document.getElementById("extraSearchBar"),input:document.getElementById("extraSearchInput"),count:document.getElementById("extraSearchCount"),area:document.getElementById("extraMessages"),room:"extra"};
+  }
+  return null;
+}
+
+function openChatSearch(e){
+  if(e)e.stopPropagation();
+  const x=getActiveSearchElements(); if(!x)return;
+  activeSearchRoom=x.room;
+  x.bar.classList.add("show");
+  x.input.value="";
+  x.count.textContent="0/0";
+  clearChatSearchHighlights();
+  setTimeout(()=>x.input.focus(),50);
+}
+
+function clearChatSearchHighlights(){
+  document.querySelectorAll(".chatSearchHit,.chatSearchCurrent").forEach(el=>{
+    el.classList.remove("chatSearchHit","chatSearchCurrent");
+  });
+  chatSearchMatches=[];
+  chatSearchIndex=-1;
+}
+
+function closeChatSearch(){
+  const bars=document.querySelectorAll(".chatSearchBar");
+  bars.forEach(b=>b.classList.remove("show"));
+  clearChatSearchHighlights();
+  activeSearchRoom=null;
+}
+
+function runChatSearch(){
+  const x=getActiveSearchElements(); if(!x)return;
+  clearChatSearchHighlights();
+  const q=x.input.value.trim().toLowerCase();
+  if(!q){x.count.textContent="0/0";return;}
+  const rows=Array.from(x.area.querySelectorAll(".them,.me,.fileMessageRow,.kakaoSystemMessage,.kakaoInviteSystem"));
+  chatSearchMatches=rows.filter(row=>{
+    const txt=(row.innerText||row.textContent||"").toLowerCase();
+    return txt.includes(q);
+  });
+  chatSearchMatches.forEach(row=>row.classList.add("chatSearchHit"));
+  if(chatSearchMatches.length){
+    chatSearchIndex=chatSearchMatches.length-1;
+    focusChatSearchMatch();
+  }else{x.count.textContent="0/0";}
+}
+
+function focusChatSearchMatch(){
+  const x=getActiveSearchElements(); if(!x||!chatSearchMatches.length)return;
+  chatSearchMatches.forEach(el=>el.classList.remove("chatSearchCurrent"));
+  const el=chatSearchMatches[chatSearchIndex];
+  el.classList.add("chatSearchCurrent");
+  x.count.textContent=(chatSearchIndex+1)+"/"+chatSearchMatches.length;
+  el.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+function moveChatSearch(dir){
+  if(!chatSearchMatches.length)return;
+  chatSearchIndex=(chatSearchIndex+dir+chatSearchMatches.length)%chatSearchMatches.length;
+  focusChatSearchMatch();
+}
+
+document.addEventListener("input",function(e){
+  if(e.target && (e.target.id==="roomSearchInput"||e.target.id==="extraSearchInput")){
+    runChatSearch();
+  }
+});
+document.addEventListener("keydown",function(e){
+  if(e.target && (e.target.id==="roomSearchInput"||e.target.id==="extraSearchInput") && e.key==="Enter"){
+    e.preventDefault();
+    moveChatSearch(-1);
+  }
+});
+
 const drawerPeople={
   jaeyoon:{name:"재윤이",photo:"jaeyoon.jpg?v=drawer2",status:""},
   sunghoon:{name:"박성훈",photo:"sunghoon.jpg?v=drawer2",status:"연락 확인 시간 늦어요"},
@@ -6960,6 +7072,7 @@ function openExtraRoom(chatId){
   isOnHome=false;
 }
 function backExtraRoom(){
+  closeChatSearch();
   closeRoomDrawer();
   document.getElementById("extraRoom").classList.remove("show");
   document.getElementById("kakao").style.display="block";
