@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="instagram-app-v1-20261104">
+<meta name="build-version" content="jaeyoon-instagram-content-20261104">
 
 <style>
 *{
@@ -1422,6 +1422,16 @@ button,input{
 .igDMRow img{width:52px;height:52px;border-radius:50%;object-fit:cover;margin-right:12px}
 .igDMText{flex:1;min-width:0}.igDMName{font-size:13px;font-weight:600}.igDMPreview{font-size:11px;color:#888;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .igUnreadDot{width:9px;height:9px;border-radius:50%;background:#0095f6}
+
+.igCommentsOverlay{position:absolute;inset:0;z-index:70;background:rgba(0,0,0,.35);align-items:flex-end}
+.igCommentsSheet{width:100%;height:62%;background:#fff;border-radius:18px 18px 0 0;display:flex;flex-direction:column}
+.igCommentsSheetHead{height:48px;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:center;position:relative}
+.igCommentsSheetHead button{position:absolute;right:14px;border:0;background:transparent;font-size:25px}
+.igCommentsList{flex:1;overflow-y:auto;padding:8px 14px}
+.igCommentRow{font-size:12px;padding:9px 0}.igCommentRow b{margin-right:8px}.igReply{margin:7px 0 0 25px;font-size:11px}
+.igCommentInputWrap{height:55px;border-top:1px solid #eee;display:flex;align-items:center;padding:7px 10px;gap:8px}
+.igCommentInputWrap input{flex:1;height:38px;border:1px solid #ddd;border-radius:20px;padding:0 13px;outline:none}
+.igCommentInputWrap button{border:0;background:transparent;color:#0095f6;font-weight:700}
 </style>
 </head>
 
@@ -2218,6 +2228,13 @@ button,input{
     <div id="igDMList"></div>
   </div>
 
+  <div id="igCommentsOverlay" class="igCommentsOverlay" style="display:none">
+    <div class="igCommentsSheet">
+      <div class="igCommentsSheetHead"><b id="igCommentsTitle">댓글</b><button onclick="closeIgComments()">×</button></div>
+      <div id="igCommentsList" class="igCommentsList"></div>
+      <div id="igCommentInputWrap" class="igCommentInputWrap"><input id="igCommentInput" placeholder="댓글 달기..."><button onclick="submitIgComment()">게시</button></div>
+    </div>
+  </div>
   <div class="igBottom">
     <button onclick="showIgHome()">⌂</button>
     <button onclick="igAlert('검색')">⌕</button>
@@ -3287,13 +3304,43 @@ const IG_ACCOUNTS={
   jaeyoon:{username:"_imjaeyooon",name:"심재윤",photo:"jaeyoon.jpg",posts:3,followers:624,following:411,bio:"",story:"가끔"},
   soobin:{username:"page.soobin",name:"최수빈",photo:"soobin.jpg",posts:8,followers:731,following:506,bio:"",story:"자주"},
   sunghoon:{username:"park.sunghoon",name:"박성훈",photo:"sunghoon.jpg",posts:1,followers:519,following:388,bio:"인생은 독고다이",story:"가끔"},
-  jongseong:{username:"jayxrock_",name:"박종",photo:"jongsung.jpg",posts:9,followers:603,following:417,bio:"JAYSON",story:"자주"},
+  jongseong:{username:"jayxrock_",name:"박종성",photo:"jongsung.jpg",posts:9,followers:603,following:417,bio:"JAYSON",story:"자주"},
   jungwon:{username:"meowon_",name:"양정원",photo:"jungwon.jpg",posts:6,followers:558,following:436,bio:"",story:"자주"}
 };
 const IG_ORDER=["jaeyoon","soobin","sunghoon","jongseong","jungwon"];
 let igNavStack=[];
-let igLikes={};
+let igLikes={"jaeyoon-0":true,"jaeyoon-2":true};
 let igSaved={};
+let igUserComments={};
+const IG_JAEYOON_POSTS=[
+  {
+    when:"한달 전", caption:"이제 슬슬 추워진다 ㅠㅠ", likes:132,
+    comments:[
+      {user:"park.sunghoon",text:"USER_NAME이랑 감?",reply:"🤭"},
+      {user:"jayxrock_",text:"수업이나 와 ㅅㄲ야"},
+      {user:"m1nseok.zip",text:"사진 잘 나왔네"},
+      {user:"daily_hyun",text:"🔥🔥"}
+    ]
+  },
+  {
+    when:"2주 전", caption:"photo by.@USER_IG", likes:153,
+    comments:[
+      {user:"page.soobin",text:"뭐야 둘이 놀러간거?",reply:"음ㅎㅎ"},
+      {user:"park.sunghoon",text:"꺼져"},
+      {user:"02.archive",text:"분위기 좋다"},
+      {user:"hwani.jpg",text:"👏"}
+    ]
+  },
+  {
+    when:"15시간 전", caption:"💪💪", likes:124,
+    comments:[
+      {user:"jayxrock_",text:"아 같이간다매"},
+      {user:"gym_daily24",text:"💪"},
+      {user:"minu_park",text:"운동하네"}
+    ],
+    allowUserComment:true
+  }
+];
 
 function getIgAccount(id){
   if(id==="me") return {username:instagramUserId||"my_account",name:userName||"나",photo:"",posts:3,followers:480,following:392,bio:"",story:""};
@@ -3315,17 +3362,61 @@ function renderInstagram(){
   feed.innerHTML=IG_ORDER.map((id,i)=>igPostHTML(id,i)).join("");
 }
 function igPostHTML(id,i){
-  const a=getIgAccount(id), key=id+"-0", liked=!!igLikes[key], saved=!!igSaved[key];
-  const captions={jaeyoon:"",soobin:"",sunghoon:"",jongseong:"",jungwon:""};
-  return '<article class="igPost"><div class="igPostHead" onclick="openIgProfile(\''+id+'\')"><img src="'+a.photo+'"><span>'+a.username+'</span><span style="margin-left:auto">•••</span></div>'+
+  const a=getIgAccount(id), key=id+"-"+i, liked=!!igLikes[key], saved=!!igSaved[key];
+  let data={when:"",caption:"",likes:120+i*37,comments:[]};
+  if(id==="jaeyoon") data=IG_JAEYOON_POSTS[i]||data;
+  const caption=(data.caption||"").replace("USER_IG",instagramUserId||"my_account").replace("USER_NAME",userName||"나");
+  const likeCount=(data.likes||0)+(liked?1:0);
+  const commentCount=(data.comments||[]).length+(igUserComments[key]?1:0);
+  return '<article class="igPost" data-post-key="'+key+'">'+
+    '<div class="igPostHead" onclick="openIgProfile(\''+id+'\')"><img src="'+a.photo+'"><div><span>'+a.username+'</span>'+(data.when?'<div style="font-size:9px;color:#999;font-weight:400;margin-top:2px">'+data.when+'</div>':'')+'</div><span style="margin-left:auto">•••</span></div>'+
     '<div class="igPlaceholder" onclick="openIgProfile(\''+id+'\')">게시물 사진 업로드 예정</div>'+
-    '<div class="igPostActions"><button onclick="toggleIgLike(\''+key+'\',this)">'+(liked?"♥":"♡")+'</button><button onclick="igComments(\''+id+'\')">○</button><button onclick="openIgDM()">△</button><button class="save" onclick="toggleIgSave(\''+key+'\',this)">'+(saved?"▣":"▢")+'</button></div>'+
-    '<div class="igPostText"><div class="igLikes">좋아요 '+(120+i*37+(liked?1:0))+'개</div><div class="igCaption"><b>'+a.username+'</b>'+captions[id]+'</div><div class="igComments" onclick="igComments(\''+id+'\')">댓글 보기</div></div></article>';
+    '<div class="igPostActions"><button class="'+(liked?"igLiked":"")+'" onclick="toggleIgLike(\''+key+'\',this,'+(data.likes||0)+')">'+(liked?"♥":"♡")+'</button><button onclick="openIgComments(\''+id+'\','+i+')">○</button><button onclick="igAlert(\'공유\')">△</button><button class="save" onclick="toggleIgSave(\''+key+'\',this)">'+(saved?"▣":"▢")+'</button></div>'+
+    '<div class="igPostText"><div class="igLikes" id="likes-'+key+'">좋아요 '+likeCount+'개</div><div class="igCaption"><b>'+a.username+'</b>'+caption+'</div><div class="igComments" onclick="openIgComments(\''+id+'\','+i+')">댓글 '+commentCount+'개 모두 보기</div></div></article>';
 }
-function toggleIgLike(key,btn){igLikes[key]=!igLikes[key];btn.textContent=igLikes[key]?"♥":"♡";btn.classList.toggle("igLiked",igLikes[key]);}
+
+function toggleIgLike(key,btn,baseLikes){
+  igLikes[key]=!igLikes[key];
+  btn.textContent=igLikes[key]?"♥":"♡";
+  btn.classList.toggle("igLiked",igLikes[key]);
+  const el=document.getElementById("likes-"+key);
+  if(el) el.textContent="좋아요 "+(baseLikes+(igLikes[key]?1:0))+"개";
+}
 function toggleIgSave(key,btn){igSaved[key]=!igSaved[key];btn.textContent=igSaved[key]?"▣":"▢";}
-function igComments(id){const txt=prompt("댓글을 입력하세요. (취소하면 닫기)");if(txt&&txt.trim())alert("댓글이 등록되었습니다.");}
-function viewIgStory(id){const a=getIgAccount(id);alert(a.name+"의 스토리\n\n스토리 사진은 이후 업로드하면 여기에 표시돼.");}
+function openIgComments(id,index){
+  const key=id+"-"+index;
+  const a=getIgAccount(id);
+  const data=id==="jaeyoon"?(IG_JAEYOON_POSTS[index]||{comments:[]}):{comments:[]};
+  const comments=(data.comments||[]).map(c=>{
+    const text=c.text.replace("USER_NAME",userName||"나").replace("USER_IG",instagramUserId||"my_account");
+    return '<div class="igCommentRow"><b>'+c.user+'</b><span>'+text+'</span>'+(c.reply?'<div class="igReply"><b>'+a.username+'</b> '+c.reply+'</div>':'')+'</div>';
+  }).join("");
+  const mine=igUserComments[key]?'<div class="igCommentRow"><b>'+instagramUserId+'</b><span>'+igUserComments[key]+'</span></div>':'';
+  const canWrite=id==="jaeyoon";
+  document.getElementById("igCommentsTitle").textContent="댓글";
+  document.getElementById("igCommentsList").innerHTML=comments+mine;
+  document.getElementById("igCommentInputWrap").style.display=canWrite?"flex":"none";
+  document.getElementById("igCommentInput").value="";
+  document.getElementById("igCommentInput").dataset.key=key;
+  document.getElementById("igCommentsOverlay").style.display="flex";
+}
+function closeIgComments(){document.getElementById("igCommentsOverlay").style.display="none";}
+function submitIgComment(){
+  const input=document.getElementById("igCommentInput");
+  const text=input.value.trim(); if(!text)return;
+  const key=input.dataset.key;
+  igUserComments[key]=text;
+  closeIgComments();
+  renderInstagram();
+}
+function viewIgStory(id){
+  const a=getIgAccount(id);
+  if(id==="jaeyoon"){
+    alert(a.name+"의 스토리 · 10분 전\n\n"+(userName||"사용자")+"이가 찍어준 사진\n\n사진은 나중에 업로드하면 여기에 표시돼.");
+    return;
+  }
+  alert(a.name+"의 스토리\n\n스토리 사진은 이후 업로드하면 여기에 표시돼.");
+}
 function showIgHome(){document.getElementById("igHomeView").style.display="block";document.getElementById("igProfileView").style.display="none";document.getElementById("igDMView").style.display="none";igNavStack=[];}
 function openIgProfile(id){
   const a=getIgAccount(id); if(!a)return;
@@ -3333,12 +3424,24 @@ function openIgProfile(id){
   document.getElementById("igProfileUsername").textContent=a.username;
   const avatar=a.photo?'<img class="igProfileAvatar" src="'+a.photo+'">':'<div class="igProfileAvatar" style="display:flex;align-items:center;justify-content:center;font-size:30px">◉</div>';
   let highlights="";
-  if(id!=="me"){highlights='<div class="igHighlights"><div class="igHighlight" onclick="viewIgHighlight(\''+id+'\')"><img src="'+a.photo+'"><div>일상</div></div><div class="igHighlight" onclick="viewIgHighlight(\''+id+'\')"><img src="'+a.photo+'"><div>📷</div></div></div>';}
-  const cells=Array.from({length:a.posts},(_,i)=>'<div class="igGridCell" onclick="igAlert(\'게시물\')">사진 '+(i+1)+'</div>').join("");
+  if(id!=="me"){
+    if(id==="jaeyoon"){
+      highlights='<div class="igHighlights"><div class="igHighlight" onclick="viewIgHighlight(\'jaeyoon\',\'✌️\')"><img src="'+a.photo+'"><div>✌️</div></div><div class="igHighlight" onclick="viewIgHighlight(\'jaeyoon\',\'📷\')"><img src="'+a.photo+'"><div>📷</div></div></div>';
+    }else{
+      highlights='<div class="igHighlights"><div class="igHighlight" onclick="viewIgHighlight(\''+id+'\',\'일상\')"><img src="'+a.photo+'"><div>일상</div></div><div class="igHighlight" onclick="viewIgHighlight(\''+id+'\',\'📷\')"><img src="'+a.photo+'"><div>📷</div></div></div>';
+    }
+  }
+  const cells=Array.from({length:a.posts},(_,i)=>'<div class="igGridCell" onclick="'+(id==="jaeyoon"?"openIgComments(\\'jaeyoon\\',"+i+")":"igAlert(\\'게시물\\')")+'">사진 '+(i+1)+'</div>').join("");
   document.getElementById("igProfileBody").innerHTML='<div class="igProfileTop"><div class="igProfileSummary">'+avatar+'<div class="igStats"><div><b>'+a.posts+'</b>게시물</div><div onclick="igAlert(\'팔로워\')"><b>'+a.followers+'</b>팔로워</div><div onclick="igAlert(\'팔로잉\')"><b>'+a.following+'</b>팔로잉</div></div></div><div class="igProfileName">'+a.name+'</div>'+(a.bio?'<div class="igBio">'+a.bio+'</div>':'')+(id!=="me"?'<div class="igProfileBtns"><button>팔로잉</button><button onclick="openIgDM()">메시지</button></div>':'<div class="igProfileBtns"><button>프로필 편집</button><button>프로필 공유</button></div>')+'</div>'+highlights+'<div class="igGrid">'+cells+'</div>';
   igNavStack=["profile"];
 }
-function viewIgHighlight(id){const a=getIgAccount(id);alert(a.name+" 하이라이트\n\n사진을 업로드하면 실제 하이라이트처럼 넘겨볼 수 있게 연결할 수 있어.");}
+function viewIgHighlight(id,label){
+  const a=getIgAccount(id);
+  let desc="사진을 업로드하면 실제 하이라이트처럼 넘겨볼 수 있게 연결할 수 있어.";
+  if(id==="jaeyoon"&&label==="✌️") desc=(userName||"사용자")+"와 같이 놀러 다니는 사진들";
+  if(id==="jaeyoon"&&label==="📷") desc="재윤이 사진";
+  alert(a.name+" · "+label+"\n\n"+desc);
+}
 function openIgDM(){
   document.getElementById("igHomeView").style.display="none";document.getElementById("igProfileView").style.display="none";document.getElementById("igDMView").style.display="block";
   const recent={jaeyoon:"새 메시지가 있습니다.",soobin:"새 메시지가 있습니다.",sunghoon:"",jungwon:"",jongseong:""};
