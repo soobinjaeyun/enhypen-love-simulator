@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="desktop-global-pointer-home-swipe-20261104">
+<meta name="build-version" content="ig-comment-input-safezone-20261104">
 
 <style>
 *{
@@ -1455,6 +1455,21 @@ button,input{
 @media (pointer:fine){
   .homeGestureArea{height:70px!important;background:transparent!important}
 }
+
+.igCommentsSheet{
+  height:68%!important;
+  padding-bottom:76px!important;
+}
+.igCommentInputWrap{
+  position:sticky!important;
+  bottom:0!important;
+  min-height:62px!important;
+  padding:9px 12px!important;
+  background:#fff!important;
+  z-index:85!important;
+}
+.igCommentInputWrap input{height:42px!important}
+#igCommentsOverlay{padding-bottom:42px!important}
 </style>
 </head>
 
@@ -3909,6 +3924,7 @@ function handleHomeTouchEnd(event){
 
 function handleHomeMouseDown(event){
   if(event.button!==0) return;
+  if(event.target.closest && event.target.closest("#igCommentsOverlay")) return;
   event.preventDefault();
 
   const target =
@@ -7636,6 +7652,7 @@ function isPointerNearPhoneBottom(ev,target){
 document.addEventListener("pointerdown",function(ev){
   if(ev.pointerType==="touch") return; // existing touch logic remains
   if(ev.button!==0) return;
+  if(ev.target.closest && ev.target.closest("#igCommentsOverlay")) return;
   const target=getTopVisibleAppScreen();
   if(!target || !isPointerNearPhoneBottom(ev,target)) return;
   desktopHomePointerActive=true;
