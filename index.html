@@ -6298,7 +6298,7 @@ const extraChatHistories={
     {type:"them",text:"파일 보내봐"},
     {type:"mefile",name:"경수_과제.pdf",size:"2.4MB"},
 
-    {type:"date",text:"2026년 9월 18일 금요일 · 밤"},
+    {type:"date",text:"2026년 9월 18일 금요일"},
     {type:"them",text:"야"},
     {type:"me",text:"왜요"},
     {type:"them",text:"너 아까 말한 거 틀렸음"},
@@ -6380,29 +6380,57 @@ function renderExtraChatHistory(chatId){
     area.innerHTML='<div id="extraEmptyNotice" class="emptyChatNotice">아직 대화가 없습니다.</div>';
     return;
   }
+
+  const startTimes={
+    soobin:["오후 2:14","오후 4:08","오후 1:32","오후 7:18","오후 9:41","오후 11:06"],
+    sunghoon:["오후 12:37","오후 3:16","오후 5:24","오후 1:08","오후 10:43","오후 8:19"],
+    jongseong:["오후 2:06","오후 5:31","오후 3:22","오후 9:47","오후 6:13","오후 4:52"]
+  };
+
+  let section=-1;
+  let minuteOffset=0;
+
+  function timeForMessage(){
+    const bases=startTimes[chatId]||["오후 6:00"];
+    const base=bases[Math.max(0,Math.min(section,bases.length-1))]||"오후 6:00";
+    const match=base.match(/(오전|오후) (\d+):(\d+)/);
+    if(!match) return base;
+    let h=Number(match[2]), m=Number(match[3])+Math.floor(minuteOffset/2);
+    while(m>=60){m-=60;h++;if(h===13)h=1;}
+    minuteOffset++;
+    return match[1]+" "+h+":"+String(m).padStart(2,"0");
+  }
+
   area.innerHTML="";
-  history.forEach((m,i)=>{
+  history.forEach((m)=>{
     if(m.type==="date"){
+      section++;
+      minuteOffset=0;
       const d=document.createElement("div");
       d.className="dateDivider";
       d.innerHTML="<span>"+m.text+"</span>";
       area.appendChild(d);
       return;
     }
+
+    const msgTime=timeForMessage();
+
     if(m.type==="me"){
       const row=document.createElement("div");
       row.className="me";
-      row.innerHTML='<div class="meBubble">'+m.text+'</div>';
+      row.innerHTML='<div class="msgTime">'+msgTime+'</div><div class="meBubble">'+m.text+'</div>';
       area.appendChild(row);
       return;
     }
+
     if(m.type==="mefile"){
       const row=document.createElement("div");
       row.className="me";
-      row.innerHTML='<div class="fileBubble" style="border-radius:10px 3px 10px 10px;background:#fee500"><div class="fileIcon">📄</div><div class="fileInfo"><div class="fileName">'+m.name+'</div><div class="fileSize">'+m.size+'</div></div></div>';
+      row.innerHTML='<div class="msgTime">'+msgTime+'</div><div class="fileBubble" style="border-radius:10px 3px 10px 10px;background:#fee500"><div class="fileIcon">📄</div><div class="fileInfo"><div class="fileName">'+m.name+'</div><div class="fileSize">'+m.size+'</div></div></div>';
       area.appendChild(row);
       return;
     }
+
     if(m.type==="file"){
       const row=document.createElement("div");
       row.className="fileMessageRow";
@@ -6412,10 +6440,11 @@ function renderExtraChatHistory(chatId){
         jongseong:{photo:"jongsung.jpg?v=20261104a",name:"종성"}
       };
       const fp=fileProfiles[chatId]||{photo:"jaeyoon.jpg",name:"상대"};
-      row.innerHTML='<img src="'+fp.photo+'"><div class="fileMessageContent"><div class="sender">'+fp.name+'</div><div class="fileBubble"><div class="fileIcon">📄</div><div class="fileInfo"><div class="fileName">'+m.name+'</div><div class="fileSize">'+m.size+'</div></div></div></div>';
+      row.innerHTML='<img src="'+fp.photo+'"><div class="fileMessageContent"><div class="sender">'+fp.name+'</div><div class="messageLine"><div class="fileBubble"><div class="fileIcon">📄</div><div class="fileInfo"><div class="fileName">'+m.name+'</div><div class="fileSize">'+m.size+'</div></div></div><div class="msgTime">'+msgTime+'</div></div></div>';
       area.appendChild(row);
       return;
     }
+
     const row=document.createElement("div");
     row.className="them";
     const chatProfiles={
@@ -6424,9 +6453,10 @@ function renderExtraChatHistory(chatId){
       jongseong:{photo:"jongsung.jpg?v=20261104a",name:"종성"}
     };
     const p=chatProfiles[chatId]||{photo:"jaeyoon.jpg",name:"상대"};
-    row.innerHTML='<img src="'+p.photo+'"><div class="themContent"><div class="sender">'+p.name+'</div><div class="messageLine"><div class="themBubble">'+m.text+'</div></div></div>';
+    row.innerHTML='<img src="'+p.photo+'"><div class="themContent"><div class="sender">'+p.name+'</div><div class="messageLine"><div class="themBubble">'+m.text+'</div><div class="msgTime">'+msgTime+'</div></div></div>';
     area.appendChild(row);
   });
+
   setTimeout(()=>{area.scrollTop=area.scrollHeight;},30);
 }
 
