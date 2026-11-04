@@ -1436,7 +1436,7 @@ button,input{
 .igDefaultAvatar{width:30px;height:30px;border-radius:50%;flex:0 0 30px;background:#f1f1f1;position:relative;overflow:hidden}
 .igDefaultAvatar:before{content:"";position:absolute;width:10px;height:10px;border-radius:50%;background:#c7c7c7;left:10px;top:6px}
 .igDefaultAvatar:after{content:"";position:absolute;width:18px;height:10px;border-radius:10px 10px 4px 4px;background:#c7c7c7;left:6px;top:18px}
-.igCommentContent{flex:1;min-width:0;padding-top:2px}.igCommentContent b{margin-right:8px}.igReply{margin:7px 0 0 0;font-size:11px}
+.igCommentContent{flex:1;min-width:0;padding-top:2px}.igCommentContent b{margin-right:8px}.igReply{margin:7px 0 0 0;font-size:11px;display:flex;align-items:center;gap:6px}.igReplyAvatar{width:18px;height:18px;border-radius:50%;object-fit:cover;flex:0 0 18px}
 .igCommentInputWrap{height:55px;border-top:1px solid #eee;display:flex;align-items:center;padding:7px 10px;gap:8px}
 .igCommentInputWrap input{flex:1;height:38px;border:1px solid #ddd;border-radius:20px;padding:0 13px;outline:none}
 .igCommentInputWrap button{border:0;background:transparent;color:#0095f6;font-weight:700}
@@ -3451,7 +3451,7 @@ const IG_SOOBIN_POSTS=[
     when:"2개월 전", caption:"✈️", likes:176, photo:"soobin_post5.jpeg?v=sbig2",
     comments:[
       {user:"yawnzzn",text:"잘 다녀와"},
-      {user:"bamgyuuuu",text:"내 선물",reply:"없음"}
+      {user:"kaikamal_",text:"내 선물",reply:"없음"}
     ]
   },
   {
@@ -3571,7 +3571,7 @@ function openIgComments(id,index){
   const data=id==="jaeyoon"?(IG_JAEYOON_POSTS[index]||{comments:[]}):id==="soobin"?(IG_SOOBIN_POSTS[index]||{comments:[]}):{comments:[]};
   const comments=(data.comments||[]).map(c=>{
     const text=c.text.replace("USER_NAME",userName||"나").replace("USER_IG",instagramUserId||"my_account");
-    return '<div class="igCommentRow">'+igCommentAvatarHTML(c.user)+'<div class="igCommentContent"><b>'+c.user+'</b><span>'+text+'</span>'+(c.reply?'<div class="igReply"><b>'+a.username+'</b> '+c.reply+'</div>':'')+'</div></div>';
+    return '<div class="igCommentRow">'+igCommentAvatarHTML(c.user)+'<div class="igCommentContent"><b>'+c.user+'</b><span>'+text+'</span>'+(c.reply?'<div class="igReply"><img class="igReplyAvatar" src="'+a.photo+'" alt=""><span><b>'+a.username+'</b> '+c.reply+'</span></div>':'')+'</div></div>';
   }).join("");
   const mine=(Array.isArray(igUserComments[key])?igUserComments[key]:[]).map(function(userComment){
     return '<div class="igCommentRow" data-user-comment="true"><span class="igDefaultAvatar"></span><div class="igCommentContent"><b>'+(instagramUserId||"my_account")+'</b><span>'+escapeIgText(userComment)+'</span></div></div>';
