@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="chat-search-force-20261104-2">
+<meta name="build-version" content="saved-contact-names-20261104">
 
 <style>
 *{
@@ -1739,10 +1739,10 @@ button,input{
       </div>
       <div style="padding:8px 18px 7px;color:#999;font-size:12px;">친구 5</div>
       <div class="friendRow2" onclick="openFriendProfile2('jaeyoon')"><img src="jaeyoon.jpg?v=20261104a"><div class="friendText2"><span>재윤이</span></div></div>
-      <div class="friendRow2" onclick="openFriendProfile2('soobin')"><img src="soobin.jpg?v=20261104a"><div class="friendText2"><span>수빈</span><small>ㅜ.ㅜ</small></div></div>
-      <div class="friendRow2" onclick="openFriendProfile2('sunghoon')"><img src="sunghoon.jpg?v=20261104a"><div class="friendText2"><span>박성훈</span><small>연락 확인 시간 늦어요</small></div></div>
-      <div class="friendRow2" onclick="openFriendProfile2('jongsung')"><img src="jongsung.jpg?v=20261104a"><div class="friendText2"><span>종성</span><small>X</small></div></div>
-      <div class="friendRow2" onclick="openFriendProfile2('jungwon')"><img src="jungwon.jpg?v=20261104-jungwon2"><div class="friendText2"><span>정원이</span><small>:D</small></div></div>
+      <div class="friendRow2" onclick="openFriendProfile2('soobin')"><img src="soobin.jpg?v=20261104a"><div class="friendText2"><span>영교24 최수빈 선배</span><small>ㅜ.ㅜ</small></div></div>
+      <div class="friendRow2" onclick="openFriendProfile2('sunghoon')"><img src="sunghoon.jpg?v=20261104a"><div class="friendText2"><span>경영24 박성훈 선배</span><small>연락 확인 시간 늦어요</small></div></div>
+      <div class="friendRow2" onclick="openFriendProfile2('jongsung')"><img src="jongsung.jpg?v=20261104a"><div class="friendText2"><span>경제25 쫑생 선배</span><small>X</small></div></div>
+      <div class="friendRow2" onclick="openFriendProfile2('jungwon')"><img src="jungwon.jpg?v=20261104-jungwon2"><div class="friendText2"><span>미컴26 양정원</span><small>:D</small></div></div>
     </div>
 
     <!-- 카톡 하단 메뉴 -->
@@ -6326,10 +6326,10 @@ document.addEventListener("keydown",function(e){
 
 const drawerPeople={
   jaeyoon:{name:"재윤이",photo:"jaeyoon.jpg?v=drawer2",status:""},
-  sunghoon:{name:"박성훈",photo:"sunghoon.jpg?v=drawer2",status:"연락 확인 시간 늦어요"},
-  jongseong:{name:"종성",photo:"jongsung.jpg?v=drawer2",status:"X"},
-  jungwon:{name:"정원",photo:"jungwon.jpg?v=drawer2",status:":D"},
-  soobin:{name:"수빈",photo:"soobin.jpg?v=drawer2",status:"ㅜ.ㅜ"}
+  sunghoon:{name:"경영24 박성훈 선배",photo:"sunghoon.jpg?v=drawer2",status:"연락 확인 시간 늦어요"},
+  jongseong:{name:"경제25 쫑생 선배",photo:"jongsung.jpg?v=drawer2",status:"X"},
+  jungwon:{name:"미컴26 양정원",photo:"jungwon.jpg?v=drawer2",status:":D"},
+  soobin:{name:"영교24 최수빈 선배",photo:"soobin.jpg?v=drawer2",status:"ㅜ.ㅜ"}
 };
 
 function getCurrentDrawerRoom(){
@@ -7050,10 +7050,10 @@ let currentExtraChat=null;
 let selectedFriend2=null;
 const friendData2={
   jaeyoon:{name:"재윤이",photo:"jaeyoon.jpg?v=20261104a",status:""},
-  soobin:{name:"수빈",photo:"soobin.jpg?v=20261104a",status:"ㅜ.ㅜ"},
-  sunghoon:{name:"박성훈",photo:"sunghoon.jpg?v=20261104a",status:"연락 확인 시간 늦어요"},
-  jongsung:{name:"종성",photo:"jongsung.jpg?v=20261104a",status:"X"},
-  jungwon:{name:"정원이",photo:"jungwon.jpg?v=20261104-jungwon2",status:":D"}
+  soobin:{name:"영교24 최수빈 선배",photo:"soobin.jpg?v=20261104a",status:"ㅜ.ㅜ"},
+  sunghoon:{name:"경영24 박성훈 선배",photo:"sunghoon.jpg?v=20261104a",status:"연락 확인 시간 늦어요"},
+  jongsung:{name:"경제25 쫑생 선배",photo:"jongsung.jpg?v=20261104a",status:"X"},
+  jungwon:{name:"미컴26 양정원",photo:"jungwon.jpg?v=20261104-jungwon2",status:":D"}
 };
 
 function openExtraRoom(chatId){
