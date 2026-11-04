@@ -1573,13 +1573,13 @@ button,input{
       </div>
 
       <!-- 미컴26 양정원 -->
-      <div class="chatItem" data-chat="jungwon" data-group="university" data-last-ts="0" onclick="openExtraRoom('jungwon')">
+      <div class="chatItem" data-chat="jungwon" data-group="university" data-last-ts="2026-10-30T21:20:00" onclick="openExtraRoom('jungwon')">
         <img src="jungwon.jpg?v=20261104a" class="profile" alt="정원이">
         <div class="listText">
           <div class="chatNameRow"><div class="chatName">미컴26 양정원</div></div>
-          <div class="preview">대화를 시작해보세요.</div>
+          <div class="preview">내일 봐</div>
         </div>
-        <div class="chatMeta"><div class="chatTime"></div></div>
+        <div class="chatMeta"><div class="chatTime">10월 30일</div></div>
       </div>
 
       <!-- 5인 단톡방 -->
@@ -6092,7 +6092,7 @@ document
 /* ===== repaired Kakao friends / extra chats ===== */
 const extraChats = {
   soobin:{name:"영교24 최수빈 선배"}, sunghoon:{name:"박성훈"},
-  jongseong:{name:"경제25 쫑생 선배"}, jungwon:{name:"정원이"},
+  jongseong:{name:"경제25 쫑생 선배"}, jungwon:{name:"미컴26 양정원"},
   class302:{name:"월요일 필교 2시 반 진리관 302호"},
   mom:{name:"엄마"}, dad:{name:"아빠"}, brother:{name:"오빠"}
 };
@@ -6382,6 +6382,63 @@ const extraChatHistories={
     {type:"them",text:"눈치 빨라졌네"},
     {type:"me",text:"ㅋㅋㅋㅋㅋㅋㅋㅋㅋ"},
     {type:"them",text:"내일 끝나고 연락해"},{type:"them",text:"튀지말고"}
+  ],
+  jungwon:[
+    {type:"date",text:"2026년 9월 7일 월요일"},
+    {type:"them",text:"혹시 오늘 필교 들었어?"},
+    {type:"me",text:"엉 왜?"},
+    {type:"them",text:"교수님 과제 뭐 내주셨는지 기억남?"},
+    {type:"me",text:"잠만"},{type:"me",text:"사진 찍어놓은 거 있을걸"},
+    {type:"them",text:"오"},{type:"them",text:"있으면 보내주라"},
+    {type:"meimage",label:"과제 사진"},
+    {type:"them",text:"ㄱㅅㄱㅅ"},
+
+    {type:"date",text:"2026년 9월 15일 화요일"},
+    {type:"me",text:"정원아"},
+    {type:"them",text:"엉"},
+    {type:"me",text:"너 오늘 학교야?"},
+    {type:"them",text:"ㅇㅇ"},{type:"them",text:"왜"},
+    {type:"me",text:"혹시 프린트 좀 해줄 수 있어...?ㅎ"},
+    {type:"them",text:"몇장인데"},
+    {type:"me",text:"4장..."},
+    {type:"them",text:"보내"},
+    {type:"me",text:"천사네"},
+    {type:"them",text:"500원"},
+    {type:"me",text:"미친"},
+
+    {type:"date",text:"2026년 9월 25일 금요일"},
+    {type:"them",text:"아까 학관에 있었지"},
+    {type:"me",text:"어케 알았어"},
+    {type:"them",text:"지나가다가 봄"},
+    {type:"me",text:"아는척하지"},
+    {type:"them",text:"너무 멀리 있었음"},
+    {type:"me",text:"핑계 ㄴ"},
+    {type:"them",text:"ㅋㅋㅋㅋ"},{type:"them",text:"다음엔 함"},
+
+    {type:"date",text:"2026년 10월 12일 월요일"},
+    {type:"me",text:"야 이거 제출 오늘까지 맞지?"},
+    {type:"them",text:"ㅇㅇ 11:59"},
+    {type:"me",text:"하"},
+    {type:"them",text:"안했어?"},
+    {type:"me",text:"응"},
+    {type:"them",text:"나도"},
+    {type:"me",text:"ㅋㅋㅋㅋㅋㅋㅋㅋㅋ"},{type:"me",text:"왜 이렇게 당당해"},
+    {type:"them",text:"아직 4시간이나 남음"},
+    {type:"me",text:"넌 할 수 있을 것 같아?"},
+    {type:"them",text:"아니"},
+    {type:"me",text:"그럼 왜 여유로운데"},
+    {type:"them",text:"이미 망해서"},
+
+    {type:"date",text:"2026년 10월 30일 금요일"},
+    {type:"them",text:"내일 2시 수업 맞지?"},
+    {type:"me",text:"엉"},
+    {type:"them",text:"ㅇㅋ"},
+    {type:"me",text:"왜?"},
+    {type:"them",text:"내가 시간표를 안 봐서"},
+    {type:"me",text:"그걸 왜 나한테 물어봄 ㅋㅋㅋㅋ"},
+    {type:"them",text:"너는 알 것 같았음"},
+    {type:"me",text:"어이없네"},
+    {type:"them",text:"ㅋㅋㅋ"},{type:"them",text:"내일 봐"}
   ]
 };
 
@@ -6396,7 +6453,8 @@ function renderExtraChatHistory(chatId){
   const startTimes={
     soobin:["오후 2:14","오후 4:08","오후 1:32","오후 7:18","오후 9:41","오후 11:06"],
     sunghoon:["오후 12:37","오후 3:16","오후 5:24","오후 1:08","오후 10:43","오후 8:19"],
-    jongseong:["오후 2:06","오후 5:31","오후 3:22","오후 9:47","오후 6:13","오후 4:52"]
+    jongseong:["오후 2:06","오후 5:31","오후 3:22","오후 9:47","오후 6:13","오후 4:52"],
+    jungwon:["오후 4:11","오후 12:46","오후 3:18","오후 7:54","오후 9:12"]
   };
 
   let section=-1;
@@ -6435,6 +6493,14 @@ function renderExtraChatHistory(chatId){
       return;
     }
 
+    if(m.type==="meimage"){
+      const row=document.createElement("div");
+      row.className="me";
+      row.innerHTML='<div class="msgTime">'+msgTime+'</div><div style="width:150px;height:115px;border-radius:12px 3px 12px 12px;background:linear-gradient(145deg,#e9edf2,#d8dee7);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#65707c;overflow:hidden"><div style="font-size:30px">🖼️</div><div style="font-size:11px;margin-top:6px">'+(m.label||"사진")+'</div></div>';
+      area.appendChild(row);
+      return;
+    }
+
     if(m.type==="mefile"){
       const row=document.createElement("div");
       row.className="me";
@@ -6449,7 +6515,8 @@ function renderExtraChatHistory(chatId){
       const fileProfiles={
         soobin:{photo:"soobin.jpg?v=20261104a",name:"수빈"},
         sunghoon:{photo:"sunghoon.jpg?v=20261104a",name:"박성훈"},
-        jongseong:{photo:"jongsung.jpg?v=20261104a",name:"종성"}
+        jongseong:{photo:"jongsung.jpg?v=20261104a",name:"종성"},
+        jungwon:{photo:"jungwon.jpg?v=20261104a",name:"정원"}
       };
       const fp=fileProfiles[chatId]||{photo:"jaeyoon.jpg",name:"상대"};
       row.innerHTML='<img src="'+fp.photo+'"><div class="fileMessageContent"><div class="sender">'+fp.name+'</div><div class="messageLine"><div class="fileBubble"><div class="fileIcon">📄</div><div class="fileInfo"><div class="fileName">'+m.name+'</div><div class="fileSize">'+m.size+'</div></div></div><div class="msgTime">'+msgTime+'</div></div></div>';
@@ -6462,7 +6529,8 @@ function renderExtraChatHistory(chatId){
     const chatProfiles={
       soobin:{photo:"soobin.jpg?v=20261104a",name:"수빈"},
       sunghoon:{photo:"sunghoon.jpg?v=20261104a",name:"박성훈"},
-      jongseong:{photo:"jongsung.jpg?v=20261104a",name:"종성"}
+      jongseong:{photo:"jongsung.jpg?v=20261104a",name:"종성"},
+      jungwon:{photo:"jungwon.jpg?v=20261104a",name:"정원"}
     };
     const p=chatProfiles[chatId]||{photo:"jaeyoon.jpg",name:"상대"};
     row.innerHTML='<img src="'+p.photo+'"><div class="themContent"><div class="sender">'+p.name+'</div><div class="messageLine"><div class="themBubble">'+m.text+'</div><div class="msgTime">'+msgTime+'</div></div></div>';
