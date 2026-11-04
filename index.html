@@ -885,7 +885,9 @@ button,input{
 /* 손을 놓았을 때 복귀 */
 
 .returnFromSwipe{
-  transition:transform .22s ease !important;
+  transition:
+    transform .22s ease,
+    opacity .22s ease !important;
 }
 
 /* 홈으로 빠질 때 */
@@ -1123,9 +1125,11 @@ button,input{
   .screen{
     width:390px;
     height:844px;
+    inset:auto;
     top:50%;
     left:50%;
-    transform:translate(-50%,-50%);
+    margin-left:-195px;
+    margin-top:-422px;
     border-radius:42px;
   }
 
@@ -1433,209 +1437,10 @@ button,input{
 
 
       <!--
-      나중에 사람 추가할 때는
-      아래 구조를 복사해서
-      chatItem 하나씩 추가하면 됨.
-      지금은 화면 느낌만 자연스럽게 하기 위해
-      비활성 예시 채팅 몇 개를 둠.
+      나중에 사람을 추가할 때 이 chatList 안에
+      같은 형식의 chatItem을 한 줄씩 추가하면 됩니다.
+      지금은 재윤이 채팅방만 표시합니다.
       -->
-
-
-      <div class="chatItem">
-
-        <div class="placeholderProfile">
-          👩🏻
-        </div>
-
-        <div class="listText">
-
-          <div class="chatNameRow">
-
-            <div class="chatName">
-              혜선, 유진, 나연
-            </div>
-
-            <div class="memberCount">
-              4
-            </div>
-
-          </div>
-
-          <div class="preview">
-            그래서 우리 내일 만나?
-          </div>
-
-        </div>
-
-        <div class="chatMeta">
-
-          <div class="chatTime">
-            오후 3:30
-          </div>
-
-          <div class="unreadBadge show">
-            3
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="chatItem">
-
-        <div class="placeholderProfile">
-          👩🏻‍🦰
-        </div>
-
-        <div class="listText">
-
-          <div class="chatNameRow">
-
-            <div class="chatName">
-              지은이
-            </div>
-
-          </div>
-
-          <div class="preview">
-            알겠어~ 선물 고마워
-          </div>
-
-        </div>
-
-        <div class="chatMeta">
-
-          <div class="chatTime">
-            오후 3:00
-          </div>
-
-          <div class="unreadBadge show">
-            1
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="chatItem">
-
-        <div class="placeholderProfile">
-          🏃🏻
-        </div>
-
-        <div class="listText">
-
-          <div class="chatNameRow">
-
-            <div class="chatName">
-              러닝 함께해요
-            </div>
-
-            <div class="memberCount">
-              34
-            </div>
-
-          </div>
-
-          <div class="preview">
-            한강 러닝 열어보려고 합니다~
-          </div>
-
-        </div>
-
-        <div class="chatMeta">
-
-          <div class="chatTime">
-            오후 2:00
-          </div>
-
-          <div class="unreadBadge show">
-            10
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="chatItem">
-
-        <div class="placeholderProfile">
-          🐈
-        </div>
-
-        <div class="listText">
-
-          <div class="chatNameRow">
-
-            <div class="chatName">
-              고양이 집사들
-            </div>
-
-            <div class="memberCount">
-              4
-            </div>
-
-          </div>
-
-          <div class="preview">
-            이 사진 정말 귀엽네요!
-          </div>
-
-        </div>
-
-        <div class="chatMeta">
-
-          <div class="chatTime">
-            오후 1:30
-          </div>
-
-          <div class="unreadBadge show">
-            3
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="chatItem">
-
-        <div class="placeholderProfile">
-          👓
-        </div>
-
-        <div class="listText">
-
-          <div class="chatNameRow">
-
-            <div class="chatName">
-              영어 선생님
-            </div>
-
-          </div>
-
-          <div class="preview">
-            다음주 수요일이 괜찮으세요?
-          </div>
-
-        </div>
-
-        <div class="chatMeta">
-
-          <div class="chatTime">
-            오후 1:00
-          </div>
-
-          <div class="unreadBadge show">
-            2
-          </div>
-
-        </div>
-
-      </div>
 
     </div>
 
