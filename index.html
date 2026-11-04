@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="instagram-comments-persistent-20261104">
+<meta name="build-version" content="desktop-global-pointer-home-swipe-20261104">
 
 <style>
 *{
@@ -1450,6 +1450,10 @@ button,input{
   }
   .homeGestureArea:active{cursor:grabbing!important}
   .homeIndicator{pointer-events:none}
+}
+
+@media (pointer:fine){
+  .homeGestureArea{height:70px!important;background:transparent!important}
 }
 </style>
 </head>
@@ -7602,6 +7606,74 @@ function enforceSavedContactNames(){
 }
 document.addEventListener("DOMContentLoaded",enforceSavedContactNames);
 window.addEventListener("load",enforceSavedContactNames);
+
+/* ===== robust desktop home swipe: global pointer events ===== */
+let desktopHomePointerActive=false;
+let desktopHomePointerId=null;
+let desktopHomeStartY=0;
+let desktopHomeCurrentY=0;
+let desktopHomeTarget=null;
+
+function getTopVisibleAppScreen(){
+  const ids=["profilePhotoViewer2","friendProfile2","activeCall","incomingCall","extraRoom","room","instagram","other","kakao"];
+  for(const id of ids){
+    const el=document.getElementById(id);
+    if(!el) continue;
+    const cs=getComputedStyle(el);
+    const visible=cs.display!=="none" && cs.visibility!=="hidden" && Number(cs.opacity)!==0;
+    const shownByClass=(id==="room"||id==="extraRoom")?el.classList.contains("show"):true;
+    if(visible && shownByClass) return el;
+  }
+  return null;
+}
+
+function isPointerNearPhoneBottom(ev,target){
+  const r=target.getBoundingClientRect();
+  return ev.clientX>=r.left && ev.clientX<=r.right &&
+         ev.clientY>=r.bottom-105 && ev.clientY<=r.bottom+4;
+}
+
+document.addEventListener("pointerdown",function(ev){
+  if(ev.pointerType==="touch") return; // existing touch logic remains
+  if(ev.button!==0) return;
+  const target=getTopVisibleAppScreen();
+  if(!target || !isPointerNearPhoneBottom(ev,target)) return;
+  desktopHomePointerActive=true;
+  desktopHomePointerId=ev.pointerId;
+  desktopHomeStartY=desktopHomeCurrentY=ev.clientY;
+  desktopHomeTarget=target;
+  target.classList.remove("returnFromSwipe","exitToHome");
+  target.classList.add("swipingHome");
+  try{document.body.setPointerCapture && document.body.setPointerCapture(ev.pointerId);}catch(e){}
+  ev.preventDefault();
+},true);
+
+document.addEventListener("pointermove",function(ev){
+  if(!desktopHomePointerActive || ev.pointerId!==desktopHomePointerId || !desktopHomeTarget) return;
+  desktopHomeCurrentY=ev.clientY;
+  let distance=Math.max(0,Math.min(360,desktopHomeStartY-desktopHomeCurrentY));
+  const scale=Math.max(.88,1-distance/1700);
+  desktopHomeTarget.style.transform="translateY("+(-distance)+"px) scale("+scale+")";
+  desktopHomeTarget.style.opacity=String(Math.max(.82,1-distance/1000));
+  ev.preventDefault();
+},true);
+
+function endDesktopHomePointer(ev){
+  if(!desktopHomePointerActive || (ev.pointerId!=null && ev.pointerId!==desktopHomePointerId)) return;
+  const target=desktopHomeTarget;
+  const distance=desktopHomeStartY-desktopHomeCurrentY;
+  desktopHomePointerActive=false;
+  desktopHomePointerId=null;
+  desktopHomeTarget=null;
+  if(!target) return;
+  if(distance>=45){
+    finishHomeGesture(target);
+  }else{
+    cancelHomeGesture(target);
+  }
+}
+document.addEventListener("pointerup",endDesktopHomePointer,true);
+document.addEventListener("pointercancel",endDesktopHomePointer,true);
 </script>
 
 </body>
