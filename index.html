@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="ig-comment-input-safezone-20261104">
+<meta name="build-version" content="jaeyoon-real-instagram-photos-20261104">
 
 <style>
 *{
@@ -1470,6 +1470,14 @@ button,input{
 }
 .igCommentInputWrap input{height:42px!important}
 #igCommentsOverlay{padding-bottom:42px!important}
+
+.igMediaViewer{position:absolute;inset:0;z-index:100;background:#000;color:#fff}
+.igMediaImage{width:100%;height:100%;object-fit:contain}
+.igMediaTop{position:absolute;top:42px;left:0;right:0;z-index:3;display:flex;align-items:center;padding:12px 14px;background:linear-gradient(rgba(0,0,0,.55),transparent)}
+.igMediaTop button{border:0;background:transparent;color:#fff;font-size:28px;margin-right:10px}.igMediaTop small{display:block;font-size:10px;color:#ddd;margin-top:2px}
+.igMediaProgress{position:absolute;top:40px;left:8px;right:8px;z-index:4;display:flex;gap:3px}.igMediaProgress span{height:2px;flex:1;background:rgba(255,255,255,.35)}.igMediaProgress span.active{background:#fff}
+.igMediaCaption{position:absolute;left:20px;right:20px;bottom:65px;z-index:3;text-align:center;font-size:13px;text-shadow:0 1px 3px #000}
+.igMediaPrev,.igMediaNext{position:absolute;top:20%;bottom:20%;width:28%;border:0;background:transparent;color:transparent;z-index:2}.igMediaPrev{left:0}.igMediaNext{right:0}
 </style>
 </head>
 
@@ -2266,6 +2274,14 @@ button,input{
     <div id="igDMList"></div>
   </div>
 
+  <div id="igMediaViewer" class="igMediaViewer" style="display:none">
+    <div class="igMediaTop"><button onclick="closeIgMediaViewer()">×</button><div><b id="igMediaUser"></b><small id="igMediaTime"></small></div></div>
+    <div id="igMediaProgress" class="igMediaProgress"></div>
+    <img id="igMediaImage" class="igMediaImage" src="" alt="">
+    <div id="igMediaCaption" class="igMediaCaption"></div>
+    <button class="igMediaPrev" onclick="moveIgMedia(-1)">‹</button>
+    <button class="igMediaNext" onclick="moveIgMedia(1)">›</button>
+  </div>
   <div id="igPostDetail" class="igPostDetail" style="display:none">
     <div class="igProfileHeader"><button onclick="closeIgPostDetail()">‹</button><b>게시물</b><button>•••</button></div>
     <div id="igPostDetailBody" class="igPostDetailBody"></div>
@@ -3343,7 +3359,7 @@ function openRoom(){
    Instagram
 ========================================= */
 const IG_ACCOUNTS={
-  jaeyoon:{username:"_imjaeyooon",name:"심재윤",photo:"jaeyoon.jpg",posts:3,followers:624,following:411,bio:"",story:"가끔"},
+  jaeyoon:{username:"_imjaeyooon",name:"심재윤",photo:"jaeyoon_profile.jpeg?v=jyig1",posts:3,followers:624,following:411,bio:"",story:"가끔"},
   soobin:{username:"page.soobin",name:"최수빈",photo:"soobin.jpg",posts:8,followers:731,following:506,bio:"",story:"자주"},
   sunghoon:{username:"park.sunghoon",name:"박성훈",photo:"sunghoon.jpg",posts:1,followers:519,following:388,bio:"인생은 독고다이",story:"가끔"},
   jongseong:{username:"jayxrock_",name:"박종성",photo:"jongsung.jpg",posts:9,followers:603,following:417,bio:"JAYSON",story:"자주"},
@@ -3367,7 +3383,7 @@ function persistIgUserComments(){
 }
 const IG_JAEYOON_POSTS=[
   {
-    when:"한달 전", caption:"이제 슬슬 추워진다 ㅠㅠ", likes:132,
+    when:"한달 전", caption:"이제 슬슬 추워진다 ㅠㅠ", likes:132, photo:"jaeyoon_post1.jpeg?v=jyig1",
     comments:[
       {user:"park.sunghoon",text:"USER_NAME이랑 감?",reply:"🤭"},
       {user:"jayxrock_",text:"수업이나 와 ㅅㄲ야"},
@@ -3376,7 +3392,7 @@ const IG_JAEYOON_POSTS=[
     ]
   },
   {
-    when:"2주 전", caption:"photo by.@USER_IG", likes:153,
+    when:"2주 전", caption:"photo by.@USER_IG", likes:153, photo:"jaeyoon_post2.jpeg?v=jyig1",
     comments:[
       {user:"page.soobin",text:"뭐야 둘이 놀러간거?",reply:"음ㅎㅎ"},
       {user:"park.sunghoon",text:"꺼져"},
@@ -3385,7 +3401,7 @@ const IG_JAEYOON_POSTS=[
     ]
   },
   {
-    when:"15시간 전", caption:"💪💪", likes:124,
+    when:"15시간 전", caption:"💪💪", likes:124, photo:"jaeyoon_post3.jpeg?v=jyig1",
     comments:[
       {user:"jayxrock_",text:"아 같이간다매"},
       {user:"gym_daily24",text:"💪"},
@@ -3425,7 +3441,7 @@ function igPostHTML(id,i){
   const commentCount=(data.comments||[]).length+storedComments.length;
   return '<article class="igPost" data-post-key="'+key+'">'+
     '<div class="igPostHead" onclick="openIgProfile(\''+id+'\')"><img src="'+a.photo+'"><div><span>'+a.username+'</span>'+(data.when?'<div style="font-size:9px;color:#999;font-weight:400;margin-top:2px">'+data.when+'</div>':'')+'</div><span style="margin-left:auto">•••</span></div>'+
-    '<div class="igPlaceholder" onclick="openIgPostDetail(\''+id+'\','+i+')">게시물 사진 업로드 예정</div>'+
+    (data.photo?'<img class="igPostPhoto" src="'+data.photo+'" onclick="openIgPostDetail(\''+id+'\','+i+')" alt="게시물 사진">':'<div class="igPlaceholder" onclick="openIgPostDetail(\''+id+'\','+i+')">게시물 사진 업로드 예정</div>')+
     '<div class="igPostActions"><button class="'+(liked?"igLiked":"")+'" onclick="toggleIgLike(\''+key+'\',this,'+(data.likes||0)+')">'+(liked?"♥":"♡")+'</button><button onclick="openIgComments(\''+id+'\','+i+')">○</button><button onclick="igAlert(\'공유\')">△</button><button class="save" onclick="toggleIgSave(\''+key+'\',this)">'+(saved?"▣":"▢")+'</button></div>'+
     '<div class="igPostText"><div class="igLikes" id="likes-'+key+'">좋아요 '+likeCount+'개</div><div class="igCaption"><b>'+a.username+'</b>'+caption+'</div><div class="igComments" onclick="openIgComments(\''+id+'\','+i+')">댓글 '+commentCount+'개 모두 보기</div></div></article>';
 }
@@ -3511,10 +3527,32 @@ function submitIgComment(){
   list.scrollTop=list.scrollHeight;
   updateIgCommentCount(key);
 }
+let igMediaItems=[],igMediaIndex=0;
+function openIgMediaViewer(items,user,time,caption){
+  igMediaItems=items||[];igMediaIndex=0;
+  document.getElementById("igMediaUser").textContent=user||"";
+  document.getElementById("igMediaTime").textContent=time||"";
+  document.getElementById("igMediaCaption").textContent=caption||"";
+  document.getElementById("igMediaViewer").style.display="block";
+  renderIgMediaViewer();
+}
+function renderIgMediaViewer(){
+  if(!igMediaItems.length)return;
+  document.getElementById("igMediaImage").src=igMediaItems[igMediaIndex];
+  document.getElementById("igMediaProgress").innerHTML=igMediaItems.map((_,i)=>'<span class="'+(i===igMediaIndex?"active":"")+'"></span>').join("");
+}
+function moveIgMedia(dir){
+  if(!igMediaItems.length)return;
+  igMediaIndex+=dir;
+  if(igMediaIndex<0)igMediaIndex=0;
+  if(igMediaIndex>=igMediaItems.length){closeIgMediaViewer();return;}
+  renderIgMediaViewer();
+}
+function closeIgMediaViewer(){document.getElementById("igMediaViewer").style.display="none";}
 function viewIgStory(id){
   const a=getIgAccount(id);
   if(id==="jaeyoon"){
-    alert(a.name+"의 스토리 · 10분 전\n\n"+(userName||"사용자")+"이가 찍어준 사진\n\n사진은 나중에 업로드하면 여기에 표시돼.");
+    openIgMediaViewer(["jaeyoon_story.jpeg?v=jyig1"],a.username,"10분 전",(userName||"사용자")+"이가 찍어준 사진");
     return;
   }
   alert(a.name+"의 스토리\n\n스토리 사진은 이후 업로드하면 여기에 표시돼.");
@@ -3529,21 +3567,29 @@ function openIgProfile(id){
   let highlights="";
   if(id!=="me"){
     if(id==="jaeyoon"){
-      highlights='<div class="igHighlights"><div class="igHighlight" onclick="viewIgHighlight(\'jaeyoon\',\'✌️\')"><img src="'+a.photo+'"><div>✌️</div></div><div class="igHighlight" onclick="viewIgHighlight(\'jaeyoon\',\'📷\')"><img src="'+a.photo+'"><div>📷</div></div></div>';
+      highlights='<div class="igHighlights"><div class="igHighlight" onclick="viewIgHighlight(\'jaeyoon\',\'✌️\')"><img src="jaeyoon_highlight_peace1.jpeg?v=jyig1"><div>✌️</div></div><div class="igHighlight" onclick="viewIgHighlight(\'jaeyoon\',\'📷\')"><img src="jaeyoon_highlight_camera1.jpeg?v=jyig1"><div>📷</div></div></div>';
     }else{
       highlights='<div class="igHighlights"><div class="igHighlight" onclick="viewIgHighlight(\''+id+'\',\'일상\')"><img src="'+a.photo+'"><div>일상</div></div><div class="igHighlight" onclick="viewIgHighlight(\''+id+'\',\'📷\')"><img src="'+a.photo+'"><div>📷</div></div></div>';
     }
   }
-  const cells=Array.from({length:a.posts},(_,i)=>'<div class="igGridCell" onclick="openIgPostDetail(\''+id+'\','+i+')">사진 '+(i+1)+'</div>').join("");
+  const cells=Array.from({length:a.posts},(_,i)=>{
+    const pd=id==="jaeyoon"?IG_JAEYOON_POSTS[i]:null;
+    return '<div class="igGridCell" onclick="openIgPostDetail(\''+id+'\','+i+')">'+(pd&&pd.photo?'<img src="'+pd.photo+'" alt="게시물 '+(i+1)+'">':'사진 '+(i+1))+'</div>';
+  }).join("");
   document.getElementById("igProfileBody").innerHTML='<div class="igProfileTop"><div class="igProfileSummary">'+avatar+'<div class="igStats"><div><b>'+a.posts+'</b>게시물</div><div onclick="igAlert(\'팔로워\')"><b>'+a.followers+'</b>팔로워</div><div onclick="igAlert(\'팔로잉\')"><b>'+a.following+'</b>팔로잉</div></div></div><div class="igProfileName">'+a.name+'</div>'+(a.bio?'<div class="igBio">'+a.bio+'</div>':'')+(id!=="me"?'<div class="igProfileBtns"><button>팔로잉</button><button onclick="openIgDM()">메시지</button></div>':'<div class="igProfileBtns"><button>프로필 편집</button><button>프로필 공유</button></div>')+'</div>'+highlights+'<div class="igGrid">'+cells+'</div>';
   igNavStack=["profile"];
 }
 function viewIgHighlight(id,label){
   const a=getIgAccount(id);
-  let desc="사진을 업로드하면 실제 하이라이트처럼 넘겨볼 수 있게 연결할 수 있어.";
-  if(id==="jaeyoon"&&label==="✌️") desc=(userName||"사용자")+"와 같이 놀러 다니는 사진들";
-  if(id==="jaeyoon"&&label==="📷") desc="재윤이 사진";
-  alert(a.name+" · "+label+"\n\n"+desc);
+  if(id==="jaeyoon"&&label==="✌️"){
+    openIgMediaViewer(["jaeyoon_highlight_peace1.jpeg?v=jyig1","jaeyoon_highlight_peace2.jpeg?v=jyig1"],a.username,"하이라이트","✌️");
+    return;
+  }
+  if(id==="jaeyoon"&&label==="📷"){
+    openIgMediaViewer(["jaeyoon_highlight_camera1.jpeg?v=jyig1","jaeyoon_highlight_camera2.jpeg?v=jyig1","jaeyoon_highlight_camera3.jpeg?v=jyig1"],a.username,"하이라이트","📷");
+    return;
+  }
+  alert(a.name+" · "+label+"\n\n사진은 이후 업로드하면 연결돼.");
 }
 function openIgDM(){
   document.getElementById("igPostDetail").style.display="none";
