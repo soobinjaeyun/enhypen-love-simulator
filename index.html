@@ -1396,7 +1396,10 @@ button,input{
 .igPostPhoto{width:100%;aspect-ratio:1/1;background:#eee;object-fit:cover;display:block}
 .igPlaceholder{width:100%;aspect-ratio:1/1;background:linear-gradient(135deg,#ececec,#d7d7d7);display:flex;align-items:center;justify-content:center;color:#999;font-size:13px}
 .igPostActions{display:flex;align-items:center;padding:9px 11px 3px;gap:15px}
-.igPostActions button{border:0;background:transparent;font-size:25px;padding:0;cursor:pointer}
+.igPostActions button{border:0;background:transparent;padding:0;cursor:pointer;width:25px;height:25px;display:flex;align-items:center;justify-content:center}
+.igPostActions svg{width:24px;height:24px;display:block;fill:none;stroke:#000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.igPostActions .igLiked svg{fill:#ff3040;stroke:#ff3040}
+.igPostActions .igSavedIcon svg{fill:#000;stroke:#000}
 .igPostActions .save{margin-left:auto}
 .igLiked{color:#ff3040!important}
 .igPostText{padding:0 12px;font-size:12px;line-height:1.55}
@@ -3509,18 +3512,17 @@ function igPostHTML(id,i){
   return '<article class="igPost" data-post-key="'+key+'">'+
     '<div class="igPostHead" onclick="openIgProfile(\''+id+'\')"><img src="'+a.photo+'"><div><span>'+a.username+'</span>'+(data.when?'<div style="font-size:9px;color:#999;font-weight:400;margin-top:2px">'+data.when+'</div>':'')+'</div><span style="margin-left:auto">•••</span></div>'+
     (data.photo?'<img class="igPostPhoto" src="'+data.photo+'" onclick="openIgPostDetail(\''+id+'\','+i+')" alt="게시물 사진">':'<div class="igPlaceholder" onclick="openIgPostDetail(\''+id+'\','+i+')">게시물 사진 업로드 예정</div>')+
-    '<div class="igPostActions"><button class="'+(liked?"igLiked":"")+'" onclick="toggleIgLike(\''+key+'\',this,'+(data.likes||0)+')">'+(liked?"♥":"♡")+'</button><button onclick="openIgComments(\''+id+'\','+i+')">○</button><button onclick="igAlert(\'공유\')">△</button><button class="save" onclick="toggleIgSave(\''+key+'\',this)">'+(saved?"▣":"▢")+'</button></div>'+
+    '<div class="igPostActions"><button class="'+(liked?"igLiked":"")+'" onclick="toggleIgLike(\''+key+'\',this,'+(data.likes||0)+')" aria-label="좋아요"><svg viewBox="0 0 24 24"><path d="M12 21s-7.2-4.35-9.5-8.55C.55 8.9 2.35 4.5 6.35 4.5c2.15 0 3.55 1.2 4.35 2.4.8-1.2 2.2-2.4 4.35-2.4 4 0 5.8 4.4 3.85 7.95C19.2 16.65 12 21 12 21z"/></svg></button><button onclick="openIgComments(\''+id+'\','+i+')" aria-label="댓글"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 1 1-3.15-6.6A8.45 8.45 0 0 1 21 11.5z"/><path d="M8.5 19.35 5 21l.8-3.65"/></svg></button><button onclick="igAlert(\'공유\')" aria-label="공유"><svg viewBox="0 0 24 24"><path d="M22 2 9.6 14.4"/><path d="m22 2-7.8 20-4.6-7.6L2 9.8 22 2z"/></svg></button><button class="save '+(saved?"igSavedIcon":"")+'" onclick="toggleIgSave(\''+key+'\',this)" aria-label="저장"><svg viewBox="0 0 24 24"><path d="M5 3h14v18l-7-4.8L5 21V3z"/></svg></button></div>'+
     '<div class="igPostText"><div class="igLikes" id="likes-'+key+'">좋아요 '+likeCount+'개</div><div class="igCaption"><b>'+a.username+'</b>'+caption+'</div><div class="igComments" onclick="openIgComments(\''+id+'\','+i+')">댓글 '+commentCount+'개 모두 보기</div></div></article>';
 }
 
 function toggleIgLike(key,btn,baseLikes){
   igLikes[key]=!igLikes[key];
-  btn.textContent=igLikes[key]?"♥":"♡";
   btn.classList.toggle("igLiked",igLikes[key]);
   const el=document.getElementById("likes-"+key);
   if(el) el.textContent="좋아요 "+(baseLikes+(igLikes[key]?1:0))+"개";
 }
-function toggleIgSave(key,btn){igSaved[key]=!igSaved[key];btn.textContent=igSaved[key]?"▣":"▢";}
+function toggleIgSave(key,btn){igSaved[key]=!igSaved[key];btn.classList.toggle("igSavedIcon",igSaved[key]);}
 
 function escapeIgText(value){
   return String(value).replace(/[&<>"']/g,function(ch){
