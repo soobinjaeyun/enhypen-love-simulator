@@ -12,22 +12,16 @@
   padding:0;
   -webkit-tap-highlight-color:transparent;
 }
-
 html,body{
   width:100%;
   height:100%;
   overflow:hidden;
 }
-
 body{
   background:#111;
   font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;
 }
-
-button,input{
-  font-family:inherit;
-}
-
+button,input{font-family:inherit}
 .screen{
   position:absolute;
   inset:0;
@@ -35,7 +29,6 @@ button,input{
   height:100%;
   overflow:hidden;
 }
-
 .status{
   height:45px;
   flex-shrink:0;
@@ -46,9 +39,9 @@ button,input{
   font-weight:600;
 }
 
-/* ================================
+/* =========================
    이름 설정
-================================ */
+========================= */
 
 #setup{
   z-index:500;
@@ -58,26 +51,22 @@ button,input{
   align-items:center;
   padding:30px;
 }
-
 .setupBox{
   width:100%;
   max-width:330px;
   text-align:center;
   transform:translateY(-25px);
 }
-
 .setupTitle{
   font-size:25px;
   font-weight:700;
   margin-bottom:10px;
 }
-
 .setupDesc{
   font-size:14px;
   color:#777;
   margin-bottom:30px;
 }
-
 #nameInput{
   width:100%;
   height:52px;
@@ -89,7 +78,6 @@ button,input{
   text-align:center;
   font-size:17px;
 }
-
 .startBtn{
   width:100%;
   height:52px;
@@ -103,9 +91,9 @@ button,input{
   cursor:pointer;
 }
 
-/* ================================
+/* =========================
    잠금화면
-================================ */
+========================= */
 
 #lock{
   z-index:100;
@@ -114,30 +102,25 @@ button,input{
     linear-gradient(rgba(0,0,0,.04),rgba(0,0,0,.14)),
     linear-gradient(150deg,#91b6d4,#c9bad1,#dfb7b1);
 }
-
 .lockIcon{
   text-align:center;
   margin-top:20px;
 }
-
 .lockDate{
   text-align:center;
   margin-top:25px;
   font-size:19px;
 }
-
 .lockTime{
   text-align:center;
   font-size:78px;
   font-weight:200;
   letter-spacing:-5px;
 }
-
 #notificationStack{
   margin-top:42px;
   padding:0 14px;
 }
-
 .lockNotification{
   width:100%;
   padding:12px 14px;
@@ -151,12 +134,10 @@ button,input{
   transform:translateY(-18px) scale(.98);
   transition:opacity .35s ease,transform .4s ease;
 }
-
 .lockNotification.show{
   opacity:1;
   transform:translateY(0) scale(1);
 }
-
 .notTop{
   display:flex;
   align-items:center;
@@ -164,7 +145,6 @@ button,input{
   color:#666;
   font-size:12px;
 }
-
 .kakaoMini{
   width:23px;
   height:23px;
@@ -176,17 +156,14 @@ button,input{
   justify-content:center;
   color:#111;
 }
-
 .notName{
   font-size:15px;
   font-weight:600;
 }
-
 .notMessage{
   margin-top:3px;
   font-size:14px;
 }
-
 .unlockText{
   position:absolute;
   left:0;
@@ -196,9 +173,9 @@ button,input{
   font-size:13px;
 }
 
-/* ================================
+/* =========================
    홈
-================================ */
+========================= */
 
 #home{
   z-index:1;
@@ -207,19 +184,16 @@ button,input{
     linear-gradient(rgba(0,0,0,.04),rgba(0,0,0,.14)),
     linear-gradient(150deg,#91b6d4,#c9bad1,#dfb7b1);
 }
-
 .apps{
   padding:35px 22px;
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:25px 15px;
 }
-
 .app{
   text-align:center;
   cursor:pointer;
 }
-
 .appIcon{
   position:relative;
   width:61px;
@@ -231,30 +205,17 @@ button,input{
   justify-content:center;
   font-size:27px;
 }
-
-.kakaoIcon{
-  background:#fee500;
-  color:#111;
-}
-
+.kakaoIcon{background:#fee500;color:#111}
 .instagramIcon{
   background:linear-gradient(145deg,#7048ff,#db3d99,#ff963d);
 }
-
-.photoIcon{
-  background:white;
-}
-
-.greenIcon{
-  background:#34c759;
-}
-
+.photoIcon{background:white}
+.greenIcon{background:#34c759}
 .appName{
   margin-top:6px;
   font-size:11px;
   text-shadow:0 1px 3px rgba(0,0,0,.4);
 }
-
 .appBadge{
   display:none;
   position:absolute;
@@ -272,11 +233,7 @@ button,input{
   font-size:12px;
   font-weight:700;
 }
-
-.appBadge.show{
-  display:flex;
-}
-
+.appBadge.show{display:flex}
 .dock{
   position:absolute;
   left:12px;
@@ -292,40 +249,33 @@ button,input{
   align-items:center;
 }
 
-/* ================================
+/* =========================
    카톡 목록
-================================ */
+========================= */
 
 #kakao{
   display:none;
   z-index:10;
   background:white;
 }
-
 .kakaoHeader{
   height:64px;
   padding:18px 18px 10px;
   display:flex;
   align-items:flex-end;
 }
-
-.kakaoHeader h1{
-  font-size:23px;
-}
-
+.kakaoHeader h1{font-size:23px}
 .homeBtn{
   margin-left:auto;
   font-size:14px;
   cursor:pointer;
 }
-
 .chatItem{
   display:flex;
   align-items:center;
   padding:12px 16px;
   cursor:pointer;
 }
-
 .profile{
   width:55px;
   height:55px;
@@ -333,18 +283,15 @@ button,input{
   object-fit:cover;
   background:#ddd;
 }
-
 .listText{
   flex:1;
   min-width:0;
   margin-left:12px;
 }
-
 .chatName{
   font-size:16px;
   font-weight:600;
 }
-
 .preview{
   margin-top:5px;
   color:#888;
@@ -353,18 +300,15 @@ button,input{
   overflow:hidden;
   text-overflow:ellipsis;
 }
-
 .chatMeta{
   margin-left:10px;
   text-align:right;
 }
-
 .chatTime{
   font-size:11px;
   color:#aaa;
   margin-bottom:7px;
 }
-
 .unreadBadge{
   display:none;
   width:21px;
@@ -378,14 +322,11 @@ button,input{
   font-size:11px;
   font-weight:700;
 }
+.unreadBadge.show{display:flex}
 
-.unreadBadge.show{
-  display:flex;
-}
-
-/* ================================
+/* =========================
    채팅방
-================================ */
+========================= */
 
 #room{
   display:none;
@@ -393,11 +334,7 @@ button,input{
   background:#b2c7d9;
   flex-direction:column;
 }
-
-#room.show{
-  display:flex;
-}
-
+#room.show{display:flex}
 .roomHeader{
   height:56px;
   flex-shrink:0;
@@ -405,23 +342,19 @@ button,input{
   display:flex;
   align-items:center;
 }
-
 .back{
   width:40px;
   font-size:34px;
   cursor:pointer;
 }
-
 .roomName{
   font-size:17px;
   font-weight:600;
 }
-
 .roomTools{
   margin-left:auto;
   font-size:20px;
 }
-
 #messages{
   flex:1;
   min-height:0;
@@ -429,12 +362,10 @@ button,input{
   padding:10px 12px 16px;
   -webkit-overflow-scrolling:touch;
 }
-
 .dateDivider{
   text-align:center;
   margin:10px 0 20px;
 }
-
 .dateDivider span{
   display:inline-block;
   padding:5px 12px;
@@ -443,13 +374,11 @@ button,input{
   color:white;
   font-size:11px;
 }
-
 .them{
   display:flex;
   align-items:flex-start;
   margin-bottom:10px;
 }
-
 .them img{
   width:39px;
   height:39px;
@@ -457,54 +386,42 @@ button,input{
   border-radius:14px;
   object-fit:cover;
 }
-
-.themContent{
-  max-width:75%;
-}
-
+.themContent{max-width:75%}
 .sender{
   font-size:12px;
   margin-bottom:5px;
 }
-
 .messageLine{
   display:flex;
   align-items:flex-end;
 }
-
-.themBubble,
-.meBubble{
+.themBubble,.meBubble{
   max-width:245px;
   padding:8px 10px;
   font-size:14px;
   line-height:1.42;
   word-break:keep-all;
 }
-
 .themBubble{
   background:white;
   border-radius:3px 10px 10px 10px;
 }
-
 .me{
   display:flex;
   justify-content:flex-end;
   align-items:flex-end;
   margin:6px 0;
 }
-
 .meBubble{
   background:#fee500;
   border-radius:10px 3px 10px 10px;
 }
-
 .msgTime{
   margin:0 5px 1px;
   color:#59656d;
   font-size:9px;
   white-space:nowrap;
 }
-
 .newDivider{
   display:flex;
   align-items:center;
@@ -513,7 +430,6 @@ button,input{
   color:#59656d;
   font-size:10px;
 }
-
 .newDivider::before,
 .newDivider::after{
   content:"";
@@ -522,9 +438,9 @@ button,input{
   background:rgba(70,80,90,.22);
 }
 
-/* ================================
+/* =========================
    입력창
-================================ */
+========================= */
 
 .composer{
   min-height:64px;
@@ -537,7 +453,6 @@ button,input{
   position:relative;
   z-index:30;
 }
-
 .plus{
   width:31px;
   height:31px;
@@ -549,7 +464,6 @@ button,input{
   color:#777;
   font-size:22px;
 }
-
 .fakeInput{
   flex:1;
   height:39px;
@@ -561,15 +475,14 @@ button,input{
   font-size:14px;
   cursor:pointer;
 }
-
 .fakeInput.waiting{
   background:#f5f5f5;
   color:#bbb;
 }
 
-/* ================================
+/* =========================
    선택지
-================================ */
+========================= */
 
 #choiceOverlay{
   display:none;
@@ -578,7 +491,6 @@ button,input{
   z-index:80;
   background:rgba(0,0,0,.25);
 }
-
 .choicePanel{
   position:absolute;
   left:0;
@@ -588,14 +500,12 @@ button,input{
   border-radius:20px 20px 0 0;
   background:#f5f5f5;
 }
-
 .choiceTitle{
   text-align:center;
   color:#888;
   font-size:12px;
   margin-bottom:9px;
 }
-
 .choiceBtn{
   width:100%;
   margin-bottom:8px;
@@ -608,9 +518,9 @@ button,input{
   cursor:pointer;
 }
 
-/* ================================
-   전화 수신
-================================ */
+/* =========================
+   전화
+========================= */
 
 #incomingCall{
   display:none;
@@ -618,7 +528,6 @@ button,input{
   color:white;
   background:#222;
 }
-
 .callBg{
   position:absolute;
   inset:-25px;
@@ -628,13 +537,11 @@ button,input{
   filter:blur(20px);
   transform:scale(1.12);
 }
-
 .callShade{
   position:absolute;
   inset:0;
   background:rgba(0,0,0,.18);
 }
-
 .callContent{
   position:relative;
   z-index:2;
@@ -642,26 +549,22 @@ button,input{
   padding-top:90px;
   text-align:center;
 }
-
 .callPhoto{
   width:108px;
   height:108px;
   border-radius:50%;
   object-fit:cover;
 }
-
 .callName{
   margin-top:18px;
   font-size:31px;
   font-weight:500;
 }
-
 .callSub{
   margin-top:7px;
   color:#ddd;
   font-size:15px;
 }
-
 .callButtons{
   position:absolute;
   left:0;
@@ -670,11 +573,7 @@ button,input{
   display:flex;
   justify-content:space-around;
 }
-
-.callGroup{
-  font-size:13px;
-}
-
+.callGroup{font-size:13px}
 .callRound{
   width:68px;
   height:68px;
@@ -685,18 +584,10 @@ button,input{
   font-size:27px;
   cursor:pointer;
 }
+.reject{background:#ff3b30}
+.answer{background:#34c759}
 
-.reject{
-  background:#ff3b30;
-}
-
-.answer{
-  background:#34c759;
-}
-
-/* ================================
-   통화 중
-================================ */
+/* 통화중 */
 
 #activeCall{
   display:none;
@@ -704,7 +595,6 @@ button,input{
   color:white;
   background:#222;
 }
-
 .activeBg{
   position:absolute;
   inset:-25px;
@@ -714,13 +604,11 @@ button,input{
   filter:blur(20px);
   transform:scale(1.12);
 }
-
 .activeShade{
   position:absolute;
   inset:0;
   background:rgba(0,0,0,.22);
 }
-
 .activeContent{
   position:relative;
   z-index:2;
@@ -728,17 +616,12 @@ button,input{
   padding-top:80px;
   text-align:center;
 }
-
-.activeName{
-  font-size:29px;
-}
-
+.activeName{font-size:29px}
 #callTimer{
   margin-top:8px;
   color:#ddd;
   font-size:14px;
 }
-
 #callDialogue{
   margin:70px 25px 0;
   min-height:72px;
@@ -751,14 +634,12 @@ button,input{
   font-size:16px;
   line-height:1.5;
 }
-
 #callChoices{
   position:absolute;
   left:15px;
   right:15px;
   bottom:125px;
 }
-
 .callChoice{
   width:100%;
   margin:4px 0;
@@ -769,7 +650,6 @@ button,input{
   color:#111;
   font-size:13px;
 }
-
 .endCall{
   position:absolute;
   left:50%;
@@ -784,16 +664,13 @@ button,input{
   font-size:27px;
 }
 
-/* ================================
-   기타 앱
-================================ */
+/* 기타 */
 
 #other{
   display:none;
   z-index:30;
   background:#f7f7f7;
 }
-
 .otherHeader{
   height:62px;
   padding:0 18px 13px;
@@ -802,19 +679,13 @@ button,input{
   display:flex;
   align-items:flex-end;
 }
-
 .otherBody{
   text-align:center;
   padding-top:180px;
   color:#999;
 }
 
-/* ================================
-   PC
-================================ */
-
 @media(min-width:600px){
-
   .screen{
     width:390px;
     height:844px;
@@ -823,45 +694,28 @@ button,input{
     transform:translate(-50%,-50%);
     border-radius:42px;
   }
-
 }
 </style>
 </head>
 
 <body>
 
-<!-- 이름 설정 -->
+<!-- 이름 -->
 <div id="setup" class="screen">
-
   <div class="setupBox">
+    <div class="setupTitle">이름을 알려주세요💕</div>
+    <div class="setupDesc">최애가 이 이름으로 당신을 부릅니다.</div>
 
-    <div class="setupTitle">
-      이름을 알려주세요💕
-    </div>
+    <input id="nameInput" maxlength="10" placeholder="이름" autocomplete="off">
 
-    <div class="setupDesc">
-      최애가 이 이름으로 당신을 부릅니다.
-    </div>
-
-    <input
-      id="nameInput"
-      maxlength="10"
-      placeholder="이름"
-      autocomplete="off">
-
-    <button
-      class="startBtn"
-      onclick="startGame()">
+    <button class="startBtn" onclick="startGame()">
       시작하기
     </button>
-
   </div>
-
 </div>
 
 <!-- 홈 -->
 <div id="home" class="screen">
-
   <div class="status">
     <span class="clock">00:00</span>
     <span>●●● 100%</span>
@@ -870,130 +724,66 @@ button,input{
   <div class="apps">
 
     <div class="app" onclick="openKakao()">
-
       <div class="appIcon kakaoIcon">
-
         💬
-
-        <div id="homeBadge" class="appBadge">
-          2
-        </div>
-
+        <div id="homeBadge" class="appBadge">2</div>
       </div>
-
-      <div class="appName">
-        카카오톡
-      </div>
-
+      <div class="appName">카카오톡</div>
     </div>
-
 
     <div class="app" onclick="openOther('Instagram')">
-
-      <div class="appIcon instagramIcon">
-        ◎
-      </div>
-
-      <div class="appName">
-        Instagram
-      </div>
-
+      <div class="appIcon instagramIcon">◎</div>
+      <div class="appName">Instagram</div>
     </div>
 
-
     <div class="app" onclick="openOther('사진')">
-
-      <div class="appIcon photoIcon">
-        🌈
-      </div>
-
-      <div class="appName">
-        사진
-      </div>
-
+      <div class="appIcon photoIcon">🌈</div>
+      <div class="appName">사진</div>
     </div>
 
   </div>
 
-
   <div class="dock">
-
     <div class="app" onclick="openOther('전화')">
-
-      <div class="appIcon greenIcon">
-        ☎
-      </div>
-
+      <div class="appIcon greenIcon">☎</div>
     </div>
 
     <div class="app" onclick="openOther('메시지')">
-
-      <div class="appIcon greenIcon">
-        ●
-      </div>
-
+      <div class="appIcon greenIcon">●</div>
     </div>
-
   </div>
-
 </div>
 
-<!-- 카톡 목록 -->
+<!-- 카톡 -->
 <div id="kakao" class="screen">
-
   <div class="status">
     <span class="clock">00:00</span>
     <span>●●● 100%</span>
   </div>
 
   <div class="kakaoHeader">
-
-    <h1>
-      채팅
-    </h1>
-
-    <div class="homeBtn" onclick="goHome()">
-      홈
-    </div>
-
+    <h1>채팅</h1>
+    <div class="homeBtn" onclick="goHome()">홈</div>
   </div>
-
 
   <div class="chatItem" onclick="openRoom()">
 
-    <img
-      src="jaeyoon.jpg"
-      class="profile">
+    <img src="jaeyoon.jpg" class="profile">
 
     <div class="listText">
-
-      <div class="chatName">
-        재윤이
-      </div>
-
-      <div id="preview" class="preview">
-        새 메시지가 없습니다
-      </div>
-
+      <div class="chatName">재윤이</div>
+      <div id="preview" class="preview">새 메시지가 없습니다</div>
     </div>
 
-
     <div class="chatMeta">
-
-      <div id="listTime" class="chatTime">
-      </div>
-
-      <div id="listBadge" class="unreadBadge">
-        2
-      </div>
-
+      <div id="listTime" class="chatTime"></div>
+      <div id="listBadge" class="unreadBadge">2</div>
     </div>
 
   </div>
-
 </div>
 
-<!-- 채팅방 -->
+<!-- 대화방 -->
 <div id="room" class="screen">
 
   <div class="status">
@@ -1002,179 +792,96 @@ button,input{
   </div>
 
   <div class="roomHeader">
-
-    <div class="back" onclick="backList()">
-      ‹
-    </div>
-
-    <div class="roomName">
-      재윤이
-    </div>
-
-    <div class="roomTools">
-      ⌕　☰
-    </div>
-
+    <div class="back" onclick="backList()">‹</div>
+    <div class="roomName">재윤이</div>
+    <div class="roomTools">⌕　☰</div>
   </div>
-
 
   <div id="messages"></div>
 
-
   <div class="composer">
+    <div class="plus">＋</div>
 
-    <div class="plus">
-      ＋
-    </div>
-
-    <div
-      id="messageInput"
-      class="fakeInput"
-      onclick="openChoices()">
+    <div id="messageInput" class="fakeInput" onclick="openChoices()">
       메시지 입력
     </div>
 
-    <div>
-      ☺
-    </div>
-
-    <div>
-      #
-    </div>
-
+    <div>☺</div>
+    <div>#</div>
   </div>
 
-
   <div id="choiceOverlay">
-
     <div class="choicePanel">
-
-      <div class="choiceTitle">
-        보낼 메시지를 선택하세요
-      </div>
-
+      <div class="choiceTitle">보낼 메시지를 선택하세요</div>
       <div id="choiceButtons"></div>
-
     </div>
-
   </div>
 
 </div>
 
 <!-- 전화 수신 -->
 <div id="incomingCall" class="screen">
-
   <div class="callBg"></div>
   <div class="callShade"></div>
 
   <div class="callContent">
 
-    <img
-      src="jaeyoon.jpg"
-      class="callPhoto">
+    <img src="jaeyoon.jpg" class="callPhoto">
 
-    <div class="callName">
-      재윤이
-    </div>
-
-    <div class="callSub">
-      휴대전화
-    </div>
-
+    <div class="callName">재윤이</div>
+    <div class="callSub">휴대전화</div>
 
     <div class="callButtons">
 
       <div class="callGroup">
-
-        <button
-          class="callRound reject"
-          onclick="rejectCall()">
-          ✕
-        </button>
-
-        <div>
-          거절
-        </div>
-
+        <button class="callRound reject" onclick="rejectCall()">✕</button>
+        <div>거절</div>
       </div>
 
-
       <div class="callGroup">
-
-        <button
-          class="callRound answer"
-          onclick="answerCall()">
-          ☎
-        </button>
-
-        <div>
-          응답
-        </div>
-
+        <button class="callRound answer" onclick="answerCall()">☎</button>
+        <div>응답</div>
       </div>
 
     </div>
 
   </div>
-
 </div>
 
 <!-- 통화 중 -->
 <div id="activeCall" class="screen">
-
   <div class="activeBg"></div>
   <div class="activeShade"></div>
 
   <div class="activeContent">
 
-    <div class="activeName">
-      재윤이
-    </div>
+    <div class="activeName">재윤이</div>
+    <div id="callTimer">00:00</div>
 
-    <div id="callTimer">
-      00:00
-    </div>
-
-    <div id="callDialogue">
-      여보세요?
-    </div>
+    <div id="callDialogue">여보세요?</div>
 
     <div id="callChoices"></div>
 
-    <button
-      class="endCall"
-      onclick="endCall()">
-      ☎
-    </button>
+    <button class="endCall" onclick="endCall()">☎</button>
 
   </div>
-
 </div>
 
-<!-- 기타 앱 -->
+<!-- 기타 -->
 <div id="other" class="screen">
-
   <div class="status">
     <span class="clock">00:00</span>
     <span>●●● 100%</span>
   </div>
 
   <div class="otherHeader">
-
-    <span
-      onclick="closeOther()"
-      style="font-size:28px;margin-right:15px;cursor:pointer">
-      ‹
-    </span>
-
+    <span onclick="closeOther()" style="font-size:28px;margin-right:15px;cursor:pointer">‹</span>
     <strong id="otherTitle"></strong>
-
   </div>
 
   <div class="otherBody">
     이 앱은 다음에 만들 거야 :)
   </div>
-
 </div>
 
 <!-- 잠금화면 -->
@@ -1185,19 +892,13 @@ button,input{
     <span>●●● 100%</span>
   </div>
 
-  <div class="lockIcon">
-    🔒
-  </div>
+  <div class="lockIcon">🔒</div>
 
-  <div id="lockDate" class="lockDate">
-  </div>
+  <div id="lockDate" class="lockDate"></div>
 
-  <div class="lockTime clock">
-    00:00
-  </div>
+  <div class="lockTime clock">00:00</div>
 
-  <div id="notificationStack">
-  </div>
+  <div id="notificationStack"></div>
 
   <div class="unlockText">
     화면을 눌러 잠금 해제
@@ -1207,9 +908,9 @@ button,input{
 
 <script>
 
-/* =========================================
+/* =========================
    상태
-========================================= */
+========================= */
 
 let userName = "";
 let calledName = "";
@@ -1237,9 +938,9 @@ let callSeconds = 0;
 let callEnding = false;
 
 
-/* =========================================
-   이름 조사
-========================================= */
+/* =========================
+   이름
+========================= */
 
 function getCalledName(name){
 
@@ -1252,7 +953,6 @@ function getCalledName(name){
       name.length - 1
     );
 
-
   if(
     code >= 0xAC00 &&
     code <= 0xD7A3
@@ -1261,32 +961,25 @@ function getCalledName(name){
     const hasBatchim =
       (code - 0xAC00) % 28 !== 0;
 
-
     return hasBatchim
       ? name + "아"
       : name + "야";
-
   }
 
-
   return name + "아";
-
 }
 
 
-/* =========================================
-   메시지 시간
-========================================= */
+/* =========================
+   메시지 도착 시각
+========================= */
 
 function getMessageTime(){
 
-  const now =
-    new Date();
-
+  const now = new Date();
 
   let hour =
     now.getHours();
-
 
   const minute =
     String(
@@ -1297,21 +990,17 @@ function getMessageTime(){
       "0"
     );
 
-
   const period =
     hour < 12
       ? "오전"
       : "오후";
 
-
   hour =
     hour % 12;
-
 
   if(hour === 0){
     hour = 12;
   }
-
 
   return (
     period +
@@ -1320,58 +1009,44 @@ function getMessageTime(){
     ":" +
     minute
   );
-
 }
 
 
-/* =========================================
-   게임 시작
-========================================= */
+/* =========================
+   시작
+========================= */
 
 function startGame(){
 
   const value =
     document
-      .getElementById(
-        "nameInput"
-      )
+      .getElementById("nameInput")
       .value
       .trim();
 
-
   if(!value){
 
-    alert(
-      "이름을 입력해주세요."
-    );
+    alert("이름을 입력해주세요.");
 
     return;
   }
 
-
   userName =
     value;
-
 
   calledName =
     getCalledName(
       userName
     );
 
-
   prepareAudio();
-
 
   initializeStory();
 
-
   document
-    .getElementById(
-      "setup"
-    )
+    .getElementById("setup")
     .style.display =
     "none";
-
 
   unreadCount = 0;
 
@@ -1379,13 +1054,10 @@ function startGame(){
 
   receivedInserted = false;
 
-
   updateUnreadUI();
 
 
-  /*
-  첫 번째 카톡
-  */
+  /* 첫 메시지 */
 
   setTimeout(
     function(){
@@ -1400,9 +1072,7 @@ function startGame(){
   );
 
 
-  /*
-  두 번째 카톡
-  */
+  /* 두 번째 */
 
   setTimeout(
     function(){
@@ -1418,21 +1088,24 @@ function startGame(){
 }
 
 
-/* =========================================
-   카톡 수신
-========================================= */
+/* =========================
+   새 메시지 수신
+========================= */
 
 function receiveNewMessage(text){
+
+  /*
+  실제로 메시지가 도착하는
+  바로 이 순간 시간 생성
+  */
 
   const time =
     getMessageTime();
 
 
   const message = {
-
     text:text,
     time:time
-
   };
 
 
@@ -1452,17 +1125,13 @@ function receiveNewMessage(text){
 
 
   document
-    .getElementById(
-      "preview"
-    )
+    .getElementById("preview")
     .textContent =
     text;
 
 
   document
-    .getElementById(
-      "listTime"
-    )
+    .getElementById("listTime")
     .textContent =
     time;
 
@@ -1475,9 +1144,9 @@ function receiveNewMessage(text){
 }
 
 
-/* =========================================
-   잠금화면 알림
-========================================= */
+/* =========================
+   잠금 알림
+========================= */
 
 function addLockNotification(
   text,
@@ -1553,9 +1222,9 @@ function addLockNotification(
 }
 
 
-/* =========================================
+/* =========================
    안읽음
-========================================= */
+========================= */
 
 function updateUnreadUI(){
 
@@ -1564,7 +1233,6 @@ function updateUnreadUI(){
       .getElementById(
         "homeBadge"
       );
-
 
   const listBadge =
     document
@@ -1581,48 +1249,36 @@ function updateUnreadUI(){
       .textContent =
       unreadCount;
 
-
     listBadge
       .textContent =
       unreadCount;
 
-
     homeBadge
       .classList
-      .add(
-        "show"
-      );
-
+      .add("show");
 
     listBadge
       .classList
-      .add(
-        "show"
-      );
+      .add("show");
 
   }else{
 
     homeBadge
       .classList
-      .remove(
-        "show"
-      );
-
+      .remove("show");
 
     listBadge
       .classList
-      .remove(
-        "show"
-      );
+      .remove("show");
 
   }
 
 }
 
 
-/* =========================================
+/* =========================
    과거 대화
-========================================= */
+========================= */
 
 function initializeStory(){
 
@@ -1631,7 +1287,6 @@ function initializeStory(){
   ){
     return;
   }
-
 
   storyInitialized =
     true;
@@ -1653,6 +1308,11 @@ function initializeStory(){
     false
   );
 
+
+  /*
+  과거 메시지는
+  시간을 직접 지정하므로 그대로 유지
+  */
 
   addThem(
     userName +
@@ -1720,9 +1380,9 @@ function initializeStory(){
 }
 
 
-/* =========================================
+/* =========================
    새 메시지 대화방 삽입
-========================================= */
+========================= */
 
 function insertReceivedMessages(){
 
@@ -1793,9 +1453,9 @@ function insertReceivedMessages(){
 }
 
 
-/* =========================================
-   상대 메시지 DOM
-========================================= */
+/* =========================
+   상대 말풍선 DOM
+========================= */
 
 function createThemElement(
   text,
@@ -1843,23 +1503,19 @@ function createThemElement(
 }
 
 
-/* =========================================
+/* =========================
    화면 이동
-========================================= */
+========================= */
 
 document
-  .getElementById(
-    "lock"
-  )
+  .getElementById("lock")
   .addEventListener(
     "click",
     function(){
 
       if(
         document
-          .getElementById(
-            "setup"
-          )
+          .getElementById("setup")
           .style.display !==
         "none"
       ){
@@ -1877,9 +1533,7 @@ document
 function openKakao(){
 
   document
-    .getElementById(
-      "kakao"
-    )
+    .getElementById("kakao")
     .style.display =
     "block";
 
@@ -1889,9 +1543,7 @@ function openKakao(){
 function goHome(){
 
   document
-    .getElementById(
-      "kakao"
-    )
+    .getElementById("kakao")
     .style.display =
     "none";
 
@@ -1904,13 +1556,9 @@ function openRoom(){
 
 
   document
-    .getElementById(
-      "room"
-    )
+    .getElementById("room")
     .classList
-    .add(
-      "show"
-    );
+    .add("show");
 
 
   unreadCount =
@@ -1928,13 +1576,9 @@ function openRoom(){
 function backList(){
 
   document
-    .getElementById(
-      "room"
-    )
+    .getElementById("room")
     .classList
-    .remove(
-      "show"
-    );
+    .remove("show");
 
 }
 
@@ -1942,17 +1586,13 @@ function backList(){
 function openOther(name){
 
   document
-    .getElementById(
-      "otherTitle"
-    )
+    .getElementById("otherTitle")
     .textContent =
     name;
 
 
   document
-    .getElementById(
-      "other"
-    )
+    .getElementById("other")
     .style.display =
     "block";
 
@@ -1962,18 +1602,16 @@ function openOther(name){
 function closeOther(){
 
   document
-    .getElementById(
-      "other"
-    )
+    .getElementById("other")
     .style.display =
     "none";
 
 }
 
 
-/* =========================================
-   메시지 추가
-========================================= */
+/* =========================
+   날짜
+========================= */
 
 function addDate(
   text,
@@ -1982,16 +1620,12 @@ function addDate(
 
   const area =
     document
-      .getElementById(
-        "messages"
-      );
+      .getElementById("messages");
 
 
   const div =
     document
-      .createElement(
-        "div"
-      );
+      .createElement("div");
 
 
   div.className =
@@ -2016,11 +1650,27 @@ function addDate(
 }
 
 
+/* =========================
+   내 메시지
+
+   중요:
+   time을 따로 안 주면
+   여기서 실제 생성 시각을 만듦.
+========================= */
+
 function addMe(
   text,
-  time = getMessageTime(),
+  time,
   scroll = true
 ){
+
+  if(!time){
+
+    time =
+      getMessageTime();
+
+  }
+
 
   const area =
     document
@@ -2079,11 +1729,27 @@ function addMe(
 }
 
 
+/* =========================
+   재윤이 메시지
+
+   중요:
+   time을 따로 안 주면
+   실제 말풍선 생성 순간의 시간.
+========================= */
+
 function addThem(
   text,
-  time = getMessageTime(),
+  time,
   scroll = true
 ){
+
+  if(!time){
+
+    time =
+      getMessageTime();
+
+  }
+
 
   const area =
     document
@@ -2149,9 +1815,9 @@ function scrollBottom(){
 }
 
 
-/* =========================================
+/* =========================
    선택지
-========================================= */
+========================= */
 
 function setChoices(array){
 
@@ -2180,9 +1846,7 @@ function setChoices(array){
 
     input
       .classList
-      .remove(
-        "waiting"
-      );
+      .remove("waiting");
 
   }else{
 
@@ -2192,9 +1856,7 @@ function setChoices(array){
 
     input
       .classList
-      .add(
-        "waiting"
-      );
+      .add("waiting");
 
   }
 
@@ -2224,9 +1886,7 @@ function lockInput(){
 
   input
     .classList
-    .add(
-      "waiting"
-    );
+    .add("waiting");
 
 }
 
@@ -2330,6 +1990,10 @@ function selectChoice(index){
   lockInput();
 
 
+  /*
+  이 순간 실제 시간이 찍힘
+  */
+
   addMe(
     text
   );
@@ -2343,9 +2007,13 @@ function selectChoice(index){
 }
 
 
-/* =========================================
-   메시지 순차 실행
-========================================= */
+/* =========================
+   순차 메시지
+
+   sequence에는 시간을 넣지 않음.
+   실제 setTimeout이 실행되는 순간
+   addThem/addMe에서 시간을 생성.
+========================= */
 
 function sequence(
   items,
@@ -2424,9 +2092,9 @@ function sequence(
 }
 
 
-/* =========================================
+/* =========================
    스토리
-========================================= */
+========================= */
 
 function runStage(
   current,
@@ -2440,9 +2108,7 @@ function runStage(
     "first"
   ){
 
-    if(
-      index === 0
-    ){
+    if(index === 0){
 
       sequence([
 
@@ -2469,9 +2135,7 @@ function runStage(
     }
 
 
-    if(
-      index === 1
-    ){
+    if(index === 1){
 
       sequence([
 
@@ -2504,9 +2168,7 @@ function runStage(
     }
 
 
-    if(
-      index === 2
-    ){
+    if(index === 2){
 
       sequence([
 
@@ -2585,9 +2247,7 @@ function runStage(
     "nextDay"
   ){
 
-    if(
-      index === 0
-    ){
+    if(index === 0){
 
       sequence([
 
@@ -2614,9 +2274,7 @@ function runStage(
     }
 
 
-    if(
-      index === 1
-    ){
+    if(index === 1){
 
       sequence([
 
@@ -2643,9 +2301,7 @@ function runStage(
     }
 
 
-    if(
-      index === 2
-    ){
+    if(index === 2){
 
       sequence([
 
@@ -2696,9 +2352,7 @@ function runStage(
     "weekend"
   ){
 
-    if(
-      index === 0
-    ){
+    if(index === 0){
 
       sequence([
 
@@ -2737,9 +2391,7 @@ function runStage(
     }
 
 
-    if(
-      index === 1
-    ){
+    if(index === 1){
 
       sequence([
 
@@ -2796,9 +2448,7 @@ function runStage(
     }
 
 
-    if(
-      index === 2
-    ){
+    if(index === 2){
 
       sequence([
 
@@ -2849,9 +2499,7 @@ function runStage(
     "movie"
   ){
 
-    if(
-      index === 0
-    ){
+    if(index === 0){
 
       sequence([
 
@@ -2914,9 +2562,7 @@ function runStage(
     }
 
 
-    if(
-      index === 1
-    ){
+    if(index === 1){
 
       sequence([
 
@@ -2961,9 +2607,7 @@ function runStage(
     }
 
 
-    if(
-      index === 2
-    ){
+    if(index === 2){
 
       sequence([
 
@@ -3029,9 +2673,7 @@ function runStage(
     "saturday"
   ){
 
-    if(
-      index === 0
-    ){
+    if(index === 0){
 
       sequence([
 
@@ -3058,9 +2700,7 @@ function runStage(
     }
 
 
-    if(
-      index === 1
-    ){
+    if(index === 1){
 
       sequence([
 
@@ -3087,9 +2727,7 @@ function runStage(
     }
 
 
-    if(
-      index === 2
-    ){
+    if(index === 2){
 
       sequence([
 
@@ -3120,9 +2758,9 @@ function runStage(
 }
 
 
-/* =========================================
-   선택지 단계
-========================================= */
+/* =========================
+   다음 단계
+========================= */
 
 function weekendChoices(){
 
@@ -3214,9 +2852,9 @@ function startSaturday(){
 }
 
 
-/* =========================================
+/* =========================
    전화
-========================================= */
+========================= */
 
 function incomingPhoneCall(){
 
@@ -3246,8 +2884,6 @@ function incomingPhoneCall(){
 
 }
 
-
-/* 전화 거절 */
 
 function rejectCall(){
 
@@ -3294,8 +2930,6 @@ function rejectCall(){
 
 }
 
-
-/* 전화 응답 */
 
 function answerCall(){
 
@@ -3347,9 +2981,7 @@ function answerCall(){
     "";
 
 
-  if(
-    callInterval
-  ){
+  if(callInterval){
 
     clearInterval(
       callInterval
@@ -3368,7 +3000,7 @@ function answerCall(){
         const minute =
           String(
             Math.floor(
-              callSeconds / 60
+              callSeconds/60
             )
           )
           .padStart(
@@ -3379,7 +3011,7 @@ function answerCall(){
 
         const second =
           String(
-            callSeconds % 60
+            callSeconds%60
           )
           .padStart(
             2,
@@ -3392,8 +3024,8 @@ function answerCall(){
             "callTimer"
           )
           .textContent =
-          minute +
-          ":" +
+          minute+
+          ":"+
           second;
 
       },
@@ -3409,7 +3041,7 @@ function answerCall(){
           "callDialogue"
         )
         .textContent =
-        calledName +
+        calledName+
         " 어디쯤이야?";
 
 
@@ -3421,8 +3053,6 @@ function answerCall(){
 
 }
 
-
-/* 통화 선택지 */
 
 function showCallChoices(){
 
@@ -3489,9 +3119,7 @@ function showCallChoices(){
 
 function chooseCall(index){
 
-  if(
-    callEnding
-  ){
+  if(callEnding){
     return;
   }
 
@@ -3504,9 +3132,7 @@ function chooseCall(index){
     "";
 
 
-  if(
-    index === 0
-  ){
+  if(index === 0){
 
     callDialogueSequence([
 
@@ -3530,9 +3156,7 @@ function chooseCall(index){
   }
 
 
-  if(
-    index === 1
-  ){
+  if(index === 1){
 
     callDialogueSequence([
 
@@ -3556,9 +3180,7 @@ function chooseCall(index){
   }
 
 
-  if(
-    index === 2
-  ){
+  if(index === 2){
 
     callDialogueSequence([
 
@@ -3589,9 +3211,9 @@ function chooseCall(index){
 }
 
 
-/* =========================================
-   통화 대사 + 마지막 마무리
-========================================= */
+/* =========================
+   전화 마지막
+========================= */
 
 function callDialogueSequence(
   items
@@ -3632,8 +3254,7 @@ function callDialogueSequence(
 
 
   /*
-  기존 마지막 대사가 나온 뒤
-  4초 기다림
+  마지막 대사 이후 4초
   */
 
   setTimeout(
@@ -3652,8 +3273,7 @@ function callDialogueSequence(
 
 
   /*
-  마지막 대사를 2초 보여준 후
-  자동 통화 종료
+  2초 후 자동 종료
   */
 
   setTimeout(
@@ -3668,15 +3288,9 @@ function callDialogueSequence(
 }
 
 
-/* =========================================
-   전화 종료
-========================================= */
-
 function endCall(){
 
-  if(
-    callInterval
-  ){
+  if(callInterval){
 
     clearInterval(
       callInterval
@@ -3703,9 +3317,9 @@ function endCall(){
 }
 
 
-/* =========================================
-   자체 알림음
-========================================= */
+/* =========================
+   알림음
+========================= */
 
 function prepareAudio(){
 
@@ -3716,16 +3330,12 @@ function prepareAudio(){
       window.webkitAudioContext;
 
 
-    if(
-      !AC
-    ){
+    if(!AC){
       return;
     }
 
 
-    if(
-      !audioContext
-    ){
+    if(!audioContext){
 
       audioContext =
         new AC();
@@ -3751,9 +3361,7 @@ function playNotificationSound(){
 
   try{
 
-    if(
-      !audioContext
-    ){
+    if(!audioContext){
       return;
     }
 
@@ -3772,7 +3380,7 @@ function playNotificationSound(){
 
     makeTone(
       1175,
-      now + .15,
+      now+.15,
       .18,
       .10
     );
@@ -3820,21 +3428,19 @@ function makeTone(
   gain.gain
     .exponentialRampToValueAtTime(
       volume,
-      start + .015
+      start+.015
     );
 
 
   gain.gain
     .exponentialRampToValueAtTime(
       .0001,
-      start + duration
+      start+duration
     );
 
 
   oscillator
-    .connect(
-      gain
-    );
+    .connect(gain);
 
 
   gain
@@ -3849,17 +3455,17 @@ function makeTone(
 
 
   oscillator.stop(
-    start +
-    duration +
+    start+
+    duration+
     .02
   );
 
 }
 
 
-/* =========================================
-   현재 시간
-========================================= */
+/* =========================
+   상단 시계
+========================= */
 
 function updateClock(){
 
@@ -3895,8 +3501,8 @@ function updateClock(){
       function(element){
 
         element.textContent =
-          hour +
-          ":" +
+          hour+
+          ":"+
           minute;
 
       }
@@ -3922,11 +3528,11 @@ function updateClock(){
     )
     .textContent =
 
-    (now.getMonth()+1) +
-    "월 " +
+    (now.getMonth()+1)+
+    "월 "+
 
-    now.getDate() +
-    "일 " +
+    now.getDate()+
+    "일 "+
 
     days[
       now.getDay()
@@ -3944,9 +3550,7 @@ setInterval(
 );
 
 
-/* =========================================
-   Enter
-========================================= */
+/* Enter */
 
 document
   .getElementById(
