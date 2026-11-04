@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="sender-saved-names-final-20261104">
+<meta name="build-version" content="real-app-icons-20261104">
 
 <style>
 *{
@@ -1350,6 +1350,10 @@ button,input{
 .chatSearchHit .themBubble,.chatSearchHit .meBubble{box-shadow:0 0 0 2px rgba(255,199,0,.7)}
 .chatSearchCurrent .themBubble,.chatSearchCurrent .meBubble{background:#fff3a8!important}
 .chatSearchCurrent.me .meBubble{background:#ffd92f!important}
+
+.realAppIcon{background:none!important;overflow:hidden;padding:0!important}
+.realAppIcon>img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.kakaoIcon.realAppIcon,.instagramIcon.realAppIcon,.photoIcon.realAppIcon{background:none!important}
 </style>
 </head>
 
@@ -1404,9 +1408,8 @@ button,input{
       class="app"
       onclick="openKakao()">
 
-      <div class="appIcon kakaoIcon">
-
-        💬
+      <div class="appIcon kakaoIcon realAppIcon">
+        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/99/cb/cd/99cbcd0c-fec1-476a-ff3d-56c9190ad8db/AppIcon-0-0-85-220-0-0-4-0-2x.png/512x512bb.jpg" alt="카카오톡">
 
         <div
           id="homeBadge"
@@ -1427,8 +1430,8 @@ button,input{
       class="app"
       onclick="openOther('Instagram')">
 
-      <div class="appIcon instagramIcon">
-        ◎
+      <div class="appIcon instagramIcon realAppIcon">
+        <img src="https://duran.ai/ig-icon.webp" alt="Instagram">
       </div>
 
       <div class="appName">
@@ -1442,8 +1445,8 @@ button,input{
       class="app"
       onclick="openOther('사진')">
 
-      <div class="appIcon photoIcon">
-        🌈
+      <div class="appIcon photoIcon realAppIcon">
+        <img src="https://www.iphonefaq.org/files/styles/large/public/photos-app.jpg" alt="사진">
       </div>
 
       <div class="appName">
