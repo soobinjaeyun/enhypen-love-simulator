@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="jungwon-20261104-2">
+<meta name="build-version" content="groupchat-20261104-3">
 
 <style>
 *{
@@ -1252,6 +1252,13 @@ button,input{
 .friendText2{margin-left:13px;display:flex;flex-direction:column;min-width:0}
 .friendText2 span{margin-left:0!important;font-size:15px;font-weight:600;color:#111}
 .friendText2 small{margin-top:4px;font-size:11px;font-weight:400;color:#999}
+
+.groupProfileGrid{
+  width:51px;height:51px;flex-shrink:0;
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+  gap:2px;padding:2px;border-radius:18px;background:#e9e9e9;overflow:hidden;
+}
+.groupProfileGrid img{width:100%;height:100%;object-fit:cover;min-width:0;border-radius:7px}
 </style>
 </head>
 
@@ -1585,13 +1592,18 @@ button,input{
 
       <!-- 5인 단톡방 -->
       <div class="chatItem" data-chat="class302" data-group="university" data-last-ts="2026-11-03T16:35:00" onclick="openExtraRoom('class302')">
-        <div class="profileFallback group">👥</div>
+        <div class="groupProfileGrid" aria-label="단체 프로필">
+          <img src="jaeyoon.jpg?v=group2" alt="">
+          <img src="sunghoon.jpg?v=group2" alt="">
+          <img src="jongsung.jpg?v=group2" alt="">
+          <img src="jungwon.jpg?v=group2" alt="">
+        </div>
         <div class="listText">
           <div class="chatNameRow">
             <div class="chatName">월요일 필교 2시 반 진리관 302호</div>
             <div class="memberCount">5</div>
           </div>
-          <div class="preview">정원: ㅋㅋㅋㅋㅋㅋㅋㅋ</div>
+          <div class="preview" id="group302Preview">정원: ㅋㅋㅋㅋㅋㅋㅋㅋ</div>
         </div>
         <div class="chatMeta"><div class="chatTime">11월 3일</div></div>
       </div>
@@ -6734,9 +6746,16 @@ const friendData2={
 function openExtraRoom(chatId){
   const chat=extraChats[chatId]; if(!chat)return;
   currentExtraChat=chatId;
+  const room=document.getElementById("extraRoom");
   document.getElementById("extraRoomName").textContent=chat.name;
+  room.classList.remove("show");
   renderExtraChatHistory(chatId);
-  document.getElementById("extraRoom").classList.add("show");
+  void room.offsetWidth;
+  room.classList.add("show");
+  if(chatId==="class302"){
+    const area=document.getElementById("extraMessages");
+    setTimeout(()=>{area.scrollTop=area.scrollHeight;},80);
+  }
   isOnHome=false;
 }
 function backExtraRoom(){
