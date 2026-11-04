@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="instagram-post-detail-comments-fix-20261104">
+<meta name="build-version" content="instagram-multiple-comments-20261104">
 
 <style>
 *{
@@ -3375,7 +3375,7 @@ function igPostHTML(id,i){
   if(id==="jaeyoon") data=IG_JAEYOON_POSTS[i]||data;
   const caption=(data.caption||"").replace("USER_IG",instagramUserId||"my_account").replace("USER_NAME",userName||"나");
   const likeCount=(data.likes||0)+(liked?1:0);
-  const commentCount=(data.comments||[]).length+(igUserComments[key]?1:0);
+  const commentCount=(data.comments||[]).length+((igUserComments[key]||[]).length);
   return '<article class="igPost" data-post-key="'+key+'">'+
     '<div class="igPostHead" onclick="openIgProfile(\''+id+'\')"><img src="'+a.photo+'"><div><span>'+a.username+'</span>'+(data.when?'<div style="font-size:9px;color:#999;font-weight:400;margin-top:2px">'+data.when+'</div>':'')+'</div><span style="margin-left:auto">•••</span></div>'+
     '<div class="igPlaceholder" onclick="openIgPostDetail(\''+id+'\','+i+')">게시물 사진 업로드 예정</div>'+
@@ -3401,7 +3401,7 @@ function updateIgCommentCount(key){
   const parts=key.split("-");
   const id=parts[0], index=Number(parts[1]||0);
   const data=id==="jaeyoon"?(IG_JAEYOON_POSTS[index]||{comments:[]}):{comments:[]};
-  const count=(data.comments||[]).length+(igUserComments[key]?1:0);
+  const count=(data.comments||[]).length+((igUserComments[key]||[]).length);
   document.querySelectorAll('.igPost[data-post-key="'+key+'"] .igComments').forEach(function(el){
     el.textContent="댓글 "+count+"개 모두 보기";
   });
@@ -3438,16 +3438,16 @@ function submitIgComment(){
   const input=document.getElementById("igCommentInput");
   const text=input.value.trim(); if(!text)return;
   const key=input.dataset.key;
-  igUserComments[key]=text;
+  if(!Array.isArray(igUserComments[key])) igUserComments[key]=[];
+  igUserComments[key].push(text);
   const list=document.getElementById("igCommentsList");
-  const oldMine=list.querySelector('[data-user-comment="true"]');
-  if(oldMine) oldMine.remove();
   const row=document.createElement("div");
   row.className="igCommentRow";
   row.dataset.userComment="true";
   row.innerHTML='<b>'+(instagramUserId||"my_account")+'</b><span>'+escapeIgText(text)+'</span>';
   list.appendChild(row);
   input.value="";
+  input.focus();
   list.scrollTop=list.scrollHeight;
   updateIgCommentCount(key);
 }
