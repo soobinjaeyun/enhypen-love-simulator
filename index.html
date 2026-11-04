@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="saved-contact-names-20261104">
+<meta name="build-version" content="saved-names-final-20261104">
 
 <style>
 *{
@@ -1854,9 +1854,7 @@ button,input{
       ‹
     </div>
 
-    <div class="roomName">
-      재윤이
-    </div>
+    <div id="jaeyoonRoomName" class="roomName">재윤이</div>
 
     <div class="roomTools"><button type="button" class="roomSearchButton" data-chat-search-open="true" aria-label="대화 검색">⌕</button><button type="button" class="roomMenuButton" onclick="openRoomDrawer(event)" aria-label="채팅방 메뉴">☰</button></div>
 
@@ -6324,12 +6322,21 @@ document.addEventListener("keydown",function(e){
   }
 });
 
+const SAVED_CONTACT_NAMES={
+  jaeyoon:"재윤이",
+  soobin:"영교24 최수빈 선배",
+  sunghoon:"경영24 박성훈 선배",
+  jongseong:"경제25 쫑생 선배",
+  jongsung:"경제25 쫑생 선배",
+  jungwon:"미컴26 양정원"
+};
+
 const drawerPeople={
-  jaeyoon:{name:"재윤이",photo:"jaeyoon.jpg?v=drawer2",status:""},
-  sunghoon:{name:"경영24 박성훈 선배",photo:"sunghoon.jpg?v=drawer2",status:"연락 확인 시간 늦어요"},
-  jongseong:{name:"경제25 쫑생 선배",photo:"jongsung.jpg?v=drawer2",status:"X"},
-  jungwon:{name:"미컴26 양정원",photo:"jungwon.jpg?v=drawer2",status:":D"},
-  soobin:{name:"영교24 최수빈 선배",photo:"soobin.jpg?v=drawer2",status:"ㅜ.ㅜ"}
+  jaeyoon:{name:SAVED_CONTACT_NAMES.jaeyoon,photo:"jaeyoon.jpg?v=names-final",status:""},
+  sunghoon:{name:SAVED_CONTACT_NAMES.sunghoon,photo:"sunghoon.jpg?v=names-final",status:"연락 확인 시간 늦어요"},
+  jongseong:{name:SAVED_CONTACT_NAMES.jongseong,photo:"jongsung.jpg?v=names-final",status:"X"},
+  jungwon:{name:SAVED_CONTACT_NAMES.jungwon,photo:"jungwon.jpg?v=names-final",status:":D"},
+  soobin:{name:SAVED_CONTACT_NAMES.soobin,photo:"soobin.jpg?v=names-final",status:"ㅜ.ㅜ"}
 };
 
 function getCurrentDrawerRoom(){
@@ -6392,8 +6399,8 @@ function fakeLeaveRoom(){
 
 /* ===== repaired Kakao friends / extra chats ===== */
 const extraChats = {
-  soobin:{name:"영교24 최수빈 선배"}, sunghoon:{name:"박성훈"},
-  jongseong:{name:"경제25 쫑생 선배"}, jungwon:{name:"미컴26 양정원"},
+  soobin:{name:SAVED_CONTACT_NAMES.soobin}, sunghoon:{name:SAVED_CONTACT_NAMES.sunghoon},
+  jongseong:{name:SAVED_CONTACT_NAMES.jongseong}, jungwon:{name:SAVED_CONTACT_NAMES.jungwon},
   class302:{name:"월요일 필교 2시 반 진리관 302호"},
   mom:{name:"엄마"}, dad:{name:"아빠"}, brother:{name:"오빠"}
 };
@@ -6995,10 +7002,10 @@ function renderExtraChatHistory(chatId){
       const row=document.createElement("div");
       row.className="fileMessageRow";
       const fileProfiles={
-        soobin:{photo:"soobin.jpg?v=20261104a",name:"수빈"},
-        sunghoon:{photo:"sunghoon.jpg?v=20261104a",name:"박성훈"},
-        jongseong:{photo:"jongsung.jpg?v=20261104a",name:"종성"},
-        jungwon:{photo:"jungwon.jpg?v=20261104-jungwon2",name:"정원"}
+        soobin:{photo:"soobin.jpg?v=names-final",name:SAVED_CONTACT_NAMES.soobin},
+        sunghoon:{photo:"sunghoon.jpg?v=names-final",name:SAVED_CONTACT_NAMES.sunghoon},
+        jongseong:{photo:"jongsung.jpg?v=names-final",name:SAVED_CONTACT_NAMES.jongseong},
+        jungwon:{photo:"jungwon.jpg?v=names-final",name:SAVED_CONTACT_NAMES.jungwon}
       };
       const fp=fileProfiles[chatId]||{photo:"jaeyoon.jpg",name:"상대"};
       row.innerHTML='<img src="'+fp.photo+'"><div class="fileMessageContent"><div class="sender">'+fp.name+'</div><div class="messageLine"><div class="fileBubble"><div class="fileIcon">📄</div><div class="fileInfo"><div class="fileName">'+m.name+'</div><div class="fileSize">'+m.size+'</div></div></div><div class="msgTime">'+msgTime+'</div></div></div>';
@@ -7008,10 +7015,10 @@ function renderExtraChatHistory(chatId){
 
     if(m.type==="other"){
       const profiles={
-        "재윤이":{photo:"jaeyoon.jpg?v=20261104a",name:"재윤이"},
-        "박성훈":{photo:"sunghoon.jpg?v=20261104a",name:"박성훈"},
-        "종성":{photo:"jongsung.jpg?v=20261104a",name:"종성"},
-        "정원":{photo:"jungwon.jpg?v=20261104-jungwon2",name:"정원"}
+        "재윤이":{photo:"jaeyoon.jpg?v=names-final",name:SAVED_CONTACT_NAMES.jaeyoon},
+        "박성훈":{photo:"sunghoon.jpg?v=names-final",name:SAVED_CONTACT_NAMES.sunghoon},
+        "종성":{photo:"jongsung.jpg?v=names-final",name:SAVED_CONTACT_NAMES.jongseong},
+        "정원":{photo:"jungwon.jpg?v=names-final",name:SAVED_CONTACT_NAMES.jungwon}
       };
       const gp=profiles[m.who]||{photo:"jaeyoon.jpg",name:m.who||"상대"};
       const friendIds={"재윤이":"jaeyoon","박성훈":"sunghoon","종성":"jongsung","정원":"jungwon"};
@@ -7033,10 +7040,10 @@ function renderExtraChatHistory(chatId){
     const row=document.createElement("div");
     row.className="them";
     const chatProfiles={
-      soobin:{photo:"soobin.jpg?v=20261104a",name:"수빈"},
-      sunghoon:{photo:"sunghoon.jpg?v=20261104a",name:"박성훈"},
-      jongseong:{photo:"jongsung.jpg?v=20261104a",name:"종성"},
-      jungwon:{photo:"jungwon.jpg?v=20261104-jungwon2",name:"정원"}
+      soobin:{photo:"soobin.jpg?v=names-final",name:SAVED_CONTACT_NAMES.soobin},
+      sunghoon:{photo:"sunghoon.jpg?v=names-final",name:SAVED_CONTACT_NAMES.sunghoon},
+      jongseong:{photo:"jongsung.jpg?v=names-final",name:SAVED_CONTACT_NAMES.jongseong},
+      jungwon:{photo:"jungwon.jpg?v=names-final",name:SAVED_CONTACT_NAMES.jungwon}
     };
     const p=chatProfiles[chatId]||{photo:"jaeyoon.jpg",name:"상대"};
     row.innerHTML='<img src="'+p.photo+'"><div class="themContent"><div class="sender">'+p.name+'</div><div class="messageLine"><div class="themBubble">'+m.text+'</div><div class="msgTime">'+msgTime+'</div></div></div>';
@@ -7049,11 +7056,11 @@ function renderExtraChatHistory(chatId){
 let currentExtraChat=null;
 let selectedFriend2=null;
 const friendData2={
-  jaeyoon:{name:"재윤이",photo:"jaeyoon.jpg?v=20261104a",status:""},
-  soobin:{name:"영교24 최수빈 선배",photo:"soobin.jpg?v=20261104a",status:"ㅜ.ㅜ"},
-  sunghoon:{name:"경영24 박성훈 선배",photo:"sunghoon.jpg?v=20261104a",status:"연락 확인 시간 늦어요"},
-  jongsung:{name:"경제25 쫑생 선배",photo:"jongsung.jpg?v=20261104a",status:"X"},
-  jungwon:{name:"미컴26 양정원",photo:"jungwon.jpg?v=20261104-jungwon2",status:":D"}
+  jaeyoon:{name:SAVED_CONTACT_NAMES.jaeyoon,photo:"jaeyoon.jpg?v=names-final",status:""},
+  soobin:{name:SAVED_CONTACT_NAMES.soobin,photo:"soobin.jpg?v=names-final",status:"ㅜ.ㅜ"},
+  sunghoon:{name:SAVED_CONTACT_NAMES.sunghoon,photo:"sunghoon.jpg?v=names-final",status:"연락 확인 시간 늦어요"},
+  jongsung:{name:SAVED_CONTACT_NAMES.jongsung,photo:"jongsung.jpg?v=names-final",status:"X"},
+  jungwon:{name:SAVED_CONTACT_NAMES.jungwon,photo:"jungwon.jpg?v=names-final",status:":D"}
 };
 
 function openExtraRoom(chatId){
@@ -7154,6 +7161,30 @@ window.addEventListener("load",function(){
     btn.style.pointerEvents="auto";
   });
 });
+
+function enforceSavedContactNames(){
+  const rows={
+    soobin:SAVED_CONTACT_NAMES.soobin,
+    sunghoon:SAVED_CONTACT_NAMES.sunghoon,
+    jongseong:SAVED_CONTACT_NAMES.jongseong,
+    jungwon:SAVED_CONTACT_NAMES.jungwon,
+    jaeyoon:SAVED_CONTACT_NAMES.jaeyoon
+  };
+  Object.entries(rows).forEach(([id,name])=>{
+    const chat=document.querySelector('.chatItem[data-chat="'+id+'"] .chatName');
+    if(chat) chat.textContent=name;
+  });
+  const friendRows=document.querySelectorAll("#friendsPanel .friendRow2");
+  const friendNames=[SAVED_CONTACT_NAMES.jaeyoon,SAVED_CONTACT_NAMES.soobin,SAVED_CONTACT_NAMES.sunghoon,SAVED_CONTACT_NAMES.jongseong,SAVED_CONTACT_NAMES.jungwon];
+  friendRows.forEach((row,i)=>{
+    const nameEl=row.querySelector(".friendText2 span");
+    if(nameEl && friendNames[i]) nameEl.textContent=friendNames[i];
+  });
+  const j=document.getElementById("jaeyoonRoomName");
+  if(j) j.textContent=SAVED_CONTACT_NAMES.jaeyoon;
+}
+document.addEventListener("DOMContentLoaded",enforceSavedContactNames);
+window.addEventListener("load",enforceSavedContactNames);
 </script>
 
 </body>
