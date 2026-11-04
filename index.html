@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="group-avatar-profile-20261104">
+<meta name="build-version" content="group-profile-zfix-20261104">
 
 <style>
 *{
@@ -1329,6 +1329,16 @@ button,input{
 
 .chatProfileClickable{cursor:pointer;transition:transform .08s ease}
 .chatProfileClickable:active{transform:scale(.94)}
+
+#extraMessages .chatProfileClickable{pointer-events:auto!important;position:relative;z-index:5}
+#friendProfile2{position:fixed!important}
+@media(min-width:600px){
+ #friendProfile2,#profilePhotoViewer2{
+   width:390px!important;height:844px!important;inset:auto!important;
+   top:50%!important;left:50%!important;margin-left:-195px!important;margin-top:-422px!important;
+   border-radius:42px!important;
+ }
+}
 </style>
 </head>
 
@@ -1792,13 +1802,13 @@ button,input{
 </div>
 
 
-<div id="profilePhotoViewer2" class="screen" onclick="closeProfilePhoto2()" style="display:none;z-index:120;background:#000;">
+<div id="profilePhotoViewer2" class="screen" onclick="closeProfilePhoto2()" style="display:none;z-index:9600;background:#000;">
   <div onclick="closeProfilePhoto2()" style="position:absolute;z-index:3;top:48px;right:20px;color:#fff;font-size:30px;cursor:pointer;">×</div>
   <img id="profilePhotoFull2" onclick="event.stopPropagation()" style="position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);width:100%;max-height:78%;object-fit:contain;background:#000;">
   <div class="homeGestureArea" data-home-gesture="true"><div class="homeIndicator" style="background:white"></div></div>
 </div>
 
-<div id="friendProfile2" class="screen" style="display:none;z-index:60;background:#aaa;color:#fff;">
+<div id="friendProfile2" class="screen" style="display:none;z-index:9500;background:#aaa;color:#fff;">
   <div id="friendProfileBg2" style="position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(22px);transform:scale(1.1);"></div>
   <div style="position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.58));"></div>
   <div onclick="closeFriendProfile2()" style="position:absolute;z-index:3;top:52px;left:18px;font-size:35px;cursor:pointer;">‹</div>
@@ -6896,7 +6906,7 @@ function renderExtraChatHistory(chatId){
       const fid=friendIds[m.who]||"";
       const row=document.createElement("div");
       row.className="them";
-      row.innerHTML='<img class="chatProfileClickable" data-friend-id="'+fid+'" src="'+gp.photo+'" alt="'+gp.name+'"><div class="themContent"><div class="sender">'+gp.name+'</div><div class="messageLine"><div class="themBubble">'+m.text+'</div><div class="msgTime">'+msgTime+'</div></div></div>';
+      row.innerHTML='<img class="chatProfileClickable" role="button" tabindex="0" data-friend-id="'+fid+'" src="'+gp.photo+'" alt="'+gp.name+'"><div class="themContent"><div class="sender">'+gp.name+'</div><div class="messageLine"><div class="themBubble">'+m.text+'</div><div class="msgTime">'+msgTime+'</div></div></div>';
       const avatar=row.querySelector(".chatProfileClickable");
       if(avatar && fid){
         avatar.addEventListener("click",function(ev){
@@ -6972,7 +6982,11 @@ function showChatsPanel(){
 let profileOpenedFromChat=false;
 function openFriendProfileFromChat2(id){
   profileOpenedFromChat=true;
+  closeRoomDrawer();
+  const profile=document.getElementById("friendProfile2");
+  profile.style.setProperty("z-index","9500","important");
   openFriendProfile2(id);
+  profile.style.setProperty("display","block","important");
 }
 
 function openFriendProfile2(id){
