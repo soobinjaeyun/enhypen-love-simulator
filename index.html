@@ -1494,7 +1494,7 @@ button,input{
         class="chatItem"
         data-chat="jaeyoon"
         data-group="love"
-        data-last-ts="2026-11-03T22:52:00"
+        data-last-ts="2026-10-20T22:52:00"
         onclick="openRoom()">
 
         <img
@@ -1563,9 +1563,9 @@ button,input{
         <img src="jongsung.jpg?v=20261104a" class="profile" alt="종성">
         <div class="listText">
           <div class="chatNameRow"><div class="chatName">경제25 쫑생 선배</div></div>
-          <div class="preview">튀지말고</div>
+          <div class="preview" id="jongsungPreview">튀지말고</div>
         </div>
-        <div class="chatMeta"><div class="chatTime">11월 2일</div></div>
+        <div class="chatMeta"><div class="chatTime" id="jongsungListTime">11월 2일</div></div>
       </div>
 
       <!-- 미컴26 양정원 -->
@@ -2924,6 +2924,7 @@ function openKakao(){
   isOnHome =
     false;
 
+  sortChatListByLatest();
 }
 
 
@@ -6484,6 +6485,10 @@ function openProfileChat2(){
   openExtraRoom(map[selectedFriend2]);
 }
 
+
+document.addEventListener("DOMContentLoaded", function(){
+  sortChatListByLatest();
+});
 </script>
 
 </body>
