@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="local-app-icons-20261104">
+<meta name="build-version" content="badge-over-icon-20261104">
 
 <style>
 *{
@@ -1351,9 +1351,30 @@ button,input{
 .chatSearchCurrent .themBubble,.chatSearchCurrent .meBubble{background:#fff3a8!important}
 .chatSearchCurrent.me .meBubble{background:#ffd92f!important}
 
-.realAppIcon{background:none!important;overflow:hidden;padding:0!important}
-.realAppIcon>img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.realAppIcon{background:none!important;overflow:visible!important;padding:0!important;position:relative}
+.realAppIcon>img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit;overflow:hidden}
 .kakaoIcon.realAppIcon,.instagramIcon.realAppIcon,.photoIcon.realAppIcon{background:none!important}
+
+#homeBadge{
+  position:absolute!important;
+  top:-7px!important;
+  right:-7px!important;
+  left:auto!important;
+  z-index:50!important;
+  min-width:20px!important;
+  height:20px!important;
+  padding:0 6px!important;
+  border-radius:10px!important;
+  background:#ff3b30!important;
+  color:#fff!important;
+  font-size:12px!important;
+  font-weight:700!important;
+  line-height:20px!important;
+  text-align:center!important;
+  overflow:visible!important;
+  box-shadow:0 0 0 2px rgba(255,255,255,.92)!important;
+  pointer-events:none;
+}
 </style>
 </head>
 
