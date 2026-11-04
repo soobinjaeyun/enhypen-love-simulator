@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="saved-names-final-20261104">
+<meta name="build-version" content="sender-saved-names-final-20261104">
 
 <style>
 *{
@@ -6330,6 +6330,25 @@ const SAVED_CONTACT_NAMES={
   jongsung:"경제25 쫑생 선배",
   jungwon:"미컴26 양정원"
 };
+function getSavedKakaoName(value){
+  const map={
+    "재윤이":SAVED_CONTACT_NAMES.jaeyoon,
+    "수빈":SAVED_CONTACT_NAMES.soobin,
+    "최수빈":SAVED_CONTACT_NAMES.soobin,
+    "영교24 최수빈 선배":SAVED_CONTACT_NAMES.soobin,
+    "박성훈":SAVED_CONTACT_NAMES.sunghoon,
+    "경영24 박성훈 선배":SAVED_CONTACT_NAMES.sunghoon,
+    "종성":SAVED_CONTACT_NAMES.jongseong,
+    "쫑생":SAVED_CONTACT_NAMES.jongseong,
+    "경제25 쫑생 선배":SAVED_CONTACT_NAMES.jongseong,
+    "정원":SAVED_CONTACT_NAMES.jungwon,
+    "정원이":SAVED_CONTACT_NAMES.jungwon,
+    "양정원":SAVED_CONTACT_NAMES.jungwon,
+    "미컴26 양정원":SAVED_CONTACT_NAMES.jungwon
+  };
+  return map[value]||value;
+}
+
 
 const drawerPeople={
   jaeyoon:{name:SAVED_CONTACT_NAMES.jaeyoon,photo:"jaeyoon.jpg?v=names-final",status:""},
@@ -6370,7 +6389,7 @@ function openRoomDrawer(e){
       row.innerHTML='<div class="drawerMeAvatar">♟</div><div class="drawerMemberName">'+(userName||"나")+'<div class="drawerStatus">나</div></div>';
     }else{
       const p=drawerPeople[id]; if(!p)return;
-      row.innerHTML='<img src="'+p.photo+'"><div class="drawerMemberName">'+p.name+(p.status?'<div class="drawerStatus">'+p.status+'</div>':'')+'</div><div class="drawerChatIcon">💬</div>';
+      row.innerHTML='<img src="'+p.photo+'"><div class="drawerMemberName">'+getSavedKakaoName(p.name)+(p.status?'<div class="drawerStatus">'+p.status+'</div>':'')+'</div><div class="drawerChatIcon">💬</div>';
     }
     box.appendChild(row);
   });
@@ -7008,7 +7027,7 @@ function renderExtraChatHistory(chatId){
         jungwon:{photo:"jungwon.jpg?v=names-final",name:SAVED_CONTACT_NAMES.jungwon}
       };
       const fp=fileProfiles[chatId]||{photo:"jaeyoon.jpg",name:"상대"};
-      row.innerHTML='<img src="'+fp.photo+'"><div class="fileMessageContent"><div class="sender">'+fp.name+'</div><div class="messageLine"><div class="fileBubble"><div class="fileIcon">📄</div><div class="fileInfo"><div class="fileName">'+m.name+'</div><div class="fileSize">'+m.size+'</div></div></div><div class="msgTime">'+msgTime+'</div></div></div>';
+      row.innerHTML='<img src="'+fp.photo+'"><div class="fileMessageContent"><div class="sender">'+getSavedKakaoName(fp.name)+'</div><div class="messageLine"><div class="fileBubble"><div class="fileIcon">📄</div><div class="fileInfo"><div class="fileName">'+m.name+'</div><div class="fileSize">'+m.size+'</div></div></div><div class="msgTime">'+msgTime+'</div></div></div>';
       area.appendChild(row);
       return;
     }
@@ -7025,7 +7044,7 @@ function renderExtraChatHistory(chatId){
       const fid=friendIds[m.who]||"";
       const row=document.createElement("div");
       row.className="them";
-      row.innerHTML='<img class="chatProfileClickable" role="button" tabindex="0" data-friend-id="'+fid+'" src="'+gp.photo+'" alt="'+gp.name+'"><div class="themContent"><div class="sender">'+gp.name+'</div><div class="messageLine"><div class="themBubble">'+m.text+'</div><div class="msgTime">'+msgTime+'</div></div></div>';
+      row.innerHTML='<img class="chatProfileClickable" role="button" tabindex="0" data-friend-id="'+fid+'" src="'+gp.photo+'" alt="'+gp.name+'"><div class="themContent"><div class="sender">'+getSavedKakaoName(gp.name)+'</div><div class="messageLine"><div class="themBubble">'+m.text+'</div><div class="msgTime">'+msgTime+'</div></div></div>';
       const avatar=row.querySelector(".chatProfileClickable");
       if(avatar && fid){
         avatar.addEventListener("click",function(ev){
@@ -7046,10 +7065,13 @@ function renderExtraChatHistory(chatId){
       jungwon:{photo:"jungwon.jpg?v=names-final",name:SAVED_CONTACT_NAMES.jungwon}
     };
     const p=chatProfiles[chatId]||{photo:"jaeyoon.jpg",name:"상대"};
-    row.innerHTML='<img src="'+p.photo+'"><div class="themContent"><div class="sender">'+p.name+'</div><div class="messageLine"><div class="themBubble">'+m.text+'</div><div class="msgTime">'+msgTime+'</div></div></div>';
+    row.innerHTML='<img src="'+p.photo+'"><div class="themContent"><div class="sender">'+getSavedKakaoName(p.name)+'</div><div class="messageLine"><div class="themBubble">'+m.text+'</div><div class="msgTime">'+msgTime+'</div></div></div>';
     area.appendChild(row);
   });
 
+  area.querySelectorAll(".sender").forEach(function(el){
+    el.textContent=getSavedKakaoName(el.textContent.trim());
+  });
   setTimeout(()=>{area.scrollTop=area.scrollHeight;},30);
 }
 
@@ -7067,7 +7089,13 @@ function openExtraRoom(chatId){
   const chat=extraChats[chatId]; if(!chat)return;
   currentExtraChat=chatId;
   const room=document.getElementById("extraRoom");
-  document.getElementById("extraRoomName").textContent=chat.name;
+  const savedRoomNameMap={
+    soobin:SAVED_CONTACT_NAMES.soobin,
+    sunghoon:SAVED_CONTACT_NAMES.sunghoon,
+    jongseong:SAVED_CONTACT_NAMES.jongseong,
+    jungwon:SAVED_CONTACT_NAMES.jungwon
+  };
+  document.getElementById("extraRoomName").textContent=savedRoomNameMap[chatId]||chat.name;
   room.classList.remove("show");
   renderExtraChatHistory(chatId);
   void room.offsetWidth;
