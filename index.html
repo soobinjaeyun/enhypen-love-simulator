@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
+<meta name="build-version" content="jungwon-20261104-2">
 
 <style>
 *{
@@ -1574,12 +1575,12 @@ button,input{
 
       <!-- 미컴26 양정원 -->
       <div class="chatItem" data-chat="jungwon" data-group="university" data-last-ts="2026-10-30T21:20:00" onclick="openExtraRoom('jungwon')">
-        <img src="jungwon.jpg?v=20261104a" class="profile" alt="정원이">
+        <img src="jungwon.jpg?v=20261104-jungwon2" class="profile" alt="정원이">
         <div class="listText">
           <div class="chatNameRow"><div class="chatName">미컴26 양정원</div></div>
-          <div class="preview">내일 봐</div>
+          <div class="preview" id="jungwonPreview">내일 봐</div>
         </div>
-        <div class="chatMeta"><div class="chatTime">10월 30일</div></div>
+        <div class="chatMeta"><div class="chatTime" id="jungwonListTime">10월 30일</div></div>
       </div>
 
       <!-- 5인 단톡방 -->
@@ -1638,7 +1639,7 @@ button,input{
       <div class="friendRow2" onclick="openFriendProfile2('soobin')"><img src="soobin.jpg?v=20261104a"><div class="friendText2"><span>수빈</span><small>ㅜ.ㅜ</small></div></div>
       <div class="friendRow2" onclick="openFriendProfile2('sunghoon')"><img src="sunghoon.jpg?v=20261104a"><div class="friendText2"><span>박성훈</span><small>연락 확인 시간 늦어요</small></div></div>
       <div class="friendRow2" onclick="openFriendProfile2('jongsung')"><img src="jongsung.jpg?v=20261104a"><div class="friendText2"><span>종성</span><small>X</small></div></div>
-      <div class="friendRow2" onclick="openFriendProfile2('jungwon')"><img src="jungwon.jpg?v=20261104a"><div class="friendText2"><span>정원이</span><small>:D</small></div></div>
+      <div class="friendRow2" onclick="openFriendProfile2('jungwon')"><img src="jungwon.jpg?v=20261104-jungwon2"><div class="friendText2"><span>정원이</span><small>:D</small></div></div>
     </div>
 
     <!-- 카톡 하단 메뉴 -->
@@ -6516,7 +6517,7 @@ function renderExtraChatHistory(chatId){
         soobin:{photo:"soobin.jpg?v=20261104a",name:"수빈"},
         sunghoon:{photo:"sunghoon.jpg?v=20261104a",name:"박성훈"},
         jongseong:{photo:"jongsung.jpg?v=20261104a",name:"종성"},
-        jungwon:{photo:"jungwon.jpg?v=20261104a",name:"정원"}
+        jungwon:{photo:"jungwon.jpg?v=20261104-jungwon2",name:"정원"}
       };
       const fp=fileProfiles[chatId]||{photo:"jaeyoon.jpg",name:"상대"};
       row.innerHTML='<img src="'+fp.photo+'"><div class="fileMessageContent"><div class="sender">'+fp.name+'</div><div class="messageLine"><div class="fileBubble"><div class="fileIcon">📄</div><div class="fileInfo"><div class="fileName">'+m.name+'</div><div class="fileSize">'+m.size+'</div></div></div><div class="msgTime">'+msgTime+'</div></div></div>';
@@ -6530,7 +6531,7 @@ function renderExtraChatHistory(chatId){
       soobin:{photo:"soobin.jpg?v=20261104a",name:"수빈"},
       sunghoon:{photo:"sunghoon.jpg?v=20261104a",name:"박성훈"},
       jongseong:{photo:"jongsung.jpg?v=20261104a",name:"종성"},
-      jungwon:{photo:"jungwon.jpg?v=20261104a",name:"정원"}
+      jungwon:{photo:"jungwon.jpg?v=20261104-jungwon2",name:"정원"}
     };
     const p=chatProfiles[chatId]||{photo:"jaeyoon.jpg",name:"상대"};
     row.innerHTML='<img src="'+p.photo+'"><div class="themContent"><div class="sender">'+p.name+'</div><div class="messageLine"><div class="themBubble">'+m.text+'</div><div class="msgTime">'+msgTime+'</div></div></div>';
@@ -6547,7 +6548,7 @@ const friendData2={
   soobin:{name:"수빈",photo:"soobin.jpg?v=20261104a",status:"ㅜ.ㅜ"},
   sunghoon:{name:"박성훈",photo:"sunghoon.jpg?v=20261104a",status:"연락 확인 시간 늦어요"},
   jongsung:{name:"종성",photo:"jongsung.jpg?v=20261104a",status:"X"},
-  jungwon:{name:"정원이",photo:"jungwon.jpg?v=20261104a",status:":D"}
+  jungwon:{name:"정원이",photo:"jungwon.jpg?v=20261104-jungwon2",status:":D"}
 };
 
 function openExtraRoom(chatId){
