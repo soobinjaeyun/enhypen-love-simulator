@@ -3360,7 +3360,7 @@ function openRoom(){
 ========================================= */
 const IG_ACCOUNTS={
   jaeyoon:{username:"_imjaeyooon",name:"심재윤",photo:"jaeyoon_profile.jpeg?v=jyig1",posts:3,followers:624,following:411,bio:"",story:"가끔"},
-  soobin:{username:"page.soobin",name:"최수빈",photo:"soobin.jpg",posts:8,followers:731,following:506,bio:"",story:"자주"},
+  soobin:{username:"page.soobin",name:"최수빈",photo:"soobin_profile.jpeg?v=sbig1",posts:8,followers:731,following:506,bio:"",story:"자주"},
   sunghoon:{username:"park.sunghoon",name:"박성훈",photo:"sunghoon.jpg",posts:1,followers:519,following:388,bio:"인생은 독고다이",story:"가끔"},
   jongseong:{username:"jayxrock_",name:"박종성",photo:"jongsung.jpg",posts:9,followers:603,following:417,bio:"JAYSON",story:"자주"},
   jungwon:{username:"meowon_",name:"양정원",photo:"jungwon.jpg",posts:6,followers:558,following:436,bio:"",story:"자주"}
@@ -3406,6 +3406,34 @@ const IG_JAEYOON_POSTS=[
   }
 ];
 
+const IG_SOOBIN_POSTS=[
+  {
+    when:"한달 전", caption:"🌳", likes:167, photo:"soobin_post1.jpeg?v=sbig1",
+    comments:[
+      {user:"beomgyu_03",text:"모기 안 물림?",reply:"개많이물림"},
+      {user:"jun._.17",text:"사진은 잘 나왔네",reply:"누가 찍었는데"},
+      {user:"tae_hyun",text:"ㅋㅋㅋㅋㅋㅋㅋㅋ"}
+    ]
+  },
+  {
+    when:"2주 전", caption:"간만에", likes:194, photo:"soobin_post2.jpeg?v=sbig1",
+    comments:[
+      {user:"beomgyu_03",text:"야 사진 누가 골랐냐",reply:"내가"},
+      {user:"jun._.17",text:"그래서 그랬구나",reply:"뭐가"},
+      {user:"tae_hyun",text:"ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"}
+    ]
+  },
+  {
+    when:"3일 전", caption:"", likes:218, photo:"soobin_post3.jpeg?v=sbig1",
+    comments:[
+      {user:"beomgyu_03",text:"안경 내놔",reply:"싫은데"},
+      {user:"jun._.17",text:"공부하는 척",reply:"공부함"},
+      {user:"tae_hyun",text:"👍"}
+    ],
+    allowUserComment:true
+  }
+];
+
 function getIgAccount(id){
   if(id==="me") return {username:instagramUserId||"my_account",name:userName||"나",photo:"",posts:3,followers:480,following:392,bio:"",story:""};
   return IG_ACCOUNTS[id];
@@ -3429,6 +3457,7 @@ function igPostHTML(id,i){
   const a=getIgAccount(id), key=id+"-"+i, liked=!!igLikes[key], saved=!!igSaved[key];
   let data={when:"",caption:"",likes:120+i*37,comments:[]};
   if(id==="jaeyoon") data=IG_JAEYOON_POSTS[i]||data;
+  if(id==="soobin") data=IG_SOOBIN_POSTS[i]||data;
   const caption=(data.caption||"").replace("USER_IG",instagramUserId||"my_account").replace("USER_NAME",userName||"나");
   const likeCount=(data.likes||0)+(liked?1:0);
   const storedComments=Array.isArray(igUserComments[key])?igUserComments[key]:(igUserComments[key]?[String(igUserComments[key])]:[]);
@@ -3458,7 +3487,7 @@ function escapeIgText(value){
 function updateIgCommentCount(key){
   const parts=key.split("-");
   const id=parts[0], index=Number(parts[1]||0);
-  const data=id==="jaeyoon"?(IG_JAEYOON_POSTS[index]||{comments:[]}):{comments:[]};
+  const data=id==="jaeyoon"?(IG_JAEYOON_POSTS[index]||{comments:[]}):id==="soobin"?(IG_SOOBIN_POSTS[index]||{comments:[]}):{comments:[]};
   const stored=Array.isArray(igUserComments[key])?igUserComments[key]:(igUserComments[key]?[String(igUserComments[key])]:[]);
   const count=(data.comments||[]).length+stored.length;
   document.querySelectorAll('.igPost[data-post-key="'+key+'"] .igComments').forEach(function(el){
@@ -3487,7 +3516,7 @@ function openIgComments(id,index){
     persistIgUserComments();
   }
   const a=getIgAccount(id);
-  const data=id==="jaeyoon"?(IG_JAEYOON_POSTS[index]||{comments:[]}):{comments:[]};
+  const data=id==="jaeyoon"?(IG_JAEYOON_POSTS[index]||{comments:[]}):id==="soobin"?(IG_SOOBIN_POSTS[index]||{comments:[]}):{comments:[]};
   const comments=(data.comments||[]).map(c=>{
     const text=c.text.replace("USER_NAME",userName||"나").replace("USER_IG",instagramUserId||"my_account");
     return '<div class="igCommentRow"><b>'+c.user+'</b><span>'+text+'</span>'+(c.reply?'<div class="igReply"><b>'+a.username+'</b> '+c.reply+'</div>':'')+'</div>';
@@ -3495,7 +3524,7 @@ function openIgComments(id,index){
   const mine=(Array.isArray(igUserComments[key])?igUserComments[key]:[]).map(function(userComment){
     return '<div class="igCommentRow" data-user-comment="true"><b>'+(instagramUserId||"my_account")+'</b><span>'+escapeIgText(userComment)+'</span></div>';
   }).join("");
-  const canWrite=id==="jaeyoon";
+  const canWrite=id==="jaeyoon" || (id==="soobin" && !!data.allowUserComment);
   document.getElementById("igCommentsTitle").textContent="댓글";
   document.getElementById("igCommentsList").innerHTML=comments+mine;
   document.getElementById("igCommentInputWrap").style.display=canWrite?"flex":"none";
@@ -3550,6 +3579,10 @@ function viewIgStory(id){
     openIgMediaViewer(["jaeyoon_story.jpeg?v=jyig1"],a.username,"10분 전",(userName||"사용자")+"이가 찍어준 사진");
     return;
   }
+  if(id==="soobin"){
+    openIgMediaViewer(["soobin_story.jpeg?v=sbig1"],a.username,"1시간 전","배터짐");
+    return;
+  }
   alert(a.name+"의 스토리\n\n스토리 사진은 이후 업로드하면 여기에 표시돼.");
 }
 function showIgHome(){document.getElementById("igPostDetail").style.display="none";document.getElementById("igHomeView").style.display="block";document.getElementById("igProfileView").style.display="none";document.getElementById("igDMView").style.display="none";igNavStack=[];}
@@ -3563,12 +3596,14 @@ function openIgProfile(id){
   if(id!=="me"){
     if(id==="jaeyoon"){
       highlights='<div class="igHighlights"><div class="igHighlight" onclick="viewIgHighlight(\'jaeyoon\',\'✌️\')"><img src="jaeyoon_highlight_peace1.jpeg?v=jyig1"><div>✌️</div></div><div class="igHighlight" onclick="viewIgHighlight(\'jaeyoon\',\'📷\')"><img src="jaeyoon_highlight_camera1.jpeg?v=jyig1"><div>📷</div></div></div>';
+    }else if(id==="soobin"){
+      highlights='<div class="igHighlights"><div class="igHighlight" onclick="viewIgHighlight(\'soobin\',\'🐕\')"><img src="soobin_highlight_dog1.jpeg?v=sbig1"><div>🐕</div></div><div class="igHighlight" onclick="viewIgHighlight(\'soobin\',\'📷\')"><img src="soobin_highlight_camera1.jpeg?v=sbig1"><div>📷</div></div></div>';
     }else{
       highlights='<div class="igHighlights"><div class="igHighlight" onclick="viewIgHighlight(\''+id+'\',\'일상\')"><img src="'+a.photo+'"><div>일상</div></div><div class="igHighlight" onclick="viewIgHighlight(\''+id+'\',\'📷\')"><img src="'+a.photo+'"><div>📷</div></div></div>';
     }
   }
   const cells=Array.from({length:a.posts},(_,i)=>{
-    const pd=id==="jaeyoon"?IG_JAEYOON_POSTS[i]:null;
+    const pd=id==="jaeyoon"?IG_JAEYOON_POSTS[i]:(id==="soobin"?IG_SOOBIN_POSTS[i]:null);
     return '<div class="igGridCell" onclick="openIgPostDetail(\''+id+'\','+i+')">'+(pd&&pd.photo?'<img src="'+pd.photo+'" alt="게시물 '+(i+1)+'">':'사진 '+(i+1))+'</div>';
   }).join("");
   document.getElementById("igProfileBody").innerHTML='<div class="igProfileTop"><div class="igProfileSummary">'+avatar+'<div class="igStats"><div><b>'+a.posts+'</b>게시물</div><div onclick="igAlert(\'팔로워\')"><b>'+a.followers+'</b>팔로워</div><div onclick="igAlert(\'팔로잉\')"><b>'+a.following+'</b>팔로잉</div></div></div><div class="igProfileName">'+a.name+'</div>'+(a.bio?'<div class="igBio">'+a.bio+'</div>':'')+(id!=="me"?'<div class="igProfileBtns"><button>팔로잉</button><button onclick="openIgDM()">메시지</button></div>':'<div class="igProfileBtns"><button>프로필 편집</button><button>프로필 공유</button></div>')+'</div>'+highlights+'<div class="igGrid">'+cells+'</div>';
@@ -3582,6 +3617,14 @@ function viewIgHighlight(id,label){
   }
   if(id==="jaeyoon"&&label==="📷"){
     openIgMediaViewer(["jaeyoon_highlight_camera1.jpeg?v=jyig1","jaeyoon_highlight_camera2.jpeg?v=jyig1","jaeyoon_highlight_camera3.jpeg?v=jyig1"],a.username,"하이라이트","📷");
+    return;
+  }
+  if(id==="soobin"&&label==="🐕"){
+    openIgMediaViewer(["soobin_highlight_dog1.jpeg?v=sbig1","soobin_highlight_dog2.jpeg?v=sbig1"],a.username,"하이라이트","🐕");
+    return;
+  }
+  if(id==="soobin"&&label==="📷"){
+    openIgMediaViewer(["soobin_highlight_camera1.jpeg?v=sbig1","soobin_highlight_camera2.jpeg?v=sbig1","soobin_highlight_camera3.jpeg?v=sbig1"],a.username,"하이라이트","📷");
     return;
   }
   alert(a.name+" · "+label+"\n\n사진은 이후 업로드하면 연결돼.");
