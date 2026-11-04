@@ -1146,6 +1146,10 @@ button,input{
 ========================================= */
 
 const extraChats = {
+  soobin: {
+    name:"수빈 선배",
+    members:["수빈"]
+  },
   sunghoon: {
     name:"경영24 박성훈 선배",
     members:["박성훈"]
@@ -1564,6 +1568,16 @@ function backExtraRoom(){
 
       </div>
 
+
+      <!-- 수빈 선배 -->
+      <div class="chatItem" data-chat="soobin" data-group="university" onclick="openExtraRoom('soobin')">
+        <div class="profileFallback">수빈</div>
+        <div class="listText">
+          <div class="chatNameRow"><div class="chatName">수빈 선배</div></div>
+          <div class="preview">대화를 시작해보세요.</div>
+        </div>
+        <div class="chatMeta"><div class="chatTime"></div></div>
+      </div>
 
       <!-- 경영24 박성훈 선배 -->
       <div class="chatItem" data-chat="sunghoon" data-group="university" onclick="openExtraRoom('sunghoon')">
