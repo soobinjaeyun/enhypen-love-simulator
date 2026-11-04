@@ -6043,11 +6043,112 @@ document
 
 /* ===== repaired Kakao friends / extra chats ===== */
 const extraChats = {
-  soobin:{name:"수빈"}, sunghoon:{name:"박성훈"},
+  soobin:{name:"영교24 최수빈 선배"}, sunghoon:{name:"박성훈"},
   jongseong:{name:"종성"}, jungwon:{name:"정원이"},
   class302:{name:"월요일 필교 2시 반 진리관 302호"},
   mom:{name:"엄마"}, dad:{name:"아빠"}, brother:{name:"오빠"}
 };
+
+const extraChatHistories={
+  soobin:[
+    {type:"date",text:"전공책 사건 며칠 뒤"},
+    {type:"them",text:"야"},{type:"them",text:"나 오늘 경영도서관 갔다가 괜히 책부터 확인함 ㅋㅋㅋㅋ"},
+    {type:"me",text:"ㅋㅋㅋㅋㅋㅋㅋㅋㅋ"},{type:"me",text:"이제 잘 챙기세요 제발"},
+    {type:"them",text:"저번엔 진짜 정신이 없었어 ㅠㅠ"},{type:"them",text:"근데 너 아니었으면 잃어버렸겠다"},
+    {type:"me",text:"그러니까 저한테 잘하세요~~"},
+    {type:"them",text:"이미 잘하고 있는데?"},{type:"them",text:"딸기라떼도 사줬잖아 ㅋㅋㅋ"},
+    {type:"me",text:"그거 한 번 가지고 생색을..."},
+    {type:"them",text:"아 ㅋㅋㅋㅋㅋ"},{type:"them",text:"알겠어 다음에 또 사줄게"},
+
+    {type:"date",text:"며칠 뒤"},
+    {type:"them",text:"오늘 학교야?"},
+    {type:"me",text:"넹"},{type:"me",text:"왜용"},
+    {type:"them",text:"그냥"},{type:"them",text:"아까 너 닮은 사람 본 거 같아서 ㅋㅋㅋ"},
+    {type:"me",text:"어디서요??"},
+    {type:"them",text:"학관 앞에서?"},{type:"them",text:"근데 멀리서 봐서 확실하진 않아"},
+    {type:"me",text:"저 맞을걸요 ㅋㅋㅋㅋ"},{type:"me",text:"아까 거기 있었어요"},
+    {type:"them",text:"아 역시"},{type:"them",text:"인사할걸"},
+    {type:"me",text:"왜 안 했어요 ㅋㅋㅋ"},
+    {type:"them",text:"아니 너무 멀리 있었어 ㅠㅠ"},{type:"them",text:"다음엔 할게 ㅋㅋㅋ"},
+
+    {type:"date",text:"또 며칠 뒤"},
+    {type:"me",text:"오빠 과제 다 하셨어요?"},
+    {type:"them",text:"아니"},{type:"them",text:"왜 그런 무서운 걸 물어봐"},
+    {type:"me",text:"ㅋㅋㅋㅋㅋㅋㅋㅋㅋ"},{type:"me",text:"저도 하기 싫어서요"},
+    {type:"them",text:"너도 안 했어?"},
+    {type:"me",text:"네 ㅎ"},
+    {type:"them",text:"잘됐다"},{type:"them",text:"나만 안 한 줄 알고 좀 불안했는데"},
+    {type:"me",text:"절 보고 안심하시면 어떡해요"},
+    {type:"them",text:"ㅋㅋㅋㅋㅋ 미안"},{type:"them",text:"근데 진짜 좀 안심됨"},
+
+    {type:"date",text:"저녁"},
+    {type:"them",text:"밥 먹었어?"},
+    {type:"me",text:"아직이요"},{type:"me",text:"오빠는요?"},
+    {type:"them",text:"나도 아직"},{type:"them",text:"뭐 먹을지 계속 고민 중"},
+    {type:"me",text:"또 편의점 가시는 거 아니죠"},
+    {type:"them",text:"어떻게 알았어 ㅋㅋㅋㅋㅋ"},
+    {type:"me",text:"맨날 그러시잖아요"},
+    {type:"them",text:"아"},{type:"them",text:"나 너무 많이 들켰네"},
+    {type:"me",text:"제대로 드세요~~"},
+    {type:"them",text:"너도 아직 안 먹었으면서 ㅋㅋㅋ"},{type:"them",text:"너부터 먹어"},{type:"them",text:"아니다 너도 안 먹었지"},
+    {type:"me",text:"네에ㅠ과제때메"},
+    {type:"them",text:"같이 먹자 전화할게"},
+
+    {type:"date",text:"인스타 스토리를 올린 날"},
+    {type:"them",text:"ㅋㅋㅋㅋㅋㅋㅋ"},{type:"them",text:"스토리 뭐야"},
+    {type:"me",text:"왜요 귀엽잖아요"},
+    {type:"them",text:"아니 귀엽긴 한데"},{type:"them",text:"너 이런 거 좋아하는구나"},
+    {type:"me",text:"저 이런 거 완전 좋아해요"},
+    {type:"them",text:"오 기억해둘게"},
+    {type:"me",text:"뭘 기억해요 ㅋㅋㅋㅋ"},
+    {type:"them",text:"몰라"},{type:"them",text:"나중에 쓸 데 있겠지 ㅋㅋㅋ"},
+
+    {type:"date",text:"시험기간"},
+    {type:"them",text:"공부해?"},
+    {type:"me",text:"하려고 앉아있긴 해요..."},
+    {type:"them",text:"ㅋㅋㅋㅋㅋ 그건 공부하는 게 아니잖아"},
+    {type:"me",text:"오빠는요??"},
+    {type:"them",text:"나도 똑같아"},{type:"them",text:"책 펴놓고 폰 보는 중"},
+    {type:"me",text:"남 말 할 처지가 아니시네요"},
+    {type:"them",text:"그러네 ㅋㅋㅋㅋ"},{type:"them",text:"우리 둘 다 큰일났다"},
+    {type:"me",text:"전 진짜 이제 할 거예요"},
+    {type:"them",text:"그래 해"},{type:"them",text:"나도 진짜 할게"},{type:"them",text:"한 시간 뒤에 검사한다"},
+    {type:"me",text:"뭘 검사해요 ㅋㅋㅋㅋㅋㅋ"},
+    {type:"them",text:"공부했나 안 했나"},{type:"them",text:"도망가지 마"}
+  ]
+};
+
+function renderExtraChatHistory(chatId){
+  const area=document.getElementById("extraMessages");
+  const history=extraChatHistories[chatId];
+  if(!history){
+    area.innerHTML='<div id="extraEmptyNotice" class="emptyChatNotice">아직 대화가 없습니다.</div>';
+    return;
+  }
+  area.innerHTML="";
+  history.forEach((m,i)=>{
+    if(m.type==="date"){
+      const d=document.createElement("div");
+      d.className="dateDivider";
+      d.innerHTML="<span>"+m.text+"</span>";
+      area.appendChild(d);
+      return;
+    }
+    if(m.type==="me"){
+      const row=document.createElement("div");
+      row.className="me";
+      row.innerHTML='<div class="meBubble">'+m.text+'</div>';
+      area.appendChild(row);
+      return;
+    }
+    const row=document.createElement("div");
+    row.className="them";
+    row.innerHTML='<img src="soobin.jpg?v=20261104a"><div class="themContent"><div class="sender">수빈</div><div class="messageLine"><div class="themBubble">'+m.text+'</div></div></div>';
+    area.appendChild(row);
+  });
+  setTimeout(()=>{area.scrollTop=area.scrollHeight;},30);
+}
+
 let currentExtraChat=null;
 let selectedFriend2=null;
 const friendData2={
@@ -6062,8 +6163,7 @@ function openExtraRoom(chatId){
   const chat=extraChats[chatId]; if(!chat)return;
   currentExtraChat=chatId;
   document.getElementById("extraRoomName").textContent=chat.name;
-  const notice=document.getElementById("extraEmptyNotice");
-  notice.textContent=chatId==="class302"?(userName||"나")+" · 재윤이 · 박성훈 · 종성 · 정원이":"아직 대화가 없습니다.";
+  renderExtraChatHistory(chatId);
   document.getElementById("extraRoom").classList.add("show");
   isOnHome=false;
 }
