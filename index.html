@@ -1357,6 +1357,9 @@ button,input{
 .realAppIcon{background:none!important;overflow:visible!important;padding:0!important;position:relative}
 .realAppIcon>img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit;overflow:hidden}
 .kakaoIcon.realAppIcon,.instagramIcon.realAppIcon,.photoIcon.realAppIcon{background:none!important}
+.calendarIcon{background:#fff!important;color:#050505;border-radius:18px!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;overflow:hidden!important;border:1px solid #d8d8d8;box-shadow:0 1px 2px rgba(0,0,0,.16);font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
+.calendarWeekday{font-size:13px;line-height:16px;font-weight:500;margin-top:2px}
+.calendarDay{font-size:38px;line-height:40px;font-weight:300;letter-spacing:-2px;margin-left:-2px}
 
 #homeBadge{
   position:absolute!important;
@@ -1595,6 +1598,21 @@ button,input{
 
       <div class="appName">
         사진
+      </div>
+
+    </div>
+
+    <div
+      class="app"
+      onclick="openOther('캘린더')">
+
+      <div class="appIcon calendarIcon" aria-label="캘린더">
+        <div id="calendarWeekday" class="calendarWeekday"></div>
+        <div id="calendarDay" class="calendarDay"></div>
+      </div>
+
+      <div class="appName">
+        캘린더
       </div>
 
     </div>
@@ -2553,6 +2571,16 @@ function getMessageTime(){
 /* =========================================
    게임 시작
 ========================================= */
+
+function updateCalendarHomeIcon(){
+  const now=new Date();
+  const weekdays=["일요일","월요일","화요일","수요일","목요일","금요일","토요일"];
+  const weekday=document.getElementById("calendarWeekday");
+  const day=document.getElementById("calendarDay");
+  if(weekday) weekday.textContent=weekdays[now.getDay()];
+  if(day) day.textContent=String(now.getDate());
+}
+updateCalendarHomeIcon();
 
 function startGame(){
 
