@@ -3370,16 +3370,11 @@ let igNavStack=[];
 let igLikes={"jaeyoon-0":true,"jaeyoon-2":true};
 let igSaved={};
 let igUserComments={};
-try{
-  const savedIgComments=localStorage.getItem("loveSimIgUserComments");
-  if(savedIgComments){
-    const parsed=JSON.parse(savedIgComments);
-    if(parsed && typeof parsed==="object") igUserComments=parsed;
-  }
-}catch(e){igUserComments={};}
+// User-written Instagram comments are session-only and reset on every page reload.
+try{localStorage.removeItem("loveSimIgUserComments");}catch(e){}
 
 function persistIgUserComments(){
-  try{localStorage.setItem("loveSimIgUserComments",JSON.stringify(igUserComments));}catch(e){}
+  // Intentionally do not persist user-written comments across reloads.
 }
 const IG_JAEYOON_POSTS=[
   {
