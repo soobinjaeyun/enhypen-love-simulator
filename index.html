@@ -1145,6 +1145,32 @@ button,input{
   font-size:27px;
 }
 
+let calendarViewDate=new Date();
+function openCalendar(){
+  calendarViewDate=new Date();
+  renderCalendarMonth();
+  const app=document.getElementById("calendarApp");
+  resetAppAnimation(app); app.style.display="block"; isOnHome=false;
+}
+function renderCalendarMonth(){
+  const y=calendarViewDate.getFullYear(),m=calendarViewDate.getMonth(),now=new Date();
+  document.getElementById("calendarYearLabel").textContent=y+"년";
+  document.getElementById("calendarMonthTitle").textContent=(m+1)+"월";
+  const start=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate(),prev=new Date(y,m,0).getDate();
+  let html="";
+  for(let i=0;i<42;i++){
+    let d,cy=y,cm=m,muted=false;
+    if(i<start){d=prev-start+i+1;cm--;muted=true;if(cm<0){cm=11;cy--;}}
+    else if(i>=start+days){d=i-start-days+1;cm++;muted=true;if(cm>11){cm=0;cy++;}}
+    else d=i-start+1;
+    const today=cy===now.getFullYear()&&cm===now.getMonth()&&d===now.getDate();
+    html+='<div class="calendarCell '+(muted?'muted ':'')+(i%7===0?'sunday':'')+'">'+(today?'<span class="todayCircle">'+d+'</span>':d)+'</div>';
+  }
+  document.getElementById("calendarGrid").innerHTML=html;
+}
+function goCalendarToday(){calendarViewDate=new Date();renderCalendarMonth();}
+function closeCalendar(){document.getElementById("calendarApp").style.display="none";isOnHome=true;}
+
 /* =========================================
    기타 앱
 ========================================= */
@@ -1497,7 +1523,7 @@ button,input{
 .igMediaPrev,.igMediaNext{position:absolute;top:20%;bottom:20%;width:28%;border:0;background:transparent;color:transparent;z-index:2}.igMediaPrev{left:0}.igMediaNext{right:0}
 
 /* Calendar app */
-#calendarApp{background:#fff;color:#111}
+#calendarApp{background:#fff;color:#111;z-index:8500}
 .calendarTop{padding:48px 18px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ddd}
 .calendarTopLeft{display:flex;align-items:center;gap:6px;color:#ff3b30;font-size:19px}
 .calendarTopLeft button,.calendarTools button,.calendarBottom button{border:0;background:transparent;color:#ff3b30;cursor:pointer}
@@ -1506,15 +1532,13 @@ button,input{
 .calendarMonthTitle{font-size:30px;font-weight:600;padding:18px 18px 8px}
 .calendarWeekdays,.calendarGrid{display:grid;grid-template-columns:repeat(7,1fr)}
 .calendarWeekdays{padding:0 10px;border-bottom:1px solid #ddd;color:#777;font-size:12px;text-align:center}
-.calendarWeekdays div{padding:8px 0}.calendarWeekdays div:first-child{color:#ff3b30}.calendarWeekdays div:last-child{color:#777}
+.calendarWeekdays div{padding:8px 0}.calendarWeekdays div:first-child{color:#ff3b30}
 .calendarGrid{padding:0 10px}
-.calendarCell{height:66px;border-bottom:1px solid #eee;display:flex;align-items:flex-start;justify-content:center;padding-top:8px;font-size:18px;position:relative}
+.calendarCell{height:66px;border-bottom:1px solid #eee;display:flex;align-items:flex-start;justify-content:center;padding-top:8px;font-size:18px}
 .calendarCell.muted{color:#aaa}.calendarCell.sunday:not(.muted){color:#ff3b30}
 .calendarCell .todayCircle{width:34px;height:34px;border-radius:50%;background:#ff3b30;color:#fff;display:flex;align-items:center;justify-content:center;margin-top:-5px}
-.calendarBottom{position:absolute;left:0;right:0;bottom:42px;height:48px;border-top:1px solid #ddd;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:16px}
-.calendarBottom button{font-size:16px}
+.calendarBottom{position:absolute;left:0;right:0;bottom:42px;height:48px;border-top:1px solid #ddd;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 18px}
 </style>
-
 </head>
 
 <body>
@@ -2356,10 +2380,7 @@ button,input{
 
 <div id="calendarApp" class="screen" style="display:none;z-index:8500">
   <div class="status"><span class="clock">00:00</span><span>●●● 100%</span></div>
-  <div class="calendarTop">
-    <div class="calendarTopLeft"><button type="button" onclick="closeCalendar()">‹</button><span id="calendarYearLabel"></span></div>
-    <div class="calendarTools"><button type="button" aria-label="검색">⌕</button><button type="button" aria-label="추가">＋</button></div>
-  </div>
+  <div class="calendarTop"><div class="calendarTopLeft"><button type="button" onclick="closeCalendar()">‹</button><span id="calendarYearLabel"></span></div><div class="calendarTools"><button type="button">⌕</button><button type="button">＋</button></div></div>
   <div id="calendarMonthTitle" class="calendarMonthTitle"></div>
   <div class="calendarWeekdays"><div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div></div>
   <div id="calendarGrid" class="calendarGrid"></div>
@@ -3761,41 +3782,6 @@ function openIgDM(){
 function igBack(){showIgHome();}
 function igAlert(name){alert(name+" 화면은 기본 동작까지 연결되어 있어. 세부 콘텐츠는 사진/내용을 추가하면서 채울 수 있어.");}
 
-let calendarViewDate=new Date();
-function openCalendar(){
-  const app=document.getElementById("calendarApp");
-  if(!app){alert("캘린더 화면을 불러오지 못했습니다.");return;}
-  calendarViewDate=new Date();
-  app.style.display="block";
-  app.style.zIndex="8500";
-  renderCalendarMonth();
-  resetAppAnimation(app);
-  isOnHome=false;
-}
-function renderCalendarMonth(){
-  const y=calendarViewDate.getFullYear(), m=calendarViewDate.getMonth();
-  document.getElementById("calendarYearLabel").textContent=y+"년";
-  document.getElementById("calendarMonthTitle").textContent=(m+1)+"월";
-  const first=new Date(y,m,1), start=first.getDay();
-  const days=new Date(y,m+1,0).getDate();
-  const prevDays=new Date(y,m,0).getDate();
-  const now=new Date();
-  let html="";
-  for(let i=0;i<42;i++){
-    let day,cy=y,cm=m,muted=false;
-    if(i<start){day=prevDays-start+i+1;cm=m-1;muted=true;if(cm<0){cm=11;cy--;}}
-    else if(i>=start+days){day=i-start-days+1;cm=m+1;muted=true;if(cm>11){cm=0;cy++;}}
-    else day=i-start+1;
-    const dow=i%7;
-    const today=cy===now.getFullYear()&&cm===now.getMonth()&&day===now.getDate();
-    html+='<div class="calendarCell '+(muted?'muted ':'')+(dow===0?'sunday':'')+'">'+(today?'<span class="todayCircle">'+day+'</span>':day)+'</div>';
-  }
-  document.getElementById("calendarGrid").innerHTML=html;
-}
-function changeCalendarMonth(delta){calendarViewDate=new Date(calendarViewDate.getFullYear(),calendarViewDate.getMonth()+delta,1);renderCalendarMonth();}
-function goCalendarToday(){calendarViewDate=new Date();renderCalendarMonth();}
-function closeCalendar(){document.getElementById("calendarApp").style.display="none";isOnHome=true;}
-
 /* =========================================
    기타 앱
 ========================================= */
@@ -4508,11 +4494,10 @@ function finishHomeGesture(target){
         target.id ===
         "other"
       ){
-        target.style.display="none";
-      }
 
-      if(target.id === "calendarApp"){
-        target.style.display="none";
+        target.style.display =
+          "none";
+
       }
 
       if(
@@ -7873,7 +7858,7 @@ let desktopHomeCurrentY=0;
 let desktopHomeTarget=null;
 
 function getTopVisibleAppScreen(){
-  const ids=["profilePhotoViewer2","friendProfile2","activeCall","incomingCall","extraRoom","room","calendarApp","instagram","other","kakao"];
+  const ids=["profilePhotoViewer2","friendProfile2","activeCall","incomingCall","extraRoom","room","instagram","other","kakao"];
   for(const id of ids){
     const el=document.getElementById(id);
     if(!el) continue;
