@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="instagram-multiple-comments-20261104">
+<meta name="build-version" content="instagram-scroll-posts-comments-final2-20261104">
 
 <style>
 *{
@@ -1436,6 +1436,10 @@ button,input{
 .igPostDetail{position:absolute;inset:0;z-index:55;background:#fff;overflow-y:auto}
 .igPostDetailBody{padding-bottom:70px}
 .igPostDetail .igPost{border-bottom:0}
+
+#igPostDetail{overflow-y:auto!important;-webkit-overflow-scrolling:touch}
+#igPostDetailBody{min-height:100%}
+#igPostDetailBody .igPost{display:block;width:100%}
 </style>
 </head>
 
@@ -3407,11 +3411,16 @@ function updateIgCommentCount(key){
   });
 }
 function openIgPostDetail(id,index){
-  const a=getIgAccount(id); if(!a)return;
+  const account=getIgAccount(id); if(!account)return;
   const detail=document.getElementById("igPostDetail");
   const body=document.getElementById("igPostDetailBody");
-  body.innerHTML=igPostHTML(id,index);
+  const total=Math.max(0,account.posts||0);
+  const order=[];
+  for(let i=index;i<total;i++) order.push(i);
+  for(let i=0;i<index;i++) order.push(i);
+  body.innerHTML=order.map(function(postIndex){return igPostHTML(id,postIndex);}).join("");
   detail.style.display="block";
+  detail.scrollTop=0;
 }
 function closeIgPostDetail(){
   document.getElementById("igPostDetail").style.display="none";
@@ -3424,7 +3433,9 @@ function openIgComments(id,index){
     const text=c.text.replace("USER_NAME",userName||"나").replace("USER_IG",instagramUserId||"my_account");
     return '<div class="igCommentRow"><b>'+c.user+'</b><span>'+text+'</span>'+(c.reply?'<div class="igReply"><b>'+a.username+'</b> '+c.reply+'</div>':'')+'</div>';
   }).join("");
-  const mine=igUserComments[key]?'<div class="igCommentRow" data-user-comment="true"><b>'+(instagramUserId||"my_account")+'</b><span>'+escapeIgText(igUserComments[key])+'</span></div>':'';
+  const mine=(Array.isArray(igUserComments[key])?igUserComments[key]:[]).map(function(userComment){
+    return '<div class="igCommentRow" data-user-comment="true"><b>'+(instagramUserId||"my_account")+'</b><span>'+escapeIgText(userComment)+'</span></div>';
+  }).join("");
   const canWrite=id==="jaeyoon";
   document.getElementById("igCommentsTitle").textContent="댓글";
   document.getElementById("igCommentsList").innerHTML=comments+mine;
