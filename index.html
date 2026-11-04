@@ -2353,9 +2353,10 @@ button,input{
   <div class="homeGestureArea" data-home-gesture="true"><div class="homeIndicator"></div></div>
 </div>
 
-<div id="calendarApp" class="screen" style="display:none">
+<div id="calendarApp" class="screen" style="display:none;z-index:8500">
+  <div class="status"><span class="clock">00:00</span><span>●●● 100%</span></div>
   <div class="calendarTop">
-    <div class="calendarTopLeft"><button type="button" onclick="changeCalendarMonth(-1)">‹</button><span id="calendarYearLabel"></span></div>
+    <div class="calendarTopLeft"><button type="button" onclick="closeCalendar()">‹</button><span id="calendarYearLabel"></span></div>
     <div class="calendarTools"><button type="button" aria-label="검색">⌕</button><button type="button" aria-label="추가">＋</button></div>
   </div>
   <div id="calendarMonthTitle" class="calendarMonthTitle"></div>
@@ -3761,10 +3762,13 @@ function igAlert(name){alert(name+" 화면은 기본 동작까지 연결되어 �
 
 let calendarViewDate=new Date();
 function openCalendar(){
+  const app=document.getElementById("calendarApp");
+  if(!app){alert("캘린더 화면을 불러오지 못했습니다.");return;}
   calendarViewDate=new Date();
+  app.style.display="block";
+  app.style.zIndex="8500";
   renderCalendarMonth();
-  resetAppAnimation(document.getElementById("calendarApp"));
-  document.getElementById("calendarApp").style.display="block";
+  resetAppAnimation(app);
   isOnHome=false;
 }
 function renderCalendarMonth(){
@@ -4503,10 +4507,11 @@ function finishHomeGesture(target){
         target.id ===
         "other"
       ){
+        target.style.display="none";
+      }
 
-        target.style.display =
-          "none";
-
+      if(target.id === "calendarApp"){
+        target.style.display="none";
       }
 
       if(
@@ -7867,7 +7872,7 @@ let desktopHomeCurrentY=0;
 let desktopHomeTarget=null;
 
 function getTopVisibleAppScreen(){
-  const ids=["profilePhotoViewer2","friendProfile2","activeCall","incomingCall","extraRoom","room","instagram","other","kakao"];
+  const ids=["profilePhotoViewer2","friendProfile2","activeCall","incomingCall","extraRoom","room","calendarApp","instagram","other","kakao"];
   for(const id of ids){
     const el=document.getElementById(id);
     if(!el) continue;
