@@ -1142,100 +1142,6 @@ button,input{
 }
 
 /* =========================================
-   추가 개인톡 / 단톡방
-========================================= */
-
-const extraChats = {
-  soobin: {
-    name:"영교24 최수빈 선배",
-    members:["수빈"]
-  },
-  sunghoon: {
-    name:"경영24 박성훈 선배",
-    members:["박성훈"]
-  },
-  jongseong: {
-    name:"경제25 쫑생 선배",
-    members:["박종성"]
-  },
-  jungwon: {
-    name:"미컴26 양정원",
-    members:["양정원"]
-  },
-  class302: {
-    name:"월요일 필교 2시 반 진리관 302호",
-    members:["사용자","재윤이","박성훈","박종성","양정원"]
-  },
-  mom: {
-    name:"엄마",
-    members:["엄마"]
-  },
-  dad: {
-    name:"아빠",
-    members:["아빠"]
-  },
-  brother: {
-    name:"오빠",
-    members:["오빠"]
-  }
-};
-
-let currentExtraChat = null;
-
-function openExtraRoom(chatId){
-
-  const chat = extraChats[chatId];
-
-  if(!chat){
-    return;
-  }
-
-  currentExtraChat = chatId;
-
-  document
-    .getElementById("extraRoomName")
-    .textContent = chat.name;
-
-  const notice =
-    document.getElementById("extraEmptyNotice");
-
-  if(chatId === "class302"){
-    notice.textContent =
-      (userName || "나") +
-      " · 재윤이 · 박성훈 · 박종성 · 양정원";
-  }else{
-    notice.textContent = "아직 대화가 없습니다.";
-  }
-
-  resetAppAnimation(
-    document.getElementById("extraRoom")
-  );
-
-  document
-    .getElementById("extraRoom")
-    .classList
-    .add("show");
-
-  isOnHome = false;
-}
-
-function backExtraRoom(){
-
-  document
-    .getElementById("extraRoom")
-    .classList
-    .remove("show");
-
-  resetAppAnimation(
-    document.getElementById("extraRoom")
-  );
-
-  document
-    .getElementById("kakao")
-    .style.display = "block";
-}
-
-/* =========================================
    기타 앱
 ========================================= */
 
@@ -1327,6 +1233,11 @@ function backExtraRoom(){
   font-size:14px;
   background:#fff;
 }
+
+.friendRow2{display:flex;align-items:center;padding:9px 18px;cursor:pointer;background:#fff}
+.friendRow2:active{background:#f7f7f7}
+.friendRow2 img{width:50px;height:50px;border-radius:19px;object-fit:cover;background:#eee}
+.friendRow2 span{margin-left:13px;font-size:15px;font-weight:600;color:#111}
 </style>
 </head>
 
@@ -1619,7 +1530,7 @@ function backExtraRoom(){
 
       <!-- 영교24 최수빈 선배 -->
       <div class="chatItem" data-chat="soobin" data-group="university" onclick="openExtraRoom('soobin')">
-        <div class="profileFallback">수빈</div>
+        <img src="soobin.jpg?v=20261104a" class="profile" alt="수빈">
         <div class="listText">
           <div class="chatNameRow"><div class="chatName">영교24 최수빈 선배</div></div>
           <div class="preview">대화를 시작해보세요.</div>
@@ -1629,7 +1540,7 @@ function backExtraRoom(){
 
       <!-- 경영24 박성훈 선배 -->
       <div class="chatItem" data-chat="sunghoon" data-group="university" onclick="openExtraRoom('sunghoon')">
-        <div class="profileFallback">성훈</div>
+        <img src="sunghoon.jpg?v=20261104a" class="profile" alt="박성훈">
         <div class="listText">
           <div class="chatNameRow"><div class="chatName">경영24 박성훈 선배</div></div>
           <div class="preview">대화를 시작해보세요.</div>
@@ -1639,7 +1550,7 @@ function backExtraRoom(){
 
       <!-- 경제25 쫑생 선배 -->
       <div class="chatItem" data-chat="jongseong" data-group="university" onclick="openExtraRoom('jongseong')">
-        <div class="profileFallback">쫑생</div>
+        <img src="jongsung.jpg?v=20261104a" class="profile" alt="종성">
         <div class="listText">
           <div class="chatNameRow"><div class="chatName">경제25 쫑생 선배</div></div>
           <div class="preview">대화를 시작해보세요.</div>
@@ -1649,7 +1560,7 @@ function backExtraRoom(){
 
       <!-- 미컴26 양정원 -->
       <div class="chatItem" data-chat="jungwon" data-group="university" onclick="openExtraRoom('jungwon')">
-        <div class="profileFallback">정원</div>
+        <img src="jungwon.jpg?v=20261104a" class="profile" alt="정원이">
         <div class="listText">
           <div class="chatNameRow"><div class="chatName">미컴26 양정원</div></div>
           <div class="preview">대화를 시작해보세요.</div>
@@ -1702,19 +1613,31 @@ function backExtraRoom(){
     </div>
 
 
+
+    <div id="friendsPanel" style="display:none;flex:1;min-height:0;overflow-y:auto;background:#fff;padding-bottom:8px;">
+      <div style="height:62px;padding:18px 18px 9px;display:flex;align-items:flex-end;">
+        <h1 style="font-size:22px;font-weight:700;">친구</h1>
+        <div style="margin-left:auto;display:flex;gap:20px;font-size:22px;"><span>⌕</span><span>♧+</span><span>⚙</span></div>
+      </div>
+      <div style="padding:8px 18px 7px;color:#999;font-size:12px;">친구 5</div>
+      <div class="friendRow2" onclick="openFriendProfile2('jaeyoon')"><img src="jaeyoon.jpg?v=20261104a"><span>재윤이</span></div>
+      <div class="friendRow2" onclick="openFriendProfile2('soobin')"><img src="soobin.jpg?v=20261104a"><span>수빈</span></div>
+      <div class="friendRow2" onclick="openFriendProfile2('sunghoon')"><img src="sunghoon.jpg?v=20261104a"><span>박성훈</span></div>
+      <div class="friendRow2" onclick="openFriendProfile2('jongsung')"><img src="jongsung.jpg?v=20261104a"><span>종성</span></div>
+      <div class="friendRow2" onclick="openFriendProfile2('jungwon')"><img src="jungwon.jpg?v=20261104a"><span>정원이</span></div>
+    </div>
+
     <!-- 카톡 하단 메뉴 -->
 
     <div class="kakaoTabBar">
 
-      <div class="kakaoTab">
+      <div id="friendsTabButton" class="kakaoTab" onclick="showFriendsPanel()">
         ♟
-        <div class="kakaoTabLabel">
-          친구
-        </div>
+        <div class="kakaoTabLabel">친구</div>
       </div>
 
 
-      <div class="kakaoTab active">
+      <div id="chatsTabButton" class="kakaoTab active" onclick="showChatsPanel()">
 
         ●
 
@@ -1770,6 +1693,22 @@ function backExtraRoom(){
   </div>
 
 </div>
+
+<div id="friendProfile2" class="screen" style="display:none;z-index:60;background:#aaa;color:#fff;">
+  <div id="friendProfileBg2" style="position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(22px);transform:scale(1.1);"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.58));"></div>
+  <div onclick="closeFriendProfile2()" style="position:absolute;z-index:3;top:52px;left:18px;font-size:35px;cursor:pointer;">‹</div>
+  <div style="position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:95px;">
+    <img id="friendProfileImg2" style="width:108px;height:108px;border-radius:38px;object-fit:cover;border:1px solid rgba(255,255,255,.5);">
+    <div id="friendProfileName2" style="font-size:21px;font-weight:600;margin-top:14px;"></div>
+    <div onclick="openProfileChat2()" style="position:absolute;bottom:25px;text-align:center;cursor:pointer;">
+      <div style="width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;margin:auto;font-size:23px;">💬</div>
+      <div style="font-size:12px;margin-top:7px;">1:1 채팅</div>
+    </div>
+  </div>
+  <div class="homeGestureArea" data-home-gesture="true"><div class="homeIndicator" style="background:white"></div></div>
+</div>
+
 <!-- =========================================
      재윤이 대화방
 ========================================= -->
@@ -6100,6 +6039,70 @@ document
 
     }
   );
+
+
+/* ===== repaired Kakao friends / extra chats ===== */
+const extraChats = {
+  soobin:{name:"수빈"}, sunghoon:{name:"박성훈"},
+  jongseong:{name:"종성"}, jungwon:{name:"정원이"},
+  class302:{name:"월요일 필교 2시 반 진리관 302호"},
+  mom:{name:"엄마"}, dad:{name:"아빠"}, brother:{name:"오빠"}
+};
+let currentExtraChat=null;
+let selectedFriend2=null;
+const friendData2={
+  jaeyoon:{name:"재윤이",photo:"jaeyoon.jpg?v=20261104a"},
+  soobin:{name:"수빈",photo:"soobin.jpg?v=20261104a"},
+  sunghoon:{name:"박성훈",photo:"sunghoon.jpg?v=20261104a"},
+  jongsung:{name:"종성",photo:"jongsung.jpg?v=20261104a"},
+  jungwon:{name:"정원이",photo:"jungwon.jpg?v=20261104a"}
+};
+
+function openExtraRoom(chatId){
+  const chat=extraChats[chatId]; if(!chat)return;
+  currentExtraChat=chatId;
+  document.getElementById("extraRoomName").textContent=chat.name;
+  const notice=document.getElementById("extraEmptyNotice");
+  notice.textContent=chatId==="class302"?(userName||"나")+" · 재윤이 · 박성훈 · 종성 · 정원이":"아직 대화가 없습니다.";
+  document.getElementById("extraRoom").classList.add("show");
+  isOnHome=false;
+}
+function backExtraRoom(){
+  document.getElementById("extraRoom").classList.remove("show");
+  document.getElementById("kakao").style.display="block";
+}
+function showFriendsPanel(){
+  document.querySelector(".kakaoTop").style.display="none";
+  document.querySelector(".chatList").style.display="none";
+  document.getElementById("friendsPanel").style.display="block";
+  document.getElementById("friendsTabButton").classList.add("active");
+  document.getElementById("chatsTabButton").classList.remove("active");
+}
+function showChatsPanel(){
+  document.querySelector(".kakaoTop").style.display="block";
+  document.querySelector(".chatList").style.display="block";
+  document.getElementById("friendsPanel").style.display="none";
+  document.getElementById("friendsTabButton").classList.remove("active");
+  document.getElementById("chatsTabButton").classList.add("active");
+}
+function openFriendProfile2(id){
+  selectedFriend2=id;
+  const f=friendData2[id]; if(!f)return;
+  document.getElementById("friendProfileImg2").src=f.photo;
+  document.getElementById("friendProfileName2").textContent=f.name;
+  document.getElementById("friendProfileBg2").style.backgroundImage='url("'+f.photo+'")';
+  document.getElementById("friendProfile2").style.display="block";
+}
+function closeFriendProfile2(){
+  document.getElementById("friendProfile2").style.display="none";
+}
+function openProfileChat2(){
+  if(!selectedFriend2)return;
+  document.getElementById("friendProfile2").style.display="none";
+  if(selectedFriend2==="jaeyoon"){showChatsPanel();openRoom();return;}
+  const map={soobin:"soobin",sunghoon:"sunghoon",jongsung:"jongseong",jungwon:"jungwon"};
+  openExtraRoom(map[selectedFriend2]);
+}
 
 </script>
 
