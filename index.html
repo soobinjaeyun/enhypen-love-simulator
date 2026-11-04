@@ -1247,6 +1247,10 @@ button,input{
 .fileInfo{margin-left:10px;min-width:0}
 .fileName{font-size:13px;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:145px}
 .fileSize{font-size:10px;color:#999;margin-top:5px}
+
+.friendText2{margin-left:13px;display:flex;flex-direction:column;min-width:0}
+.friendText2 span{margin-left:0!important;font-size:15px;font-weight:600;color:#111}
+.friendText2 small{margin-top:4px;font-size:11px;font-weight:400;color:#999}
 </style>
 </head>
 
@@ -1630,11 +1634,11 @@ button,input{
         <div style="margin-left:auto;display:flex;gap:20px;font-size:22px;"><span>⌕</span><span>♧+</span><span>⚙</span></div>
       </div>
       <div style="padding:8px 18px 7px;color:#999;font-size:12px;">친구 5</div>
-      <div class="friendRow2" onclick="openFriendProfile2('jaeyoon')"><img src="jaeyoon.jpg?v=20261104a"><span>재윤이</span></div>
-      <div class="friendRow2" onclick="openFriendProfile2('soobin')"><img src="soobin.jpg?v=20261104a"><span>수빈</span></div>
-      <div class="friendRow2" onclick="openFriendProfile2('sunghoon')"><img src="sunghoon.jpg?v=20261104a"><span>박성훈</span></div>
-      <div class="friendRow2" onclick="openFriendProfile2('jongsung')"><img src="jongsung.jpg?v=20261104a"><span>종성</span></div>
-      <div class="friendRow2" onclick="openFriendProfile2('jungwon')"><img src="jungwon.jpg?v=20261104a"><span>정원이</span></div>
+      <div class="friendRow2" onclick="openFriendProfile2('jaeyoon')"><img src="jaeyoon.jpg?v=20261104a"><div class="friendText2"><span>재윤이</span></div></div>
+      <div class="friendRow2" onclick="openFriendProfile2('soobin')"><img src="soobin.jpg?v=20261104a"><div class="friendText2"><span>수빈</span><small>ㅜ.ㅜ</small></div></div>
+      <div class="friendRow2" onclick="openFriendProfile2('sunghoon')"><img src="sunghoon.jpg?v=20261104a"><div class="friendText2"><span>박성훈</span><small>연락 확인 시간 늦어요</small></div></div>
+      <div class="friendRow2" onclick="openFriendProfile2('jongsung')"><img src="jongsung.jpg?v=20261104a"><div class="friendText2"><span>종성</span><small>X</small></div></div>
+      <div class="friendRow2" onclick="openFriendProfile2('jungwon')"><img src="jungwon.jpg?v=20261104a"><div class="friendText2"><span>정원이</span><small>:D</small></div></div>
     </div>
 
     <!-- 카톡 하단 메뉴 -->
@@ -1711,6 +1715,7 @@ button,input{
   <div style="position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:95px;">
     <img id="friendProfileImg2" style="width:108px;height:108px;border-radius:38px;object-fit:cover;border:1px solid rgba(255,255,255,.5);">
     <div id="friendProfileName2" style="font-size:21px;font-weight:600;margin-top:14px;"></div>
+    <div id="friendProfileStatus2" style="font-size:13px;margin-top:7px;opacity:.9;"></div>
     <div onclick="openProfileChat2()" style="position:absolute;bottom:25px;text-align:center;cursor:pointer;">
       <div style="width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;margin:auto;font-size:23px;">💬</div>
       <div style="font-size:12px;margin-top:7px;">1:1 채팅</div>
@@ -6463,11 +6468,11 @@ function renderExtraChatHistory(chatId){
 let currentExtraChat=null;
 let selectedFriend2=null;
 const friendData2={
-  jaeyoon:{name:"재윤이",photo:"jaeyoon.jpg?v=20261104a"},
-  soobin:{name:"수빈",photo:"soobin.jpg?v=20261104a"},
-  sunghoon:{name:"박성훈",photo:"sunghoon.jpg?v=20261104a"},
-  jongsung:{name:"종성",photo:"jongsung.jpg?v=20261104a"},
-  jungwon:{name:"정원이",photo:"jungwon.jpg?v=20261104a"}
+  jaeyoon:{name:"재윤이",photo:"jaeyoon.jpg?v=20261104a",status:""},
+  soobin:{name:"수빈",photo:"soobin.jpg?v=20261104a",status:"ㅜ.ㅜ"},
+  sunghoon:{name:"박성훈",photo:"sunghoon.jpg?v=20261104a",status:"연락 확인 시간 늦어요"},
+  jongsung:{name:"종성",photo:"jongsung.jpg?v=20261104a",status:"X"},
+  jungwon:{name:"정원이",photo:"jungwon.jpg?v=20261104a",status:":D"}
 };
 
 function openExtraRoom(chatId){
@@ -6501,6 +6506,7 @@ function openFriendProfile2(id){
   const f=friendData2[id]; if(!f)return;
   document.getElementById("friendProfileImg2").src=f.photo;
   document.getElementById("friendProfileName2").textContent=f.name;
+  document.getElementById("friendProfileStatus2").textContent=f.status||"";
   document.getElementById("friendProfileBg2").style.backgroundImage='url("'+f.photo+'")';
   document.getElementById("friendProfile2").style.display="block";
 }
