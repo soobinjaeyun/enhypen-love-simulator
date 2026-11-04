@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="instagram-scroll-posts-comments-final2-20261104">
+<meta name="build-version" content="desktop-home-swipe-fix-20261104">
 
 <style>
 *{
@@ -1440,6 +1440,17 @@ button,input{
 #igPostDetail{overflow-y:auto!important;-webkit-overflow-scrolling:touch}
 #igPostDetailBody{min-height:100%}
 #igPostDetailBody .igPost{display:block;width:100%}
+
+@media (pointer:fine){
+  .homeGestureArea{
+    height:42px!important;
+    bottom:0!important;
+    cursor:grab!important;
+    z-index:999!important;
+  }
+  .homeGestureArea:active{cursor:grabbing!important}
+  .homeIndicator{pointer-events:none}
+}
 </style>
 </head>
 
@@ -3852,7 +3863,7 @@ function handleHomeTouchEnd(event){
   홈으로 이동.
   */
 
-  if(distance >= 70){
+  if(distance >= 45){
 
     finishHomeGesture(
       target
@@ -3874,6 +3885,8 @@ function handleHomeTouchEnd(event){
 ========================================= */
 
 function handleHomeMouseDown(event){
+  if(event.button!==0) return;
+  event.preventDefault();
 
   const target =
     getGestureTarget(
@@ -4219,6 +4232,22 @@ function finishHomeGesture(target){
         target.style.display =
           "none";
 
+      }
+
+      if(
+        target.id ===
+        "instagram"
+      ){
+        target.style.display="none";
+      }
+
+      if(
+        target.id ===
+        "friendProfile2" ||
+        target.id ===
+        "profilePhotoViewer2"
+      ){
+        target.style.display="none";
       }
 
 
