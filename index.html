@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="roomdrawer-fixed-20261104-2">
+<meta name="build-version" content="invite-visible-20261104-3">
 
 <style>
 *{
@@ -1306,6 +1306,25 @@ button,input{
     margin-left:-140px!important;transform:translateY(-50%)!important;
     border-radius:0 42px 42px 0!important;
   }
+}
+
+.kakaoInviteSystem{
+  display:flex;
+  justify-content:center;
+  width:100%;
+  margin:14px 0 16px;
+  clear:both;
+}
+.kakaoInviteSystem span{
+  display:inline-block;
+  max-width:88%;
+  padding:6px 12px;
+  border-radius:14px;
+  background:rgba(79,94,105,.15);
+  color:#58656e;
+  font-size:10px;
+  line-height:1.35;
+  text-align:center;
 }
 </style>
 </head>
@@ -6604,7 +6623,7 @@ const extraChatHistories={
     {type:"other",who:"박성훈",text:"단톡"},{type:"other",who:"박성훈",text:"교수님이 만들라한거"},
     {type:"other",who:"종성",text:"ㅇㅇ"},
     {type:"other",who:"정원",text:"재윤이 아직 안들어옴"},
-    {type:"system",text:"USER님이 재윤이님을 초대했습니다."},
+    {type:"inviteSystem",text:"USER님이 재윤이님을 초대했습니다."},
     {type:"other",who:"재윤이",text:"아 미안 ㅋㅋㅋ"},{type:"other",who:"재윤이",text:"이제 봤어"},
     {type:"other",who:"박성훈",text:"5명 맞네"},
     {type:"other",who:"종성",text:"방 이름 누가 이렇게 해놓음"},
@@ -6802,6 +6821,14 @@ function renderExtraChatHistory(chatId){
       d.className="dateDivider";
       d.innerHTML="<span>"+m.text+"</span>";
       area.appendChild(d);
+      return;
+    }
+
+    if(m.type==="inviteSystem"){
+      const sys=document.createElement("div");
+      sys.className="kakaoInviteSystem";
+      sys.innerHTML='<span>'+m.text.replace("USER",userName||"나")+'</span>';
+      area.appendChild(sys);
       return;
     }
 
