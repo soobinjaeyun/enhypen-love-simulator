@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Love Simulator</title>
-<meta name="build-version" content="invite-visible-20261104-3">
+<meta name="build-version" content="group-avatar-profile-20261104">
 
 <style>
 *{
@@ -1326,6 +1326,9 @@ button,input{
   line-height:1.35;
   text-align:center;
 }
+
+.chatProfileClickable{cursor:pointer;transition:transform .08s ease}
+.chatProfileClickable:active{transform:scale(.94)}
 </style>
 </head>
 
@@ -6889,9 +6892,18 @@ function renderExtraChatHistory(chatId){
         "정원":{photo:"jungwon.jpg?v=20261104-jungwon2",name:"정원"}
       };
       const gp=profiles[m.who]||{photo:"jaeyoon.jpg",name:m.who||"상대"};
+      const friendIds={"재윤이":"jaeyoon","박성훈":"sunghoon","종성":"jongsung","정원":"jungwon"};
+      const fid=friendIds[m.who]||"";
       const row=document.createElement("div");
       row.className="them";
-      row.innerHTML='<img src="'+gp.photo+'"><div class="themContent"><div class="sender">'+gp.name+'</div><div class="messageLine"><div class="themBubble">'+m.text+'</div><div class="msgTime">'+msgTime+'</div></div></div>';
+      row.innerHTML='<img class="chatProfileClickable" data-friend-id="'+fid+'" src="'+gp.photo+'" alt="'+gp.name+'"><div class="themContent"><div class="sender">'+gp.name+'</div><div class="messageLine"><div class="themBubble">'+m.text+'</div><div class="msgTime">'+msgTime+'</div></div></div>';
+      const avatar=row.querySelector(".chatProfileClickable");
+      if(avatar && fid){
+        avatar.addEventListener("click",function(ev){
+          ev.stopPropagation();
+          openFriendProfileFromChat2(fid);
+        });
+      }
       area.appendChild(row);
       return;
     }
@@ -6956,6 +6968,13 @@ function showChatsPanel(){
   document.getElementById("friendsTabButton").classList.remove("active");
   document.getElementById("chatsTabButton").classList.add("active");
 }
+
+let profileOpenedFromChat=false;
+function openFriendProfileFromChat2(id){
+  profileOpenedFromChat=true;
+  openFriendProfile2(id);
+}
+
 function openFriendProfile2(id){
   selectedFriend2=id;
   const f=friendData2[id]; if(!f)return;
