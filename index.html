@@ -1538,6 +1538,15 @@ function closeCalendar(){document.getElementById("calendarApp").style.display="n
 .calendarCell.muted{color:#aaa}.calendarCell.sunday:not(.muted){color:#ff3b30}
 .calendarCell .todayCircle{width:34px;height:34px;border-radius:50%;background:#ff3b30;color:#fff;display:flex;align-items:center;justify-content:center;margin-top:-5px}
 .calendarBottom{position:absolute;left:0;right:0;bottom:42px;height:48px;border-top:1px solid #ddd;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 18px}
+
+.statusRight{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600}
+.cellBars{height:13px;display:flex;align-items:flex-end;gap:2px}
+.cellBars i{display:block;width:3px;background:currentColor;border-radius:1px}
+.cellBars i:nth-child(1){height:4px}.cellBars i:nth-child(2){height:7px}.cellBars i:nth-child(3){height:10px}.cellBars i:nth-child(4){height:13px}
+.statusLTE{font-size:12px;line-height:1}
+.batteryIcon{width:23px;height:11px;border:1.5px solid currentColor;border-radius:3px;position:relative;box-sizing:border-box}
+.batteryIcon:after{content:"";position:absolute;right:-3.5px;top:3px;width:2px;height:4px;background:currentColor;border-radius:0 1px 1px 0}
+.batteryFill{position:absolute;left:1.5px;top:1.5px;bottom:1.5px;width:16px;background:currentColor;border-radius:1.5px}
 </style>
 </head>
 
@@ -1589,7 +1598,7 @@ function closeCalendar(){document.getElementById("calendarApp").style.display="n
 
   <div class="status">
     <span class="clock">00:00</span>
-    <span>●●● 100%</span>
+    <span class="statusRight"><span class="cellBars"><i></i><i></i><i></i><i></i></span><span class="statusLTE">LTE</span><span class="batteryIcon"><span class="batteryFill"></span></span></span>
   </div>
 
   <div class="apps">
@@ -1713,9 +1722,7 @@ function closeCalendar(){document.getElementById("calendarApp").style.display="n
           00:00
         </span>
 
-        <span>
-          ●●● 100%
-        </span>
+        <span class="statusRight"><span class="cellBars"><i></i><i></i><i></i><i></i></span><span class="statusLTE">LTE</span><span class="batteryIcon"><span class="batteryFill"></span></span></span>
 
       </div>
 
@@ -2051,7 +2058,7 @@ function closeCalendar(){document.getElementById("calendarApp").style.display="n
 
   <div class="status">
     <span class="clock">00:00</span>
-    <span>●●● 100%</span>
+    <span class="statusRight"><span class="cellBars"><i></i><i></i><i></i><i></i></span><span class="statusLTE">LTE</span><span class="batteryIcon"><span class="batteryFill"></span></span></span>
   </div>
 
   <div class="roomHeader">
@@ -2139,7 +2146,7 @@ function closeCalendar(){document.getElementById("calendarApp").style.display="n
 <div id="extraRoom" class="screen">
   <div class="status">
     <span class="clock">00:00</span>
-    <span>●●● 100%</span>
+    <span class="statusRight"><span class="cellBars"><i></i><i></i><i></i><i></i></span><span class="statusLTE">LTE</span><span class="batteryIcon"><span class="batteryFill"></span></span></span>
   </div>
 
   <div class="roomHeader">
@@ -2331,7 +2338,7 @@ function closeCalendar(){document.getElementById("calendarApp").style.display="n
      Instagram
 ========================================= -->
 <div id="instagram" class="screen">
-  <div class="igStatus status"><span class="clock">00:00</span><span>●●● 100%</span></div>
+  <div class="igStatus status"><span class="clock">00:00</span><span class="statusRight"><span class="cellBars"><i></i><i></i><i></i><i></i></span><span class="statusLTE">LTE</span><span class="batteryIcon"><span class="batteryFill"></span></span></span></div>
 
   <div id="igHomeView" class="igView">
     <div class="igHeader"><b class="igLogo">Instagram</b><div><button onclick="igAlert('활동')">♡</button><button onclick="openIgDM()">◉</button></div></div>
@@ -2379,7 +2386,7 @@ function closeCalendar(){document.getElementById("calendarApp").style.display="n
 </div>
 
 <div id="calendarApp" class="screen" style="display:none;z-index:8500">
-  <div class="status"><span class="clock">00:00</span><span>●●● 100%</span></div>
+  <div class="status"><span class="clock">00:00</span><span class="statusRight"><span class="cellBars"><i></i><i></i><i></i><i></i></span><span class="statusLTE">LTE</span><span class="batteryIcon"><span class="batteryFill"></span></span></span></div>
   <div class="calendarTop"><div class="calendarTopLeft"><button type="button" onclick="closeCalendar()">‹</button><span id="calendarYearLabel"></span></div><div class="calendarTools"><button type="button">⌕</button><button type="button">＋</button></div></div>
   <div id="calendarMonthTitle" class="calendarMonthTitle"></div>
   <div class="calendarWeekdays"><div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div></div>
@@ -2400,9 +2407,7 @@ function closeCalendar(){document.getElementById("calendarApp").style.display="n
       00:00
     </span>
 
-    <span>
-      ●●● 100%
-    </span>
+    <span class="statusRight"><span class="cellBars"><i></i><i></i><i></i><i></i></span><span class="statusLTE">LTE</span><span class="batteryIcon"><span class="batteryFill"></span></span></span>
 
   </div>
 
@@ -2452,9 +2457,7 @@ function closeCalendar(){document.getElementById("calendarApp").style.display="n
       SKT
     </span>
 
-    <span>
-      ●●● 100%
-    </span>
+    <span class="statusRight"><span class="cellBars"><i></i><i></i><i></i><i></i></span><span class="statusLTE">LTE</span><span class="batteryIcon"><span class="batteryFill"></span></span></span>
 
   </div>
 
